@@ -1,0 +1,16 @@
+name: "IntroR"
+output_dir: "docs"
+navbar:
+  title: "Intro R"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "COO1"
+      href: COO1.html
+    - text: "COO2"
+      href: COO2.html
+    - text: "COO3"
+      href: COO3.html
+output:
+  html_document:
+    theme: cosmo

@@ -2,9 +2,6 @@
 title: "COO2 - Introduction R - importing, selecting, ordering, and missing data"
 author: "Hugo Kuijf"
 date: "7 September 2021"
-output:
-  html_document: default
-  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -37,13 +34,13 @@ We can import flat files into R and start working with them. Flat files are typi
 ### 1.1 Reading a table file with read.table()
 We will use different datasets. Therefore, you first need to download the following files from Teams:  
 
-* Mammogram.txt
-* Heart_disease.txt
-* Countries.txt
-* CountriesTD.txt
-* iris_dataset.csv
-* iris_data_incomplete.txt
-* Grades.txt  
+* [Mammogram.txt](../COO2/Mammogram.txt)
+* [Heart_disease.txt](../COO2/Heart_disease.txt)
+* [Countries.txt](../COO2/Countries.txt)
+* [CountriesTD.txt](../COO2/CountriesTD.txt)
+* [iris_dataset.csv](../COO2/iris_dataset.csv)
+* [iris_data_incomplete.txt](../COO2/iris_data_incomplete.txt)
+* [Grades.txt](../COO2/Grades.txt)
 
 Save the files in the same folder. The scripts that you have made can be saved in this folder as well.  Use a proper name for your scripts to prevent chaos. Use for example the date (yy-mm-dd) + file name + version  (e.g. 210907_RscriptCOO2_version1). 
 

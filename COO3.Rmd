@@ -2,9 +2,6 @@
 title: "COO 3 - Introduction R - Plotting"
 author: "Bas van der Velden"
 date: "29 April 2020"
-output:
-  html_document: default
-  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -62,7 +59,7 @@ countriestd # To check whether it has imported correctly.
 In this COO you will learn how to visualize data in plots. Next, you will learn how to save and customize your plots.  
 A playlist of all the HC video's can be found [here](https://www.youtube.com/playlist?list=PL3pDMfDjzlKI0wIPgMVjUw5F1ZUpsjSlA).
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5guZEmaDthI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5guZEmaDthI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
 
 1. Introduction
 2. Packages
@@ -112,7 +109,7 @@ To install the package 'ggplot2', you can use the following function:
 install.packages("ggplot2") # put the package name between quotation marks
 ```
 It can take some time to install packages. In the console, you can see a STOP-sign when it is running code:  
-![](Console-running-2.png)
+![](COO3/Console-running-2.png)
 
 Wait until the STOP sign dissapears, and the > sign appears again in the Console, before running the next line of code.
 Before a new package can be used in the current script, you need to load it into the R environment. You need to do this every time you open a new environment. You install your package once, but you load the package every time you use it in a new environment. To see which packages are loaded in your environment, you can click on 'Global Environment':  
@@ -125,7 +122,7 @@ library("ggplot2")
 For every package you use in a script, it might be useful to load the libraries on the top of your script. When you open your script again in a new environment, you can run these `library()` commands first, to load all of the necessary packages again.  
 
 ### 3. Plotting basics
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CMcV0WVA-fw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CMcV0WVA-fw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
   
 This COO, we will only use base R plotting functions.  
 To find information about each plot type, you can of course use the 'Help' function, but there are also many online resources. A great resource that shows the basics and more advanced possibilities with plots in both 'base R' and 'ggplot2' is [The R Graph Gallery](https://www.r-graph-gallery.com/).
@@ -362,7 +359,7 @@ As you can see, you first determine the file format and file name. **Look up whi
   
 ### 5. Plotting customization  
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/dPSpXOa3OJM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dPSpXOa3OJM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
 
 The plots we've made so far are not really visually attractive. Luckily, we can change many visual characteristics of the plots with extra arguments in the functions we use to plot. We will now try out some of these customization options. In all of the following exercises, we encourage you to try out some different values and play around with it a bit, to get an idea of all the possibilities.  
 You can find more info about customization on [The R Graph Gallery](https://www.r-graph-gallery.com/) again, under 'QUICK' in the menu bar. The last three tabs are useful for base R. We will start with the scatterplot (plot()) again. You can also find info on customizations at the page for the basic scatterplot.  
@@ -464,7 +461,7 @@ For clarity: To make a plot with a legend, you use two functions, each with a se
 
 ### 6. Visualization pitfalls/lies
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Clgh67l86HE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Clgh67l86HE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
 
 ---
 
@@ -479,7 +476,7 @@ There are useful color palets in the RColorBrewer package:
 ```{r echo = FALSE, warning = FALSE}
 library(RColorBrewer)
 ```
-  ![](Colorbrewer.png)  
+  ![](COO3/Colorbrewer.png)  
   
 **If the RColorBrewer package is not installed or loaded into your environment, use the `install.packages()` and `library()` functions to install and load it.**   
 You can use this package in the following way:  

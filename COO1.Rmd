@@ -1,14 +1,7 @@
 ---
 title: "COO1 - Introduction R - basics"
-knit: (function(input_file, encoding) {
-  out_dir <- 'docs';
-  rmarkdown::render(input_file,
- encoding=encoding,
- output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 author: "Hugo Kuijf"
 date: "6 September 2021"
-output:
-  html_document: default
 ---
 
 ```{r setup, include=FALSE}
