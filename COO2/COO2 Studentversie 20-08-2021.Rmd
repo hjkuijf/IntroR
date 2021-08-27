@@ -1,0 +1,418 @@
+---
+title: "COO2 - Introduction R - importing, selecting, ordering, and missing data"
+author: "Hugo Kuijf"
+date: "7 September 2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In the second computer module, you will learn how to import files into R. In addition, you will learn how to select and order data within objects. 
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/5hTG-IQeDEw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
+
+1. Importing data into R
++ 1.1 Reading a table file with read.table()
++ 1.2 Reading a tab delimited file
++ 1.3 Looking at your data
+2. Selecting data
++ 2.1 Selecting a subset of a vector
++ 2.2 Selecting a subset of a matrix
++ 2.3 Selecting a subset of a list
++ 2.4 Selecting a subset of a dataframe
+3. Sorting and ordering data
+4. Missing values
+5. Extra assignment
+
+## 1 Importing data into R
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RNP_dxv4lak" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
+
+We can import flat files into R and start working with them. Flat files are typically files that contain table data. These types of files are saved as text files, csv files (comma-separated values) or tab delimited files. The first line in these types of files are the Field names that correspond to the columns of the dataframe in R. We can use the [`read.table()` function](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table) to read any file in table format to create a dataframe.
+
+### 1.1 Reading a table file with read.table()
+We will use different datasets. Therefore, you first need to download the following files from Teams:  
+
+* Mammogram.txt
+* Heart_disease.txt
+* Countries.txt
+* CountriesTD.txt
+* iris_dataset.csv
+* iris_data_incomplete.txt
+* Grades.txt  
+
+Save the files in the same folder. The scripts that you have made can be saved in this folder as well.  Use a proper name for your scripts to prevent chaos. Use for example the date (yy-mm-dd) + file name + version  (e.g. 210907_RscriptCOO2_version1). 
+
+Let's first use the manual way to import data as shown in the lecture: File > Import Dataset > From Text (base) > Import.  
+
+**1. Import the Mammogram dataset manually.**  
+
+You can see the command RStudio used to import the data in the Console. As you can see, the function RStudio used is `read.csv()`. You can see that the only argument in the function is the path to your text file, including the name and extension (.txt) of your file. And R automatically assigned the data to a variable with the name of the file (`Mammogram <- read.csv()`).  
+`read.csv()` is a variant of the more general function `read.table()`. 'csv' Indicates that the values are comma-separated. If you open the original .txt file, you can see that each line contains a row of values, which can be numbers or letters, and each value is separated by a comma. In addition, `read.csv()` by default uses the first line in the text file as column names for the dataframe.
+
+Now, let's import another dataset by using the more general function `read.table()` in your script. The advantages of scripting instead of manually importing are that you can find the command again when you need to, and you automatically open the data the next time you run this script.  
+  
+**2. Import the Heart_disease data by copying and editing the commands from your Console.**  
+*Change the variable name, the name of the .txt file and change the function to read.table().*  
+
+As you can see when you view your new data, it is loaded as a dataframe with one column and multiple values separated by commas in one cell. `read.table()` by default uses spaces in the text file to separate columns. Since our data is separated by commas instead of spaces, it is all put into one column. In addition, the first row is not used for column names. Therefore we need to define some new arguments (as shown in the lecture).  
+  
+**3. Adapt the following commands to correctly load the Heart_disease data:**
+```{r eval = FALSE}
+Heart_disease <- read.table("C:/Folder1/Folder2/Heart_disease.txt",
+                            header = TRUE,
+                            sep = ",")
+View(Heart_disease)
+```
+The next dataset we are going to import is the Countries dataset. This data does not only contain data of the type numeric (the other datasets did), but also text, such as country names.
+
+**4. What R data type is used to store text?**  
+
+As explained before, many arguments in a function are set to default settings. One of the default settings of the `read.table()` function is that strings (data type 'character') will be converted to factors in older R versions (before R 4.0.0).  
+  
+**5. What is the difference between the data types 'character' and 'factor'?**   
+**6. Suppose a column in our dataframe contains 7 countries and the data type is factor. How many levels will this column have?**  
+**7. What will happen if we want to add another country to this column?**  
+
+To keep our options open, we will import character strings as character data and not as factors. Therefore, we make sure to set the argument `stringsAsFactors` to FALSE.
+We can call our dataframe df.countries. 'df' is short for dataframe, which helps us remember that the object with this name is a dataframe.
+
+**8. Import the dataset with the following commands:**  
+```{r eval=FALSE} 
+df.countries <- read.table("C:/Folder1/Folder2/Countries.txt",
+                         header = TRUE,
+                         sep = ",",
+                         stringsAsFactors = FALSE)
+df.countries
+```
+
+### 1.2	Reading a tab delimited file
+Now, take a look at the document "CountriesTD.txt" and try to find what looks different in this document compared to the document "Countries". 
+You can see that the text is not separated anymore by commas but now by tabs. We can still use the same functions as before but now slightly different in that we must change the argument `sep` to `"\t"` which means that this file is tab delimited. 
+
+```{r eval=FALSE} 
+countriestd <- read.table("C:/Folder1/Folder2/CountriesTD.txt", 
+                          header = TRUE, 
+                          sep = "\t", 
+                          stringsAsFactors = FALSE) 
+countriestd
+```
+Notice how this gives the exact same table as before. 
+
+We can write this shorter as well, with the `read.delim()` function: 
+```{r eval=FALSE} 
+countriestd2 <- read.delim("CountriesTD.txt", 
+                           stringsAsFactors = FALSE)
+countriestd2
+```
+
+### 1.3	 Looking at your data
+There are different ways to get information on our data. With these functions we can do some quality control, which is very important.  
+We can view the dataframe in our Console:  
+```{r eval=FALSE} 
+df.countries
+```
+We can see the whole dataframe at once since this dataframe is not so big. But this is not always the case. Then, you can use:
+```{r eval=FALSE}
+View(df.countries)# view whole dataframe in separate window
+```
+  
+We can then check the class of the df.countries object:
+```{r eval=FALSE} 
+class(df.countries)
+```
+
+With the function `dim()` we can see how many rows and columns there are in this dataframe or we can see them separately using the `nrow()` and `ncol()` functions. The `dim()` function is different from the `length()` function shown previously. The `length()` function is typically applied to a one-dimensional vector or array and returns the number of elements. The `dim()` function, on the other hand, is applied on objects with multiple dimensions and gives you the number of rows and columns instead of the number of elements. 
+```{r eval=FALSE} 
+dim(df.countries)# the first being the number of rows, the second being the number of columns
+```
+```{r eval=FALSE} 
+nrow(df.countries)
+```
+```{r eval=FALSE} 
+ncol(df.countries)
+```
+We now have a sense of how big the dataset is. We can see the elements included in the dataset:
+```{r eval=FALSE} 
+names(df.countries)
+```
+
+The `head()` function allows us to see the first few rows of the dataset:
+```{r eval=FALSE} 
+head(df.countries)
+```
+Note that you can now only see the first 6 rows. We can also narrow it down to the exact number of rows we want to see:
+```{r eval=FALSE} 
+head(df.countries,3)# Selecting to only see the first three rows of the dataframe
+```
+
+We can do this the same with the last couple of rows with the tail() function:
+```{r eval=FALSE} 
+tail(df.countries,2)# Selecting to only see the last two rows of the dataframe
+```
+
+Another useful function to study your data is the str() function. It compactly displays the structure of your data object.
+
+```{r eval=FALSE} 
+str(df.countries)
+```
+
+## 2 Selecting data
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Jrb5P20CCSo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
+
+To select data from any data type, use the index operator `[]`. In one-dimensional data, such as a vector, you provide one index. So, to select the third value of a vector, you use `vector[3]`. For two-dimensional data, if you want to select one value you need to indicate both the row, and column. Therefore, you need two indices. `dataframe[2, 5]` selects the value from the second row, fifth column.  
+
+### 2.1 Selecting a subset of a vector
+Use the following commands to create a vector and select some values from this vector: 
+
+```{r eval=FALSE} 
+a <- c(2, 3, 4, 5)
+a
+```
+Select the third element of vector a:  
+```{r eval=FALSE} 
+a[3] # The third element of vector a.
+```
+Select the first and third elements:
+```{r eval=FALSE} 
+a[c(1, 3)] # returning the first and third elements of vector a.
+```
+You can also do calculations with selected elements in a vector:
+```{r eval=FALSE} 
+a[1 + 3] # The fourth element of a vector. 
+a[1] + a[3] # Adding the first to the third element, returning the sum. 
+```
+   
+**9. Now, select the first two elements of vector a.**  
+  
+You can also select multiple values in a row:
+```{r eval=FALSE} 
+b <- 10:1
+b[2:4] # Second to fourth element of vector b
+```
+
+You can also select a subset of a vector using logical values by asking R a question.
+```{r eval=FALSE} 
+b > 3 # Which values in the vector of b are greater than 3?
+```
+10:4 are all greater than 3 and therefore return TRUE, 1, 2 and 3 are smaller or equal to 3 and therefore return FALSE.
+
+Lastly, you can select by excluding values from your vector by using a minus: `[-1]` selects every value except 1.   
+   
+**10. Select every value of b except the second and sixth.**  
+
+We can assign new values to a specific subset that we selected. For example we can select the fifth element of vector ```b``` and replace it with ```0```, using the assignment operator ```<-```.
+```{r eval=FALSE}
+b[5] <- 0
+```
+We can also replace larger parts.
+```{r eval=FALSE}
+b[6:10] <- 9
+```
+
+### 2.2 Selecting a subset of a matrix
+As explained before, to select from a matrix you can use two indices. You can also select a whole column or row. Then, we have to specify whether we want to select either the rows or columns by carefully placing commas. The first index is for rows, the second for columns `[rows, columns]`.
+
+First, we make a new matrix with the following vectors:
+```{r eval=FALSE} 
+vector.a <- c(1, 2, 3) # vector 1
+vector.b <- c(4, 5, 6) # vector 2
+vector.c <- c(7, 8, 9) # vector 3
+```
+  
+**11. Combine these vectors into columns of a new matrix, called matrix.a.**  
+  
+Now, you can select the first row:
+```{r eval = FALSE}
+matrix.a[1,] # select row 1 from matrix C
+```
+Now we see just the first row of the matrix created before. We can also show more than 1 row by making a vector in which we command to see both the first and second row `c(1,2)`.
+
+```{r eval=FALSE} 
+matrix.a[c(1,2),] # select rows 1 and 2 from matrix C
+```
+To select columns put your indices after the comma:
+```{r eval=FALSE} 
+matrix.a[,c(1,3)] # select columns 1 and 3 from matrix C
+```
+  
+**12. Now, select the value in the third row, second column of matrix.a.**  
+
+**13. Can you describe what this next line of code does to ```matrix.a```?**
+
+```{r eval=FALSE}
+matrix.a[2,1] <- 999
+```
+
+### 2.3 Selecting a subset of a list
+First, we need to create a list before we can subset it. 
+
+```{r eval=FALSE} 
+list1 <- list("hello","how","are","you","?")
+list1[3] # calling for the third element in the list stored in list1
+```
+
+In a list you can store different data types of different lengths as well. You basically gather information under one object. Via that object name, you can then easily access these data. Let's store our vector a, matrix.a, and list1 in a new list. For easy access we can also name the items in our list, using the following command:  
+```{r eval=FALSE}
+list2 <- list(my_vec = a, my_matrix = matrix.a, my_list = list1)
+```
+Now, we can acces our vector with two commands. You can use the index number to select an item on the list  `[]`, or you can use the name, with the `$` sign:
+```{r eval=FALSE}
+list2[1] # first item on the list
+list2$my_vec # the item called 'my_vec'
+```
+As you can see, when you use the `$` to access the list item it provides you with a pop-up list of the names of your items and a symbol that resembles the data type. You can choose an item from this pop-up list by clicking on it, or select the first item by pressing 'Tab'.  
+We can also select the first item of an item on our list, for example:
+```{r eval=FALSE}
+list2$my_list[4] # selects fourth item in the item called my_list
+list2[[3]][4] # selects fourth item in the third item
+```
+  
+**14. Select the value in the second row, third column of the matrix in list2.**  
+  
+### 2.4 Selecting a subset of a dataframe
+There are multiple ways to select data from a dataframe. You can use the index operator `[]`, you can use the dollar sign `$`, or you can provide the name of a column as character data:
+```{r eval=FALSE} 
+df.countries[4,] # selecting row 4
+
+df.countries[,2] # selecting column 2
+
+df.countries["Capital"] # selecting the column called Capital
+
+df.countries[,"Capital"] # selecting the information in the column called Capital
+
+df.countries$Capital # selecting the information in the column called Capital
+```
+Note that `[,2]`, `[,"Capital"]`, and `$Capital` reproduced the information in the column as a vector with character data, while `["Capital"]` reproduced the whole column, as a dataframe with one column.
+
+**15. Use the `class()` function to return the class for each of the dataframe access commands above.**  
+*One example is provided:*  
+```{r eval=FALSE}
+class(df.countries[4,])
+```
+
+We can also provide some statistics on our dataframe with these selection commands. Some basic statistic functions are `mean()`, `min()`, and `max()`.  
+  
+**16. Calculate the mean of the inhabitants in the df.countries dataframe.**  
+**17. Calculate the minimum and maximum age in the Heart_disease dataframe, using the dollar sign to get suggestions for the column names.**  
+   
+We can also select using logical operators, explained in the previous COO. The expressions created with logical operators are also called Boolean expressions. 
+To get an overview of the countries with more than 12,000,000 inhabitants, you can use:  
+```{r eval=FALSE} 
+df.countries["Inhabitants"] > 12000000
+```
+We created a boolean expression that shows us that the second and sixth countries have fewer than 12,000,000 inhabitants. We can also use this information to select data from another column. Therefore, we us this boolean expression we created to select rows. You can do this with the following commands:  
+```{r eval=FALSE}
+many_inhabitants <- df.countries$Inhabitants > 12000000
+df.countries[many_inhabitants, "Countries"]
+```
+We first created a vector containing the logical information `[1]  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE`. Then, we wanted to produce the country names with many inhabitants, so we used `"Countries"` to select the column and our logical vector to select the rows. It then selected the information in the first, third, fourth, fifth and seventh row of the column 'Countries', because those equaled 'TRUE'. It left out the names of the countries with fewer inhabitants, because those equaled 'FALSE'.   
+  
+**18. Produce the country names of the countries with fewer than 12,000,000 inhabitants in a similar manner.**  
+  
+## 3 Sorting and ordering data
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2LTb8HrjCL4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
+
+In this next bit, we will discuss the `sort()` and `order()` functions. The sort function returns the input data from lowest to highest value or in alphabetically ascending order. The order function returns the order in which the data are present in the object from lowest to highest value or in alphabetically ascending order. So for `alphabet <- c("c", "a", "b"`, `sort(alphabet)` will return: `"a", "b", "c"` and `order(alphabet)` would return `2, 3, 1`, because the second value (a) is the highest in the alphabet, then the third value (b), and then the first value (c).
+
+So, we can (temporarily) sort the countries in our dataframe with:
+```{r eval=FALSE} 
+sort(df.countries$Countries)
+```
+```{r eval=FALSE} 
+sort(df.countries$Countries, decreasing = TRUE)
+```
+
+As you can see in the df.countries dataframe, the actual order of the countries in the column 'Countries' has not changed. The sort function has just returned the column in alphabetical order in the Console.
+
+We can use the order function to create a new dataframe with our data sorted alphabetically on country name: 
+
+```{r eval=FALSE} 
+countries_sorted1 <- df.countries[order(df.countries$Countries),] # ordering our countries alphabetically 
+countries_sorted1
+```
+The order we used is the following:
+```{r eval=FALSE}
+order(df.countries$Countries)
+```
+We use this order to indicate the rows to be used for our new dataframe. So, our new dataframe is constructed as follows: For the first row of countries_ordered1 the second row of the df.countries dataframe is used (containing Belgium), the second row is then filled with the third row of df.countries (containing France), and so on.
+
+**19. Now, create a dataframe called countries_sorted2, which is sorted on number of inhabitants.**  
+
+In the lecture, the iris dataframe was sorted on two values. To try this yourself:  
+  
+**20. Import the iris_dataset.csv as a dataframe.**  
+  
+The following commands were used in the lecture:
+```{r eval=FALSE}
+volgorde <- order(iris_dataset$sepal_width)
+iris_sorted <- iris_dataset[volgorde,]
+iris_sorted <- iris_dataset[order(iris_dataset$sepal_width),]
+iris_sorted <- iris_dataset[order(iris_dataset$flower, iris_dataset$sepal_width),]
+
+iris_sorted <- iris_dataset[order(iris_dataset$flower, iris_dataset$sepal_width,
+                                       decreasing = c(FALSE, TRUE)),]
+```
+The iris_sorted dataframe has sorted the iris_dataset data first in increasing order on flower name, and then in decreasing order on sepal width.
+
+Now, let's try a similar sorting for our Heart_disease dataframe.  
+  
+**21. Create one new dataframe in which you sort the Heart_disease data first in decreasing order on sex, and then in increasing order on age.**  
+  
+## 4 Missing values
+<iframe width="560" height="315" src="https://www.youtube.com/embed/H-PuxMQcL-s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
+
+It sometimes happens that you use a data.frame that is missing information. This will be displayed with a NA value (not available). It can be difficult to work with this because then, you are, for example, not able to calculate the mean. We must be cautious when drawing conclusions when our dataframe contains NAs. We can, for example remove observations with NA values. 
+  
+Let's work with the iris dataset with missing values from the lecture. We will use a new variable name for our incomplete dataset. 
+  
+**22. Import the iris_data_incomplete.txt as a dataframe called iris_data_incomplete.**  
+  
+**23. Run the commands from the lecture:**  
+```{r eval=FALSE}
+summary(iris_data_incomplete)
+which(is.na(iris_data_incomplete$sepal_width)) # which row contains NA?
+iris_clean <- na.exclude(iris_dataset) # removes whole row containing NA
+mean(iris_data_incomplete$sepal_width) # includes the NA value
+mean(iris_data_incomplete$sepal_width, na.rm = TRUE) # excludes the NA value for this calculation
+```
+Note that the `na.exclude()` function itself does not remove the row containing NA, only if you assign it to a variable, this new variable will contain the original dataset with the row containing NA removed.  
+You can also check the number of NA values with `sum(is.na())`.  
+  
+**24. Check the number of NA values in the iris_dataset, iris_data_incomplete and iris_clean dataframes.**  
+  
+## 5 Extra assignment
+Now, take a look at the Grades.txt file. Use scripting to answer the following questions.   
+**A1. Import the Grades.txt file as a dataframe and check whether it worked correctly.**  
+**A2. How many rows and columns does the dataframe have?**  
+**A3. What are the column names?**  
+**A4. What does the first part of this dataframe look like?**  
+**A5. Provide a summary of the data.**  
+**A6. Are there errors in your data?**  
+**A7. Calculate the number of NA values.**  
+**A8. Calculate the mean of each exam. Exclude the NA values in your calculation.**  
+**A9. Make a new dataframe that excludes the rows that contain NA values.**  
+**A10. For both exams, create a logical vector that shows which grades are bigger than 10.**  
+**A11. Use the vector that contains a 'TRUE' to return the grade that was bigger than 10.**  
+**A12. For both exams, create a logical vector that shows which grades are lower than 0.**  
+**A13. Use the vector that contains a 'TRUE' to return the grade that was lower than 0.**  
+Since grades can vary from 0 to 10, we are quite certain that the grade which is higher than 10 contains a typo and should be 7.5. And the grade lower than 0 accidentially got a minus in front of it. You check this on the original exams, and indeed the grades should be 7.5 and 6.5 respectively. Now, you can change the grades, with the following commands:  
+**A14. Change the name of the dataframe and check whether the grades you change are indeed in the 10th and 9th row, in your dataframe. Then, change the grades with the following commands:**   
+```{r eval=FALSE}
+grades_complete[10, "Exam1"] <- 7.5
+grades_complete[9, "Exam2"] <- 6.5
+```
+**A15. Create a vector of the grades in Exam1 sorted with the lowest grade first.**  
+**A16. Create a vector of the grades in Exam2 sorted with the highest grade first.**  
+**A17. Create a new, sorted dataframe which first sorts on the first exam and then on the second exam.**  
+**A18. Calculate the average grade again for both exams.**  
+**A19. What is the highest grade for the first exam?**  
+**A20. Create a logical vector that shows on which row(s) contain the highest grade.**  
+*Hint: use the code we used before for the number of inhabitants as an example of creating a logical vector:*  
+`many_inhabitants <- df.countries$Inhabitants > 12000000`  
+**A21. Now, use this vector to get the name of the person with the highest grade.**  
+**A22. Now, produce the name of the person with the lowest grade for the second exam.**  

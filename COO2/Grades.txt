@@ -1,0 +1,14 @@
+Names	Exam1	Exam2
+Tom	7.8	8.2
+Anna	NA	7.4
+Merel	6.5	NA
+Daan	5.6	7.1
+Carlijn	NA	8.0
+Gideon	8.1	6.9
+Roos	4.5	5.0
+Leann	9.0	8.5
+Joey	3.2	7.0
+Sem	7.8	6.8
+Stijn	5.0	7.3
+Eline	6.5	-6.5
+Luuk	75	7.3
