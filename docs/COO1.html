@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Hugo Kuijf" />
+
+<meta name="date" content="2021-09-06" />
+
+<title>COO1 - Introduction R - basics</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Intro R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="COO1.html">COO1</a>
+</li>
+<li>
+  <a href="COO2.html">COO2</a>
+</li>
+<li>
+  <a href="COO3.html">COO3</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">COO1 - Introduction R - basics</h1>
+<h4 class="author">Hugo Kuijf</h4>
+<h4 class="date">6 September 2021</h4>
+
+</div>
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_Qn2zL5-qOg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
+</iframe>
+<p>During the course, we will work often in RStudio. In this computer module, you will install RStudio and learn about the basics of R.</p>
+<ol style="list-style-type: decimal">
+<li>Install and work in RStudio</li>
+<li>R calculations and assignments</li>
+</ol>
+<ul>
+<li>2.1 Simple calculations</li>
+<li>2.2 Assigning a value to an object</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Different data types (logical, numeric and characters)</li>
+</ol>
+<ul>
+<li>3.1 Logical data</li>
+<li>3.2 Numeric data</li>
+<li>3.3 Character data</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Vectors</li>
+</ol>
+<ul>
+<li>4.1 Vectors using a colon</li>
+<li>4.2 Vectors using functions seq() and rep()</li>
+<li>4.3 Vectors using rnorm() and runif()</li>
+<li>4.4 Character vectors</li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li>Matrices</li>
+</ol>
+<ul>
+<li>5.1 Creating matrices</li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>Lists</li>
+</ol>
+<ul>
+<li>6.1 Creating lists</li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>Data frames</li>
+</ol>
+<ul>
+<li>7.1 Creating data frames</li>
+</ul>
+<ol start="8" style="list-style-type: decimal">
+<li>Factors</li>
+</ol>
+<ul>
+<li>8.1 Creating factors</li>
+</ul>
+<div id="install-and-work-in-rstudio" class="section level2">
+<h2>1. Install and work in RStudio</h2>
+<p>You should download R via the <a href="https://lib.ugent.be/CRAN/">r-project website</a> and RStudio via <a href="https://rstudio.com/products/rstudio/download/">rstudio.com</a>.</p>
+<ol style="list-style-type: decimal">
+<li>Go to <a href="https://lib.ugent.be/CRAN/">https://lib.ugent.be/CRAN/</a> to download R</li>
+<li>Select your operating system</li>
+</ol>
+<ul>
+<li>Windows: choose ‘base’, and download and install R</li>
+<li>MacOS: download the most recent package</li>
+<li>Linux: choose your distribution and follow the instructions</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>After installing R, you can install RStudio</li>
+<li>Go to <a href="https://rstudio.com/products/rstudio/download/">rstudio.com</a></li>
+<li>Download and install the free version (open source edition) of RStudio Desktop for your OS</li>
+</ol>
+<ul>
+<li>When starting RStudio for the first time, it might ask where you installed R (in step 2)</li>
+</ul>
+<p>Note that R also comes with an application called RGui, but we will not use this during the course. We will only use RStudio.</p>
+<p>Throughout this and future COOs, we assume you work on Windows. We will demonstrate the use of keyboard shortcuts, like pressing <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to execute a script. If you use Mac, keyboard shortcuts can be different. In this specific case, you should use <kbd>Cmd</kbd>+<kbd>Return</kbd>. A list of all keyboard shortcuts for all operating systems can be found in RStudio under <a href="https://support.rstudio.com/hc/en-us/articles/200711853-Keyboard-Shortcuts">Tools → Keyboard Shortcuts Help</a>.</p>
+<div id="rstudio-contains-4-panels" class="section level3">
+<h3>RStudio contains 4 panels:</h3>
+<p><img src="COO1/Panels_COO1.png" /></p>
+<ol style="list-style-type: decimal">
+<li>The <strong>code editor</strong> in which you write your script. You can also show your tables from the working environment here. This panel will only appear when you have created a new file. When you have opened RStudio, the first thing you can do is start a new script by clicking File → New File → R Script.</li>
+<li>The <strong>R console</strong> in which your script is executed and where the results are shown.</li>
+<li><strong>Workspace and history</strong> contain the variables and objects you have created during this tutorial.</li>
+<li>In the <strong>plots and files</strong> panel, you can find ‘files’, ‘plots’, ‘list of packages’, ‘help’ and ‘viewer’.</li>
+</ol>
+<p>To find help, you can click ‘help’ and search for a certain topic. Alternatively, you can type on the R Console a questionmark and the name of the function, e.g.: <code>?read.table</code>. In the ‘help’ section you can search specific questions, which will direct you to an information page. If this does not satisfy what you were looking for, it is encouraged to search the internet, ask a fellow student, or a teaching assistant (in that order).</p>
+<p>This manual shows step by step what is expected of you to write in your script. You can copy-paste it, but it is better to write it yourself. You will see why this is so important in following tutorials in which we will write more complex scripts. Slight mistakes alter how your script works and it may not give the output you want. When you have written a script, you can press run or press <kbd>Ctrl</kbd>+<kbd>Enter</kbd>. The script is executed in the R console and R thus returns your script.</p>
+<hr />
+<p>R code is executed in the Console. The blue greater-than-sign (<span class="math inline">\(\color{blue}{&gt;}\)</span>) on the very last line of the console is a so-called command prompt and it indicates that R is ready to receive commands. If you enter an incomplete line of code, you instead get a blue plus sign (<span class="math inline">\(\color{blue}{+}\)</span>) prompt on the next line. This means R is expecting you to enter additional information to finish the incomplete code. You can stop this by clicking in the Console panel and pressing <kbd>Esc</kbd>.</p>
+<hr />
+</div>
+</div>
+<div id="r-calculations-and-assignments" class="section level2">
+<h2>2. R calculations and assignments</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QjBKGJxrkHw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
+</iframe>
+<p>Below starts a tutorial that teaches you all the basics you need to know to understand how RStudio works. From now on, everything in the grey area is what is expected of you to write in your own script. The line underneath starting with <code>[1]</code> will give you the expected answer. If you failed to provide the same answer, try to find what went wrong, google your problem or ask any of us for help. Excercises are displayed in <strong>bold</strong>.</p>
+<div id="simple-calculations" class="section level3">
+<h3>2.1 Simple calculations</h3>
+<p>We will start by practicing some more simple calculations below. <strong>Type the following in the console (the lower left panel):</strong></p>
+<pre class="r"><code>8 - 4</code></pre>
+<pre><code>[1] 4</code></pre>
+<pre class="r"><code>9 / 3 </code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>9 : 3</code></pre>
+<pre><code>[1] 9 8 7 6 5 4 3</code></pre>
+<p>The <code>-</code>, <code>/</code>, and <code>:</code> symbols are examples of operators. The operator <code>:</code> does not give the same outcome as the <code>/</code> operator. In RStudio the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Arithmetic">Arithmetic Operators</a> (like <code>/</code> and <code>+</code>) perform arithmetic on numbers or lists. The <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Colon">Colon Operator</a> returns a closed interval, in this example all the numbers between and including 9 and 3.</p>
+<p>A multiplication in RStudio is an <code>*</code> operator.</p>
+<pre class="r"><code>4 * 4</code></pre>
+<pre><code>[1] 16</code></pre>
+<p><strong>1. Now multiply 5 times 8</strong></p>
+<p>Some other calculations:</p>
+<pre class="r"><code>7 ^ 2</code></pre>
+<pre><code>[1] 49</code></pre>
+<pre class="r"><code>(10 + 5)  * 3 #everything within the parentheses will be executed first</code></pre>
+<pre><code>[1] 45</code></pre>
+<p>In R you can add notes by using the <code>#</code> and R will ignore this, but this could be useful for yourself to make some notes on parts where you did something wrong or to mark the beginning of a new part. It is very important to structure your script like this, because it helps you understand your scripts in the future and helps others to use and adapt your scripts as well. <code>#this is just a note and R will ignore it</code></p>
+</div>
+<div id="assigning-a-value-to-an-object" class="section level3">
+<h3>2.2 Assigning a value to an object</h3>
+<p><strong>2. What happens if you type the following in the code editor (upper left panel):</strong></p>
+<p><code>1 + 2</code> and press <kbd>Enter</kbd>.</p>
+<p><strong>3. What happens if you type:</strong></p>
+<p><code>1 + 2</code> and then press <kbd>Ctrl</kbd>+<kbd>Enter</kbd></p>
+<p>The outcome of your calculation will only appear in the R console if you run it. Now that we have covered some simple calculations, we can assign values to objects. This can be done using a left arrow operator: <code>&lt;-</code> (a less-than character &lt; followed by a minus character -). An object is simply the digital storage unit that stores a value. There are three ways to create an object, which you can try out below. <em>From now on no answers will be shown so therefore you have to write them down and correct them later on.</em></p>
+<pre class="r"><code>a &lt;- 3 #If you run this &#39;a &lt;- 3&#39; will appear in the R console. The object (variable) &#39;a&#39; now stores the value &#39;3&#39;. If you then type &#39;a&#39; in your script and run it your value will appear
+a</code></pre>
+<p>The object with value ‘3’ is now stored. The variable ‘a’ functions as a reference to this object.</p>
+<p>Note that you can also use an equal sign (=) or a right arrow (-&gt;), which you might encounter in code written by others and looks like this:</p>
+<pre class="r"><code>a = 3
+a</code></pre>
+<pre class="r"><code>3 -&gt; a #the arrow always points to the variable to store it properly
+a</code></pre>
+<p>It is very important to be consistent in the operator you use; choose one. For this course we will always use <code>&lt;-</code>.<br />
+You can see all of the objects you created and stored, in the <em>Workspace and history</em> panel, under the <em>Environment</em> tab.</p>
+<p>We can also do simple calculations with our newly formed variables:</p>
+<pre class="r"><code>a - 2</code></pre>
+<pre class="r"><code>a * 16</code></pre>
+<pre class="r"><code>a &lt;- 8
+a</code></pre>
+<p>Note, that it is possible to overwrite your variables. You can now see in your upper right panel that your value for ‘a’ has changed from ‘3’ to ‘8’. It is thus better to store different values under different objects, so you can use both ‘3’ and ‘8’ with a unique variable (for example ‘a’ and ‘b’).</p>
+<pre class="r"><code>b &lt;- 6 + 12
+b</code></pre>
+<p><strong>4. What do you think will be the answer to the following?</strong></p>
+<pre class="r"><code>a + b</code></pre>
+</div>
+</div>
+<div id="different-data-types" class="section level2">
+<h2>3 Different data types</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6el7mHX1_Ks" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
+</iframe>
+<p>There are different types of data, the most basic types are depicted in the table below.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Data type</th>
+<th>Literal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Logical</td>
+<td><code>TRUE</code> or <code>FALSE</code></td>
+</tr>
+<tr class="even">
+<td>Numeric</td>
+<td><code>1</code>, <code>2</code>, <code>3.5</code>, <code>-6</code>, <code>1.2e3</code></td>
+</tr>
+<tr class="odd">
+<td>Character</td>
+<td><code>"Name"</code>, <code>'Word'</code></td>
+</tr>
+</tbody>
+</table>
+<p>To see what kind of data type an object in R is, you can use the command <code>class()</code>. So, for example, if you run <code>class(TRUE)</code>, it will return <code>[1] "logical"</code>.</p>
+<div id="logical-data" class="section level3">
+<h3>3.1 Logical data</h3>
+<p>Logical data only has one of two possible values, often depicted as ‘TRUE’ or ‘FALSE’ (or ‘1’ and ‘0’). The logical data type tells you whether something is true or not. For example: you can ask R whether one value is greater than another value. When this is true, R will return ‘TRUE’. To make different comparisons, you can use the following relational and logical operators:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Operator</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>&lt;</code></td>
+<td>Less than</td>
+</tr>
+<tr class="even">
+<td><code>&gt;</code></td>
+<td>Greater than</td>
+</tr>
+<tr class="odd">
+<td><code>&lt;=</code></td>
+<td>Less than or equal to</td>
+</tr>
+<tr class="even">
+<td><code>&gt;=</code></td>
+<td>Greater than or equal to</td>
+</tr>
+<tr class="odd">
+<td><code>==</code></td>
+<td>Equal to</td>
+</tr>
+<tr class="even">
+<td><code>!=</code></td>
+<td>Not equal to</td>
+</tr>
+<tr class="odd">
+<td><code>&amp;</code>, <code>&amp;&amp;</code></td>
+<td>And</td>
+</tr>
+<tr class="even">
+<td><code>|</code>, <code>||</code></td>
+<td>Or</td>
+</tr>
+</tbody>
+</table>
+<p>The comparison operators (top six rows) are called the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Comparison">Relational Operators</a>. The operators ‘and’ and ‘or’ belong to the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Logic">Logical Operators</a>.</p>
+<p>The logic operators come in a shorter form (<code>&amp;</code>, <code>|</code>) and a longer form (<code>&amp;&amp;</code>, <code>||</code>). If you are using lists of data (e.g. a vector) in logic comparisons, you must know that there are important differences between them that can be found in the documentation. When in doubt, prefer the longer form. There are two additional logic operators: <code>!</code> is logical negation (<code>!FALSE == TRUE</code>) and <code>xor(x, y)</code> for the exclusive or (only x or y is true, but not both).</p>
+<p><strong>Try the following statements:</strong></p>
+<pre class="r"><code>1 &gt; 2 #This means that you want to check whether 1 is greater than (&gt;) 2, which is not the case and will return as FALSE.</code></pre>
+<pre class="r"><code>2 &gt; 1 #This means that you want to check whether 2 is greater than (&gt;) 1, which is correct.</code></pre>
+<pre class="r"><code>1 &lt; 2 #This means that you want to check whether 1 is smaller than (&lt;) 2, which is correct.</code></pre>
+<pre class="r"><code>1 &lt;= 2 #This means that you want to check whether 1 is smaller than or equal to 2, which is correct.</code></pre>
+<pre class="r"><code>2 &lt;= 2 #This returns as TRUE because &#39;2&#39; is equal to &#39;2&#39;.</code></pre>
+<pre class="r"><code>2 &gt;= 3 #This means that you want to check whether 2 is greater than or equal to 3, which is incorrect because 2 is smaller than 3.</code></pre>
+<p>We can then ask R the same questions as before but now using a predefined variable ‘x’.</p>
+<pre class="r"><code>x &lt;- 5
+x &gt; 4</code></pre>
+<p>Because ‘x’ now stands for ‘5’ the question is whether ‘5’ is greater than ‘4’ which is correct, and R will therefore return TRUE.</p>
+<p>To check whether x is exactly 5, you can use:</p>
+<pre class="r"><code>x == 5</code></pre>
+<p>While <code>x = 5</code> is a command to assign a value to a variable, <code>x == 5</code> is a command to compare the two objects.</p>
+<p><strong>5. What do you expect to return when you use the following command?</strong></p>
+<pre class="r"><code>x == 4</code></pre>
+<p>We can also do the opposite and ask R if ‘x’ is not equal to ‘4’ with !=.</p>
+<pre class="r"><code>x != 4</code></pre>
+<pre class="r"><code>x != 5</code></pre>
+<p>It is very important to place spaces between the objects and operators since <code>x&lt;-5</code> can mean that you want to assign ‘5’ to ‘x’ but if you do not space it properly, it says that ‘x’ is smaller than ‘-5’:</p>
+<pre class="r"><code>x &lt; -5</code></pre>
+</div>
+<div id="numeric-data" class="section level3">
+<h3>3.2 Numeric data</h3>
+<p>Examples of numeric data include actual numbers such as 1, 2, 3 and 3.5. If you execute <code>class(3.5)</code> R will return <code>[1] "numeric"</code>. The <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/class">class function</a> will tell you the datatype of your object. Notice here that you need to be very careful with your writing, if you commanded R to return <code>class(3,5)</code>, it will return an error, because you ask to return the class of both ‘3’ and ‘5’, while it can only assess the class of one object at a time. If you use decimals you must indicate that with a period and not with a comma. R uses a period as decimal separator. A subclass of numeric data is the data type ‘integer’. Integers are “whole” numbers, for example 1, 163, and -15. Fractions, such as 1/2, 9.13, and the square root of 2, are of the type numeric, but not of integer.</p>
+<p>You may encounter somewhat more exotic number formatting in real life code. For completeness, we are showing them here as well. First the <a href="https://en.wikipedia.org/wiki/Scientific_notation">scientific notation</a>, in which you would write 1200 as 1.2×10<sup>3</sup> and in R this is:</p>
+<pre class="r"><code>1.2e3</code></pre>
+<pre><code>[1] 1200</code></pre>
+</div>
+<div id="character-data" class="section level3">
+<h3>3.3 Character data</h3>
+<p>The data type ‘character’ is used for text. An example of character data would be your name or a variable X. Character data is presented between quotes, for example “Thomas”. <code>class("Thomas")</code> and <code>class('Thomas')</code> will return <code>[1]"character"</code>. If you forget the quotation marks, R interprets <code>Thomas</code> as an object. Since you didn’t create an object called Thomas, R will return an error messages for <code>class(Thomas)</code>. You can see that the color of the text in your script changes according to its class. So, you will notice when you do start a character string (with <code>"</code>), but forget to close it with another quotation mark.</p>
+<p>Note that you have to use the plain quotations marks <code>'</code> or <code>"</code>. The nice quotation marks (‘ ’ or “ ”) that Word or other editors use will cause an error in R.</p>
+</div>
+</div>
+<div id="vectors" class="section level2">
+<h2>4 Vectors</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jQJL_X8WEn4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
+</iframe>
+<p>A vector is a sequence of the same data type. To make a vector, you can use the logic, numeric or character data. The vector starts with c() followed by the data sequence. The <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/c">c() function</a> is used to combine different elements. You separate the elements in a vector with commas.</p>
+<pre class="r"><code>c(1, 2, 3, 4)</code></pre>
+<p>Now you created a vector but when you want to continue with these numbers, R cannot recall them. Therefore, we must assign this vector to an object.</p>
+<pre class="r"><code>vector1 &lt;- c(1, 2, 3, 4)
+vector1</code></pre>
+<p>Now you can use <code>vector1</code> to use the numeric data from your vector.</p>
+<pre class="r"><code>vector2 &lt;- c(2, 3, 4, 5)
+vector2</code></pre>
+<p>You can do some simple calculations with two different vectors:</p>
+<pre class="r"><code>vector1 + vector2 </code></pre>
+<p>Or</p>
+<pre class="r"><code>c(1, 2, 3, 4) + c(2, 3, 4, 5)</code></pre>
+<p>You will notice that the first element of the first vector will be added to the first element of the second vector (1+2), the second to the second (2+3), and so on, to return a new vector (3,5,7,9). You can also apply one type of calculation to every element in the vector:</p>
+<pre class="r"><code>vector1 + 3 #adding three to every element in vector1.</code></pre>
+<pre class="r"><code>vector2 * 2 #multiplying every element in vector2 by two.</code></pre>
+<p><strong>6. Write a line of code to substract <code>4</code> from each element of <code>vector1</code>.</strong></p>
+<p><strong>7. Write code to divide each element of <code>vector2</code> by <code>5</code>.</strong></p>
+<div id="vectors-using-a-colon" class="section level3">
+<h3>4.1 Vectors using a colon</h3>
+<p>You can also make vectors with the sequences of integers (“whole” numbers) using the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/Colon">Colon Operator</a> (<code>:</code>):</p>
+<pre class="r"><code>vector3 &lt;- 1:10
+vector3</code></pre>
+<p>The colon can be used to display all datapoints between 1 and 10. We do not need to use the c() function to make such a numeric vector.</p>
+<pre class="r"><code>vector4 &lt;- 10:1
+vector4</code></pre>
+<p><strong>8. Try making a very large vector (e.g. ranging from 13 to 524) and a vector of negative values (e.g. ranging from -20 to -50; or -10 to 8).</strong></p>
+</div>
+<div id="vectors-using-functions-seq-and-rep" class="section level3">
+<h3>4.2 Vectors using functions seq() and rep()</h3>
+<p>Vectors can also be created using <code>seq()</code> (sequence) or <code>rep()</code> (repeat) functions. We have already used some simple functions before, for example the <code>c()</code> command that we used to create vectors. Each function contains one or multiple arguments. These arguments are stated between the brackets of the function. The <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/seq">sequence generation function</a> <code>seq()</code> creates a regular sequence:</p>
+<pre class="r"><code>seq1 &lt;- seq(from = 1, to = 5, by = 0.5) 
+seq1</code></pre>
+<p>As you can see, seq1 is a vector which starts with 1 and then follows up to 5 with steps of 0.5. ‘From’, ‘to’, and ‘by’ are the so-called arguments of the function. For many functions there is a standard order to arguments in a function, so you can use them without giving the names of the arguments:</p>
+<pre class="r"><code>seq2 &lt;- seq(1, 5, 0.5)
+seq2</code></pre>
+<p>seq2 is the same as seq1, because it is predefined that the first argument given is ‘from’, the second is ‘to’, and the third is ‘by’.</p>
+<p>If you can’t remember which arguments to use in a function, you can use the ‘Help’ pages in RStudio. You can do this by clicking on ‘Help’ in the ‘Plots and files’ panel and search with the search bar, or you can use the command <code>help(functionname)</code> or <code>?functionname</code>. An explanation of how to read the ‘Help’ pane can be found <a href="https://robwschlegel.github.io/Intro_R_Workshop/workflow.html#help">here</a>. An example:</p>
+<pre class="r"><code>?seq</code></pre>
+<p><img src="COO1/Help-seq.png" /></p>
+<p>Another function to create a vector with numerics is the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/rep">replicate function</a>: <code>rep(x = , times = )</code>, which repeats the argument you provide for ‘x’ as many times as the integer you provide for ‘times’:</p>
+<pre class="r"><code>rep1 &lt;- rep(1, 4) #This is a command to repeat the value 1 four times
+rep1</code></pre>
+<pre class="r"><code>rep2 &lt;- rep(1:3, 4) #This is a command to repeats the values 1 to 3 four times
+rep2</code></pre>
+</div>
+<div id="vectors-using-rnorm-and-runif" class="section level3">
+<h3>4.3 Vectors using rnorm() and runif()</h3>
+<p>Vectors can be also made with random values using the rnorm() and runif() functions. <code>rnorm()</code> draws numbers from a <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/Normal">normal distribution</a> with a mean of 0 and a standard deviation of 1. <code>runif()</code> draws numbers from a <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/Uniform">uniform distribution</a> in the interval (0, 1).</p>
+<pre class="r"><code>x &lt;- rnorm(3) #This is a command to return 3 values from a normal distribution
+x</code></pre>
+<pre class="r"><code>y &lt;- rnorm(8) 
+y</code></pre>
+<pre class="r"><code>z &lt;- runif(5) #Uniform random variables in the interval (0, 1)
+z</code></pre>
+</div>
+<div id="character-vectors" class="section level3">
+<h3>4.4 Character vectors</h3>
+<p>You can also make a vector with character data as follows:</p>
+<pre class="r"><code>Countries &lt;- c(&quot;The Netherlands&quot;, &quot;Belgium&quot;, &quot;France&quot;, &quot;Germany&quot;)
+Countries</code></pre>
+<pre class="r"><code>Inhabitants &lt;- c(17084719, 11491346, 62814233, 80594017)
+Inhabitants</code></pre>
+<p>If you want to determine the number of elements that are present in a vector/object, you can use the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/length">length(x = ) function</a>, in which you use the vector name as the single argument.<br />
+<strong>9. Which command returns the number of values in the ‘Inhabitants’ vector?</strong></p>
+</div>
+</div>
+<div id="matrices" class="section level2">
+<h2>5. Matrices</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vQA1urwadns" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
+</iframe>
+<p>A matrix is like a vector because it is also a collection of data elements, but is displayed in rows and columns and is therefore called two-dimensional. As with a vector, a matrix can only contain one type of data (logical, numeric or character). A matrix can be made using the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/matrix"><code>matrix()</code> function</a>, a vector with values, and at least one matrix-dimension. In the next example a matrix will be formed from</p>
+<ul>
+<li>The values 1 to 6;</li>
+<li>‘nr’ indicates the number of rows that we want, in this case 2;</li>
+<li>‘nc’ indicates the number of columns that we want, in this case 3.</li>
+</ul>
+<div id="creating-matrices" class="section level3">
+<h3>5.1 Creating matrices</h3>
+<pre class="r"><code>matrix1 &lt;- matrix(1:6, nr = 2, nc = 3) #A matrix with values 1 to 6 distributed over 2 rows and 3 columns
+matrix1</code></pre>
+<pre class="r"><code>matrix2 &lt;- matrix(1:6, nr = 3, nc = 2) #A matrix with values 1 to 6 now distributed over 3 rows and 2 columns
+matrix2</code></pre>
+<p>You can also create separate vectors and combine the vectors to a matrix using <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/cbind">the functions <code>rbind()</code> or <code>cbind()</code></a>. cbind is short for columnbind in which the vectors you provided are put into columns of a matrix. rbind is short for rowbind and takes the vectors you give it and puts them together in rows of a matrix. <strong>Try out this example:</strong></p>
+<pre class="r"><code>a &lt;- c(1, 2, 3) #vector 1
+a</code></pre>
+<pre class="r"><code>b &lt;- c(4, 5, 6) #vector 2
+b</code></pre>
+<pre class="r"><code>c &lt;- c(7, 8, 9) #vector 3
+c</code></pre>
+<pre class="r"><code>B &lt;- rbind(a, b, c) #combining vector 1, 2 and 3 into rows of a new matrix called B. Note that the capital letter &#39;B&#39; differs from the lower case &#39;b&#39;. 
+B</code></pre>
+<pre class="r"><code>C &lt;- cbind(a, b, c) #combining vector 1, 2 and 3 into columns of a new matrix called C.
+C</code></pre>
+<pre class="r"><code>cbind(1:2, 1:2) #columns 1 to 2 of values 1 to 2</code></pre>
+<pre class="r"><code>rbind(1:2, 1:2) #rows 1 to 2 of values 1 to 2</code></pre>
+<p><strong>10. Create the following matrix using <code>cbind()</code>. Next, create the same matrix with <code>rbind()</code>:</strong></p>
+<pre><code>     [,1] [,2]
+[1,]    2    7
+[2,]    3   11
+[3,]    5   13</code></pre>
+<p>You can also use cbind() and rbind() to add rows and columns to an existing matrix.</p>
+<pre class="r"><code>cbind(b, 7:9) #we now add one extra column with the values 7 to 9</code></pre>
+</div>
+</div>
+<div id="lists" class="section level2">
+<h2>6. Lists</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9OTxzQfZwHs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
+</iframe>
+<p>You can use lists to store different data types in one data structure. Lists can contain vectors and matrices but also information such as dates. When you store information in a vector and call the whole vector, R will return everything in that vector in the order you gave it. When you store information in a list and call the whole list, R will return each element separately.</p>
+<div id="creating-lists" class="section level3">
+<h3>6.1 Creating lists</h3>
+<pre class="r"><code>a &lt;- c(&quot;hello&quot;, &quot;how&quot;, &quot;are&quot;, &quot;you&quot;, &quot;?&quot;)
+a</code></pre>
+<p>Or using the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/list">list() function</a>:</p>
+<pre class="r"><code>list1 &lt;- list(&quot;hello&quot;, &quot;how&quot;, &quot;are&quot;, &quot;you&quot;, &quot;?&quot;)
+list1</code></pre>
+</div>
+</div>
+<div id="data-frames" class="section level2">
+<h2>7. Data frames</h2>
+<p>A data frame is like a matrix because it also contains rows and columns. A data frame is also like lists because it can store different types of data at once. A data frame is a mix between the two. In a data frame, rows correspond with observations (people for example) and columns correspond with variables (such as age, name and whether they are in a relationship or not). Each row can contain a different type of data but the data in the columns should be of the same type (age = numeric, name = character, relationship status = logical). To make a data frame we use the <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame"><code>data.frame()</code> function</a>. Before we make a data frame, we need to make different vectors for each row in our data frame.</p>
+<div id="creating-data-frames" class="section level3">
+<h3>7.1 Creating data frames</h3>
+<pre class="r"><code>name &lt;- c(&quot;Tom&quot;, &quot;Nadia&quot;, &quot;Anna&quot;, &quot;Inge&quot;) 
+age &lt;- c(24, 20, 21, 23)
+relationship &lt;- c(TRUE, FALSE, TRUE, TRUE) #in a dataset the question yes or no is marked as TRUE or FALSE
+people &lt;- data.frame(name, age, relationship) #placing our vectors into a data frame 
+people</code></pre>
+<p>Note that the columns have the names of the vectors (name, age, relationship). We can change these. We can use the <code>colnames()</code> function to do so. For example, if we want to change the names because we gave our vectors names without capital letters, we can do this with the following command. <em>Note that the order in which you change the names matters.</em></p>
+<pre class="r"><code>colnames(people) &lt;- c(&quot;Name&quot;, &quot;Age&quot;, &quot;Relationship&quot;)
+people</code></pre>
+<p>Within RStudio you can view your data frame by clicking on the dataframe in the upper right panel (Environment). You can also use a command to view the dataframe:</p>
+<pre class="r"><code>View(people) #note that the V is a capital letter</code></pre>
+<p><img src="COO1/View(people).png" /></p>
+</div>
+</div>
+<div id="factors" class="section level2">
+<h2>8 Factors</h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bQCMCYVYvYE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
+</iframe>
+<p>A <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/factor">factor</a> is another way to store data. Factors store so-called categorical variables. A categorical variable can belong to a limited number of categories, and thus belongs to a particular finite group. Examples of categorical variables are countries, gender, and occupation. A factor is a data structure that stores categorical data. Factors can be ordered or unordered and are an important class for statistical analysis and for plotting. Once created, factors can only contain a pre-defined set of values, known as levels. By default, R always sorts levels in alphabetical order. Using the example of a survey in which respondents are asked about their blood type, we will illustrate how factors can be used. There are four different blood types: A, AB, B and O. These blood types are called <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/levels">levels</a>. So, we now have four levels (A=1, AB=2, B=3 and O=4). We can use these when we survey people for their blood types. In this example we surveyed 8 people in which two had blood type A, three had AB, two had B and one had O.</p>
+<div id="creating-factors" class="section level3">
+<h3>8.1 Creating factors</h3>
+<p>We first create a vector containing the answers of the respondents:</p>
+<pre class="r"><code>Bloodtype &lt;- c(&quot;A&quot;, &quot;AB&quot;, &quot;A&quot;, &quot;B&quot;, &quot;AB&quot;, &quot;B&quot;, &quot;O&quot;, &quot;AB&quot;) 
+Bloodtype</code></pre>
+<p>By adding the “quotes”, we make Bloodtype a vector with characters. You can confirm that by calling class(Bloodtype).</p>
+<pre class="r"><code>class(Bloodtype)</code></pre>
+<p>We now need to transform this character type data to a factor:</p>
+<pre class="r"><code>Bloodtype &lt;- factor(Bloodtype)
+Bloodtype</code></pre>
+<p>Here we can see that R returns the levels in alphabetical order.</p>
+<p>When comparing other values in the survey between people with the different blood types, the factor makes it easy to split the respondents based on their blood type. You could for example compare the mean age of people with bloodtype “A” with the mean age of all respondents.</p>
+</div>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>In this COO, you have learned to work in RStudio, to perform simple calculations and you have been introduced to the most important data types of R. The questions below might help you to keep the overview for the next COOs:</p>
+<ol style="list-style-type: decimal">
+<li>How do you assign a variable?</li>
+<li>What are logical, numeric, character and integer data types?</li>
+<li>Which command can you use to check the data type of a variable?</li>
+<li>What are vectors, matrices, lists, data frames and factors? And what types of data can you store in them?</li>
+<li>How do you create a vector? How do you create a regular sequence? How do you create a sequence of repeats?</li>
+<li>How do you create a matrix?</li>
+<li>How do you create a list?</li>
+<li>How do you create a dataframe? How do you change the column names of a data frame?</li>
+<li>How do you create a factor?</li>
+</ol>
+<div id="additional-exercises" class="section level3">
+<h3>Additional exercises</h3>
+<p><strong>A1. Recreate this next vector and store it in a variable <code>species</code></strong></p>
+<pre><code>[1] &quot;human&quot;       &quot;fruit fly&quot;   &quot;rat&quot;         &quot;thale cress&quot;</code></pre>
+<p><strong>A2. What type is the variable <code>species</code>? What function can you use to determine the type of an object? Use this function to check your answer.</strong></p>
+<p><strong>A3. Can you recreate this next vector using vector functions and operations, and store it in a variable <code>numbers</code>?</strong></p>
+<pre><code>[1] 499 599 699 799</code></pre>
+<p><strong>A4. Can you recreate this next data.frame? What are the types of each column? Can you make sure the <code>kingdom</code> column is a factor?</strong></p>
+<pre><code>      species numbers  kingdom
+1       human     499 Animalia
+2   fruit fly     599 Animalia
+3         rat     699 Animalia
+4 thale cress     799  Plantae</code></pre>
+<p><strong>A5. Rename the three columns to respectively <code>type</code>, <code>count</code>, <code>category</code>.</strong></p>
+<pre><code>         type count category
+1       human   499 Animalia
+2   fruit fly   599 Animalia
+3         rat   699 Animalia
+4 thale cress   799  Plantae</code></pre>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

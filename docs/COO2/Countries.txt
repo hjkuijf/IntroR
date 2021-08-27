@@ -1,0 +1,8 @@
+Countries,Capital,Inhabitants
+The Netherlands,Amsterdam,17084719
+Belgium,Brussels,11491346
+France,Paris,62814233
+Germany,Berlin,80594017
+Spain,Madrid,48958159
+Greece,Athene,10758477
+Italy,Rome,60359546
