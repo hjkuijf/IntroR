@@ -1,5 +1,10 @@
 ---
 title: "COO1 - Introduction R - basics"
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
 author: "Hugo Kuijf"
 date: "6 September 2021"
 output:
@@ -62,7 +67,7 @@ Throughout this and future COOs, we assume you work on Windows. We will demonstr
 
 ### RStudio contains 4 panels:
 
-![](Panels_COO1.png) 
+![](COO1/Panels_COO1.png) 
 
 1. The **code editor** in which you write your script. You can also show your tables from the working environment here. This panel will only appear when you have created a new file. When you have opened RStudio, the first thing you can do is start a new script by clicking File &rarr; New File &rarr; R Script. 
 2. The **R console** in which your script is executed and where the results are shown.
@@ -340,7 +345,7 @@ An example:
 ```{r eval=FALSE}
 ?seq
 ```
-![](Help-seq.png)
+![](COO1/Help-seq.png)
 
 Another function to create a vector with numerics is the [replicate function](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/rep): `rep(x = , times = )`, which repeats the argument you provide for 'x' as many times as the integer you provide for 'times':
 ```{r eval=FALSE} 
@@ -479,7 +484,7 @@ Within RStudio you can view your data frame by clicking on the dataframe in the 
 ```{r eval=FALSE} 
 View(people) #note that the V is a capital letter
 ```
-![](View(people).png) 
+![](COO1/View(people).png) 
 
 ## 8	Factors
 <iframe width="560" height="315" src="https://www.youtube.com/embed/bQCMCYVYvYE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
