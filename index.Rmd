@@ -2,4 +2,22 @@
 title: "Intro R"
 ---
 
-Welcome.
+Dear students, dear visitors,
+
+Welcome to the course site of Intro R! Intro R is part of the course ‘[*Onderzoeksmethoden*](https://uubmw.nl/onderzoeksmethoden)’, which is taught within the second year of the Bachelor Biomedical Sciences, Utrecht University. 
+
+Within the Biomedical Sciences, working with big data sets becomes more and more important. Therefore, the knowledge and skills how to handle data sets and how to perform statistical analyses is an important part of biomedical education. In this Intro R, course you’ll learn the basics of R in RStudio, the integrated development environment for R. 
+
+Following the different COO’s (computer modules), you will install R and Rstudio and get acquainted with the basics of programming in R. 
+
+- [COO 1](COO1.html) focuses on installing R and Rstudio, using R as a calculator, and the various objects that can be made and used in R.
+- In [COO 2](COO2.html), you’ll learn how to import data, how to select data, how to sort and order data, and lastly how to handle missing values.
+- In [COO 3](COO3.html), the main focus is on visualization of data with R. 
+
+Learning R can be difficult in the beginning, but also very exciting when you keep trying and succeed. 
+
+Good luck!
+
+On behalf of all involved teachers,
+
+[Hugo Kuijf](https://www.isi.uu.nl/people/hugo-kuijf/)
