@@ -15,6 +15,8 @@ navbar:
       href: COO4.html
     - text: "Statistiek 1"
       href: Werkcollege_statistiek_Thema_1.html
+    - text: "Statistiek 2"
+      href: Werkcollege_statistiek_Thema_2.html
 output:
   html_document:
     theme: cosmo
