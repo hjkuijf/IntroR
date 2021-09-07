@@ -11,6 +11,8 @@ navbar:
       href: COO2.html
     - text: "COO3"
       href: COO3.html
+    - text: "COO4"
+      href: COO4.html
 output:
   html_document:
     theme: cosmo

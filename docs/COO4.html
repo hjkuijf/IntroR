@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Rebecca Stellato" />
+
+
+<title>COO4: Descriptive Statistics in R</title>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Intro R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="COO1.html">COO1</a>
+</li>
+<li>
+  <a href="COO2.html">COO2</a>
+</li>
+<li>
+  <a href="COO3.html">COO3</a>
+</li>
+<li>
+  <a href="COO4.html">COO4</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">COO4: Descriptive Statistics in R</h1>
+<h4 class="author">Rebecca Stellato</h4>
+
+</div>
+
+
+<p>In this computer lab, you will learn how to describe a sample using graphs and descriptive statistics. We concentrate here on continuous outcome variables, looking at one group, two or more groups, and the relation between a continuous outcome variable and a continuous explanatory variable (determinant).<br />
+In a later COO you will learn how to describe a categorical variable, and associations between two categorical variables.</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Preparation</li>
+<li>Descriptive statistics, continuous outcome (step-by-step)</li>
+</ol>
+<ul>
+<li>1.1 Describing 1 group</li>
+<li>1.2 Describing &gt; 1 group</li>
+<li>1.3 Aside: transformations</li>
+<li>1.4 Relation to 1 continuous predictor</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Practice what you’ve learned</li>
+</ol>
+<p><strong>You are asked to answer a number of questions (in bold and numbered throughout).</strong></p>
+<div id="preparation" class="section level2">
+<h2>0. Preparation</h2>
+<p>For the following exercises, we will use two datasets: an SPSS dataset (<a href="COO4/BMISBP.sav">BMISBP.sav</a>), which you need to download and save locally, and a built-in dataset. The latter is a subset of the National Health and Nutrition Examination Survey (NHANES). The dataset is available in the <code>NHANES</code> package, and the data frame is also called <code>NHANES</code>. The first time you use the package, you will need to install it (either via the RStudio menu: <code>Tools-Install Packages</code>, or with the command <code>install.packages('NHANES')</code>). Then load the package (this you need to do every time you restart R/Rstudio), read in the dataframe, and get some information on the dataframe:</p>
+<pre class="r"><code>library(NHANES)
+data(NHANES)
+## help(&quot;NHANES&quot;)</code></pre>
+<p><strong>Question 1. What type of study design is this?</strong></p>
+<p>We’ll use the function <code>dim()</code> (dimensions) to see how many people are in the dataset provided, and how many variables.</p>
+<pre class="r"><code>dim(NHANES)</code></pre>
+<pre><code>## [1] 10000    76</code></pre>
+<p>The dataset contains 76 variables from 10000 participants. To keep things simple, we will concentrate on only the second survey (2011-2012), and use only the adults in the sample. Make a new dataframe <code>d</code>, containing this selection:</p>
+<pre class="r"><code>d &lt;- data.frame(NHANES[NHANES$SurveyYr==&quot;2011_12&quot; &amp; NHANES$Age&gt;=18,])
+dim(d)</code></pre>
+<pre><code>## [1] 3707   76</code></pre>
+<p>So we continue with the 3707 adult participants.</p>
+</div>
+<div id="descriptive-statistics-for-a-continuous-outcome-step-by-step" class="section level2">
+<h2>1. Descriptive statistics for a continuous outcome, step by step</h2>
+<p>We will start by looking at systolic blood pressure of adults in the sample.</p>
+<div id="describing-1-group" class="section level3">
+<h3>1.1 Describing 1 group</h3>
+<p>Make a histogram and boxplot of systolic blood pressure (SBP):</p>
+<pre class="r"><code>hist(d$BPSysAve, main=&quot;Systolic Blood Pressure US Adults&quot;,
+        xlab=&quot;Systolic Blood Pressure (mmHg)&quot;)</code></pre>
+<p><img src="COO4_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>boxplot(d$BPSysAve, main=&quot;Systolic Blood Pressure US Adults&quot;,
+        ylab=&quot;Systolic Blood Pressure (mmHg)&quot;)</code></pre>
+<p><img src="COO4_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p><strong>Question 2. Describe the shape of the distribution of SBP. Which descriptive statistics would you prefer for the location and variation (spread)?</strong></p>
+<p>Before continuing, see if you can read off the median SBP in the sample. What are the first and third quartiles, and what is the interquartile range? Can you guess (approximately) what the mean will be? And the standard deviation?</p>
+<p>Now we’ll check our guesses. You’ve seen several of the functions (mean, median, sd) earlier. <code>IQR()</code> is the interquartile range. Do you understand the <code>quantile</code> function? If not, try <code>help("quantile")</code>.</p>
+<pre class="r"><code>median(d$BPSysAve, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 119</code></pre>
+<pre class="r"><code>mean(d$BPSysAve, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 121.458</code></pre>
+<pre class="r"><code>quantile(d$BPSysAve, probs=c(0.25,0.75), na.rm=TRUE)</code></pre>
+<pre><code>## 25% 75% 
+## 110 130</code></pre>
+<pre class="r"><code>IQR(d$BPSysAve, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 20</code></pre>
+<pre class="r"><code>sd(d$BPSysAve, na.rm = TRUE)</code></pre>
+<pre><code>## [1] 17.1919</code></pre>
+<p>How do your guesses compare to the estimates above?</p>
+<p>Getting all those statistics took a lot of lines of code. Fortunately, someone wrote a nice function to get all the important descriptive statistics for a variable, either for everyone in the dataset, or stratified (split up) by a factor (grouping) variable. If you haven’t already used it, you’ll have to <strong>first install the <code>psych</code> package</strong>. The function we want is <code>describe</code>. Note that we use the <code>skew=FALSE</code> option to repress some of the default output, and the <code>quant</code> and <code>IQR</code> options to get some output we do want.</p>
+<pre class="r"><code>library(psych)
+describe(d$BPSysAve, na.rm=TRUE, skew=FALSE, quant=c(0.25, 0.5, 0.75), IQR=TRUE)</code></pre>
+<pre><code>##   vars    n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
+## 1    1 3583 121.46 17.19  81 221   140 0.29  20   110  119   130</code></pre>
+<p>Let’s now take a look at the distribution of testosterone in the sample.</p>
+<pre class="r"><code>hist(d$Testosterone, main=&quot;Testosterone Level US Adults&quot;,
+        xlab=&quot;Testosterone (ng/dL)&quot;)
+boxplot(d$Testosterone, main=&quot;Testosterone Level US Adults&quot;,
+        ylab=&quot;Testosterone (ng/dL)&quot;)</code></pre>
+<p><img src="COO4_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><strong>Question 3. Describe what you see here. Can you explain the strange distribution? What have we done wrong? How could we fix the problem?</strong></p>
+</div>
+<div id="describing-1-group-1" class="section level3">
+<h3>1.2 Describing &gt; 1 group</h3>
+<p>Let’s compare smokers, non-smokers and former smokers on a few variables. Since the variable SmokeNow was only asked of people who had ever smoked more than 100 cigarettes (Smoke100), we will first need to create a new variable. (Note: there are many ways to create new variables in R, this is one way.)</p>
+<pre class="r"><code>d$SmokStat[d$Smoke100 == &quot;No&quot;] &lt;- &quot;Never&quot;
+d$SmokStat[d$Smoke100 == &quot;Yes&quot; &amp; d$SmokeNow == &quot;No&quot;] &lt;- &quot;Former&quot;
+d$SmokStat[d$Smoke100 == &quot;Yes&quot; &amp; d$SmokeNow == &quot;Yes&quot;] &lt;- &quot;Current&quot;</code></pre>
+<p>When you’ve created a new variable from existing variables, always take a moment to check that the coding worked!</p>
+<pre class="r"><code>table(d$Smoke100, useNA = &quot;always&quot;)
+table(d$SmokStat, useNA = &quot;always&quot;)
+table(d$Smoke100,d$SmokeNow,d$SmokStat, useNA = &quot;always&quot;)</code></pre>
+<p>There were 2027 people who never smoked more than 100 cigarettes, and 1560 who did. Of those, 698 answer yes to SmokeNow, and 862 say no. 120 people did not respond to the question about ever smoking, and those are missing all 3 smoking variables. Can you identify all those numbers from the above tables?</p>
+<p>Now let’s compare these three groups on a blood pressure. Does smoking increase your systolic blood pressure (SBP)? Do former smokers have higher SBP than non-smokers? Examine the relation between smoking status and the average of several systolic blood pressure readings (<code>BPSysAve</code>), first with side-by-side boxplots.</p>
+<pre class="r"><code>boxplot(d$BPSysAve~d$SmokStat, 
+        main=&quot;Systolic Blood Pressure US Adults by Smoking Status&quot;,
+        ylab=&quot;Systolic Blood Pressure (mmHg)&quot;)</code></pre>
+<p><img src="COO4_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>What is the shape of the distribution for each of the groups? Let’s get the descriptive statistics for the three groups. We’ll start by using base R functions. First we’ll get means for each group using selections:</p>
+<pre class="r"><code>mean(d[d$SmokStat==&quot;Never&quot;, c(&quot;BPSysAve&quot;)], na.rm = TRUE)</code></pre>
+<pre><code>## [1] 120.1813</code></pre>
+<pre class="r"><code>mean(d[d$SmokStat==&quot;Former&quot;, c(&quot;BPSysAve&quot;)], na.rm = TRUE)</code></pre>
+<pre><code>## [1] 125.2447</code></pre>
+<pre class="r"><code>mean(d[d$SmokStat==&quot;Current&quot;, c(&quot;BPSysAve&quot;)], na.rm = TRUE)</code></pre>
+<pre><code>## [1] 121.7299</code></pre>
+<p>Okay, that’s going to take too long! Let’s use the tapply function for the median, SD and IQR:</p>
+<pre class="r"><code>tapply(d$BPSysAve,d$SmokStat,median,na.rm=TRUE)</code></pre>
+<pre><code>## Current  Former   Never 
+##   119.0   122.5   119.0</code></pre>
+<pre class="r"><code>tapply(d$BPSysAve,d$SmokStat,sd,na.rm=TRUE)</code></pre>
+<pre><code>##  Current   Former    Never 
+## 17.94236 17.95815 16.51434</code></pre>
+<pre class="r"><code>tapply(d$BPSysAve,d$SmokStat,IQR,na.rm=TRUE)</code></pre>
+<pre><code>## Current  Former   Never 
+##      18      22      20</code></pre>
+<p>We can get descriptive statistics split up by a grouping variable even faster by using the <code>describeBy</code> function from the <code>psych</code> package. We use the same options here as above with the <code>describe</code> function.</p>
+<pre class="r"><code>describeBy(d$BPSysAve, group=d$SmokStat, na.rm=TRUE, skew=FALSE, quant=c(0.25, 0.5, 0.75), IQR=TRUE)</code></pre>
+<pre><code>## 
+##  Descriptive statistics by group 
+## group: Current
+##   vars   n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
+## 1    1 670 121.73 17.94  81 221   140 0.69  18   111  119   129
+## ------------------------------------------------------------------------------ 
+## group: Former
+##   vars   n   mean    sd min max range   se IQR Q0.25  Q0.5 Q0.75
+## 1    1 846 125.24 17.96  85 217   132 0.62  22   113 122.5   135
+## ------------------------------------------------------------------------------ 
+## group: Never
+##   vars    n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
+## 1    1 1953 120.18 16.51  82 209   127 0.37  20   109  119   129</code></pre>
+<p>In this way, we get all the usual descriptive statitics for SBP for each of the groups separately.</p>
+</div>
+<div id="aside-transformations" class="section level3">
+<h3>1.3 Aside: transformations</h3>
+<p>Earlier in the course you read about transformations of variables. In the NHANES dataset, HDL cholesterol was reported in mmol/L. This is the SI unit, and also the unit used to report HDL cholesterol in many countries, including the Netherlands. In the US, however, the standard units are mg/dL. The conversion factor from mmol/L to mg/dL is 38.61004. Given the following descriptive statistics for HDL cholesterol in mmol/L, can you translate the mean, median, standard deviation and IQR to mg/dL for an American physician?</p>
+<pre><code>##   vars    n mean   sd  min   max range   se IQR Q0.25 Q0.5 Q0.75
+## 1    1 3500    5 1.06 1.53 12.28 10.75 0.02 1.4  4.24 4.91  5.64</code></pre>
+<p>Now let’s check our answers by making a new variable, and getting the descriptive statistics for this new variable:</p>
+<pre class="r"><code>d$TotCholmgdl &lt;- d$TotChol*38.61004
+describe(d$TotCholmgdl, na.rm=TRUE, skew=FALSE, quant=c(0.25, 0.5, 0.75), IQR=TRUE)</code></pre>
+<pre><code>##   vars    n   mean    sd   min    max  range   se   IQR  Q0.25   Q0.5  Q0.75
+## 1    1 3500 193.01 40.79 59.07 474.13 415.06 0.69 54.05 163.71 189.58 217.76</code></pre>
+<p>Since all of the statistics we’re examining (mean, median, sd, IQR) are in the same units as the variable itself, we can multiply the descriptive statistics of <code>TotChol</code> to get the descriptive statistics of <code>TotCholmgdl</code>. Though of course making the new variable and asking for its descriptives is easier.</p>
+<p>We also learned that certain transformations can help us with skewed variables. Consider, again, HDL cholesterol. Now we’ll look at <strong>direct</strong> HDL cholesterol, stored in the variable <code>DirectChol</code>.</p>
+<pre class="r"><code>hist(d$DirectChol)</code></pre>
+<p><img src="COO4_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>As with many other lab/physical measures variables we’ve looked at, this variable is also right-skewed. Later in the course we’ll hear more about why, but often it is useful in statitics to have (more or less) normally distributed outcome variables. A common transformation in biomedical statistics is the log transformation. When statisticians say “log transformation”, we nearly always mean the “natural log transformation” (ln), but log<sub>10</sub>, log<sub>2</sub> or any other base will work as well. Which base you use will sometimes depend on the context of the study. However, if there is no obvious reason to choose a different base, you’ll generally see ln used (i.e. base e=2.718). That is the transformation we’ll use here.</p>
+<pre class="r"><code>d$lnDirChol &lt;- log(d$DirectChol)
+## hist(d$lnDirChol)</code></pre>
+<p><strong>Question 4. Describe the distribution of lnDirChol. What has changed after log transformation?</strong></p>
+</div>
+<div id="relation-to-1-continuous-predictor" class="section level3">
+<h3>1.4 Relation to 1 continuous predictor</h3>
+<p>Do heavier people tend to have higher blood pressure? We will examine the relation between BMI (a continuous, numeric variable) and SBP (also a continuous, numeric variable). Though these particular variables are also available in the NHANES dataset, it might be instructive to consider a smaller sample. Often in biomedical research we do not have data from thousands of individuals at once. The file BMISBP.sav contains a sample of 40 elderly Dutch adults. Read in the data (you may need to re-install the foreign package) and examine the first few lines of the data frame. Also make sure you change your path name to the directory in which you have saved the file!</p>
+<pre class="r"><code>library(foreign)
+d2 &lt;- read.spss(file.path(mypath, &quot;BMISBP.sav&quot;), to.data.frame = T, use.value.labels = F)
+dim(d2)</code></pre>
+<pre><code>## [1] 40  2</code></pre>
+<pre class="r"><code>head(d2)</code></pre>
+<pre><code>##      BMI SBP
+## 1 18.560 118
+## 2 18.922 141
+## 3 19.611 143
+## 4 19.890 114
+## 5 20.430 145
+## 6 20.640 160</code></pre>
+<p>You have alread seen how to generate scatterplots. For a quick-and-dirty examination of 2 variables at a time, the <code>plot</code> function in base R is generally sufficient (though much prettier plots can be made using the <code>ggplot2</code> package).</p>
+<pre class="r"><code>plot(d2$BMI, d2$SBP)</code></pre>
+<p><img src="COO4_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>How would you characterize the relation between BMI and SPB? How strong do you think the correlation is?</p>
+<p>Now let’s check our guess for the correlation. Note that we need to use an option that tells R what to do with missing values in either variable. With only two variables, you can use the option <code>use="complete.obs"</code>. However, if you want to look at several variables at once (in a “correlation matrix”), we would prefer to only delete the records that are missing for the two variables being examined; for this reason we choose <code>use="pairwise.complete.obs"</code>:</p>
+<pre class="r"><code>cor(d2$BMI, d2$SBP, use=&quot;pairwise.complete.obs&quot;)</code></pre>
+<pre><code>## [1] 0.4519469</code></pre>
+<p><strong>Question 5. How does this compare to your guess? Would you call this no, weak, moderate, strong or perfect correlation?</strong></p>
+</div>
+</div>
+<div id="practice-what-youve-learned" class="section level2">
+<h2>2. Practice what you’ve learned</h2>
+<p>Now you will apply the skills you’ve learned to a new set of variables. We’ll return to the NHANES data, which should still be in the memory of R/Rstudio (if you’ve since closed RStudio and started a new session, you will need to re-run the code that read in NHANES and reduced it to the data frame <code>d</code>).</p>
+<p>Examine the distributions of, and the associations among, the following variables: age in years, the 60-second pulse rate, the combined systolic blood pressure reading, and total HDL cholesterol.</p>
+<p><strong>Question 6. Describe the distributions of age, 60-second pulse rate, and total HDL cholesterol (we’ve already examined SBP in detail)</strong><br />
+<strong>Question 7. For which variable(s) do you expect the mean and median to be the same? For which do they actually differ appreciably?</strong><br />
+<strong>Question 8a. Examine visually and numerically the relations among age in years, pulse rate, SBP, and HDL cholesterol.</strong> (Hint: remember the <code>scatterplotMatrix()</code> function.) <strong>Question 8b. Which of the six associations has the strongest correlation, and what is the correlation coefficient for that association?</strong><br />
+<strong>Question 8c. Which of the six associations has the weakest correlation, and what is that correlation coefficient?</strong></p>
+<p><strong>Question 9a. Get side-by-side boxplots and the descriptive statistics for total HDL cholesterol, separately for the body mass index categories (categorized according to WHO guidelines; this is a variable in the dataset).</strong><br />
+<strong>Question 9b. Describe the patterns you see.</strong><br />
+<strong>Question 9c. Is there increasing total HDL cholesterol for increasing categories of BMI?</strong></p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -11,8 +11,9 @@ Within the Biomedical Sciences, working with big data sets becomes more and more
 Following the different COO’s (computer modules), you will install R and Rstudio and get acquainted with the basics of programming in R. 
 
 - [COO 1](COO1.html) focuses on installing R and Rstudio, using R as a calculator, and the various objects that can be made and used in R.
-- In [COO 2](COO2.html), you’ll learn how to import data, how to select data, how to sort and order data, and lastly how to handle missing values.
+- In [COO 2](COO2.html), you will learn how to import data, how to select data, how to sort and order data, and lastly how to handle missing values.
 - In [COO 3](COO3.html), the main focus is on visualization of data with R. 
+- In [COO 4](COO4.html), you will learn about descriptive statistics in R.
 
 Learning R can be difficult in the beginning, but also very exciting when you keep trying and succeed. 
 

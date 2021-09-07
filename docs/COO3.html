@@ -255,6 +255,9 @@ $(document).ready(function () {
 <li>
   <a href="COO3.html">COO3</a>
 </li>
+<li>
+  <a href="COO4.html">COO4</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -354,7 +357,8 @@ A playlist of all the HC video’s can be found <a href="https://www.youtube.com
 <pre class="r"><code>names(DNase)</code></pre>
 <pre><code>## [1] &quot;Run&quot;     &quot;conc&quot;    &quot;density&quot;</code></pre>
 <pre class="r"><code>head(DNase)</code></pre>
-<pre><code>##   Run       conc density
+<pre><code>## Grouped Data: density ~ conc | Run
+##   Run       conc density
 ## 1   1 0.04882812   0.017
 ## 2   1 0.04882812   0.018
 ## 3   1 0.19531250   0.121
@@ -400,8 +404,8 @@ First, we need to select the correct columns. Remember that to access variables 
 <p><strong>4. Select the horsepower column with the dollar sign.</strong><br />
 <em>If you can’t remember the name of the column, you can of course use the <code>head(mtcars)</code> function, <code>names(mtcars)</code> or <code>help(mtcars)</code>.</em><br />
 The output in your console should show the values in the horsepower column:</p>
-<pre><code>##  [1] 110 110  93 110 175 105 245  62  95 123 123 180 180 180 205 215 230  66  52  65  97 150
-## [23] 150 245 175  66  91 113 264 175 335 109</code></pre>
+<pre><code>##  [1] 110 110  93 110 175 105 245  62  95 123 123 180 180 180 205 215 230  66  52  65  97 150 150 245 175
+## [26]  66  91 113 264 175 335 109</code></pre>
 <p>For our scatterplot, we will plot the horsepower on the x-axis and the weight on the y-axis.<br />
 For other columns, this command would look like this:</p>
 <pre class="r"><code>plot(x = mtcars$mpg, y = mtcars$gear)</code></pre>
