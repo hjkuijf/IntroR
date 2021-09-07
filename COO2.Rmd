@@ -32,7 +32,7 @@ In the second computer module, you will learn how to import files into R. In add
 We can import flat files into R and start working with them. Flat files are typically files that contain table data. These types of files are saved as text files, csv files (comma-separated values) or tab delimited files. The first line in these types of files are the Field names that correspond to the columns of the dataframe in R. We can use the [`read.table()` function](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table) to read any file in table format to create a dataframe.
 
 ### 1.1 Reading a table file with read.table()
-We will use different datasets. Therefore, you first need to download the following files from Teams:  
+We will use different datasets. Therefore, you first need to download the following files:  
 
 * [Mammogram.txt](COO2/Mammogram.txt)
 * [Heart_disease.txt](COO2/Heart_disease.txt)
