@@ -13,6 +13,8 @@ navbar:
       href: COO3.html
     - text: "COO4"
       href: COO4.html
+    - text: "Statistiek 1"
+      href: Werkcollege_statistiek_Thema_1.html
 output:
   html_document:
     theme: cosmo
