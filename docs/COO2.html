@@ -525,7 +525,7 @@ iris_sorted &lt;- iris_dataset[order(iris_dataset$flower, iris_dataset$sepal_wid
 <p><strong>23. Run the commands from the lecture:</strong></p>
 <pre class="r"><code>summary(iris_data_incomplete)
 which(is.na(iris_data_incomplete$sepal_width)) # which row contains NA?
-iris_clean &lt;- na.exclude(iris_dataset) # removes whole row containing NA
+iris_clean &lt;- na.exclude(iris_data_incomplete) # removes whole row containing NA
 mean(iris_data_incomplete$sepal_width) # includes the NA value
 mean(iris_data_incomplete$sepal_width, na.rm = TRUE) # excludes the NA value for this calculation</code></pre>
 <p>Note that the <code>na.exclude()</code> function itself does not remove the row containing NA, only if you assign it to a variable, this new variable will contain the original dataset with the row containing NA removed.<br />

@@ -373,7 +373,7 @@ Let's work with the iris dataset with missing values from the lecture. We will u
 ```{r eval=FALSE}
 summary(iris_data_incomplete)
 which(is.na(iris_data_incomplete$sepal_width)) # which row contains NA?
-iris_clean <- na.exclude(iris_dataset) # removes whole row containing NA
+iris_clean <- na.exclude(iris_data_incomplete) # removes whole row containing NA
 mean(iris_data_incomplete$sepal_width) # includes the NA value
 mean(iris_data_incomplete$sepal_width, na.rm = TRUE) # excludes the NA value for this calculation
 ```
