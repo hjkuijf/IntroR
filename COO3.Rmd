@@ -59,7 +59,9 @@ countriestd # To check whether it has imported correctly.
 In this COO you will learn how to visualize data in plots. Next, you will learn how to save and customize your plots.  
 A playlist of all the HC video's can be found [here](https://www.youtube.com/playlist?list=PL3pDMfDjzlKI0wIPgMVjUw5F1ZUpsjSlA).
 
-<iframe width="560" height="315" src="https://youtu.be/LKV-KbN71BM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LKV-KbN71BM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
+
+
 
 1. Introduction
 2. Packages
