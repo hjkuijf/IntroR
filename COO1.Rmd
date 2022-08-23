@@ -65,7 +65,7 @@ Throughout this and future COOs, we assume you work on Windows. We will demonstr
 1. The **code editor** in which you write your script. You can also show your tables from the working environment here. This panel will only appear when you have created a new file. When you have opened RStudio, the first thing you can do is start a new script by clicking File &rarr; New File &rarr; R Script. 
 2. The **R console** in which your script is executed and where the results are shown.
 3. **Workspace and history** contain the variables and objects you have created during this tutorial.
-4. In the **plots and files** panel, you can find 'files', 'plots', 'list of packages', 'help' and 'viewer'. 
+4. In the **plots and files** panel, you can find 'files', 'plots', 'list of packages', 'help', 'viewer', and 'presentation'. 
 
 To find help, you can click 'help' and search for a certain topic. Alternatively, you can type on the R Console a questionmark and the name of the function, e.g.: `?read.table`. In the 'help' section you can search specific questions, which will direct you to an information page. If this does not satisfy what you were looking for, it is encouraged to search the internet, ask a fellow student, or a teaching assistant (in that order).
 
@@ -333,7 +333,7 @@ seq2
 ```
 seq2 is the same as seq1, because it is predefined that the first argument given is 'from', the second is 'to', and the third is 'by'.
 
-If you can't remember which arguments to use in a function, you can use the 'Help' pages in RStudio. You can do this by clicking on 'Help' in the 'Plots and files' panel and search with the search bar, or you can use the command `help(functionname)` or `?functionname`.  An explanation of how to read the 'Help' pane can be found [here](https://robwschlegel.github.io/Intro_R_Workshop/workflow.html#help).
+If you can't remember which arguments to use in a function, you can use the 'Help' pages in RStudio. You can do this by clicking on 'Help' in the 'Plots and files' panel and search with the search bar, or you can use the command `help(functionname)` or `?functionname`.  An explanation of how to read the 'Help' panel can be found [here](https://robwschlegel.github.io/Intro_R_Workshop/workflow.html#help).
 An example:
 ```{r eval=FALSE}
 ?seq
