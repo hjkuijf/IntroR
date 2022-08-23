@@ -42,7 +42,7 @@ We will use different datasets. Therefore, you first need to download the follow
 * [iris_data_incomplete.txt](COO2/iris_data_incomplete.txt)
 * [Grades.txt](COO2/Grades.txt)
 
-Save the files in the same folder. The scripts that you have made can be saved in this folder as well.  Use a proper name for your scripts to prevent chaos. Use for example the date (yy-mm-dd) + file name + version  (e.g. 210907_RscriptCOO2_version1). 
+Save the files in the same folder. You can do this by right-clicking on the link and pick 'Save link as ...' to *directly* save the file. Note: opening the file and then saving it (e.g. using Excel) may alter the contents! The scripts that you have made can be saved in this folder as well.  Use a proper name for your scripts to prevent chaos. Use for example the date (yy-mm-dd) + file name + version  (e.g. 210907_RscriptCOO2_version1). 
 
 Let's first use the manual way to import data as shown in the lecture: File > Import Dataset > From Text (base) > Import.  
 
@@ -314,7 +314,7 @@ We first created a vector containing the logical information `[1]  TRUE FALSE  T
 ## 3 Sorting and ordering data
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2LTb8HrjCL4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
 
-In this next bit, we will discuss the `sort()` and `order()` functions. The sort function returns the input data from lowest to highest value or in alphabetically ascending order. The order function returns the order in which the data are present in the object from lowest to highest value or in alphabetically ascending order. So for `alphabet <- c("c", "a", "b"`, `sort(alphabet)` will return: `"a", "b", "c"` and `order(alphabet)` would return `2, 3, 1`, because the second value (a) is the highest in the alphabet, then the third value (b), and then the first value (c).
+In this next bit, we will discuss the `sort()` and `order()` functions. The sort function returns the input data from lowest to highest value or in alphabetically ascending order. The order function returns the order in which the data are present in the object from lowest to highest value or in alphabetically ascending order. So for `alphabet <- c("c", "a", "b")`, `sort(alphabet)` will return: `"a" "b" "c"` and `order(alphabet)` would return `2 3 1`, because the second value (`"a"`) is the lowest in the alphabet, then the third value (`"b"`), and then the first value (`"c"`).
 
 So, we can (temporarily) sort the countries in our dataframe with:
 ```{r eval=FALSE} 
@@ -408,7 +408,7 @@ grades_complete[9, "Exam2"] <- 6.5
 **A17. Create a new, sorted dataframe which first sorts on the first exam and then on the second exam.**  
 **A18. Calculate the average grade again for both exams.**  
 **A19. What is the highest grade for the first exam?**  
-**A20. Create a logical vector that shows on which row(s) contain the highest grade.**  
+**A20. Create a logical vector that shows which row(s) contain the highest grade.**  
 *Hint: use the code we used before for the number of inhabitants as an example of creating a logical vector:*  
 `many_inhabitants <- df.countries$Inhabitants > 12000000`  
 **A21. Now, use this vector to get the name of the person with the highest grade.**  
