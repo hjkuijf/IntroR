@@ -1,7 +1,6 @@
 ---
 title: "COO1 - Introduction R - basics"
 author: "Hugo Kuijf"
-date: "6 September 2021"
 ---
 
 ```{r setup, include=FALSE}

@@ -1,7 +1,6 @@
 ---
 title: "COO2 - Introduction R - importing, selecting, ordering, and missing data"
 author: "Hugo Kuijf"
-date: "7 September 2021"
 ---
 
 ```{r setup, include=FALSE}

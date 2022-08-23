@@ -1,7 +1,6 @@
 ---
 title: "COO 3 - Introduction R - Plotting"
 author: "Bas van der Velden"
-date: "13 September 2021"
 ---
 
 ```{r setup, include=FALSE}
