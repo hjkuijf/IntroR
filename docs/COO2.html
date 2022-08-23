@@ -11,12 +11,11 @@
 
 <meta name="author" content="Hugo Kuijf" />
 
-<meta name="date" content="2021-09-07" />
 
 <title>COO2 - Introduction R - importing, selecting, ordering, and missing data</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.15/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -62,6 +61,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -82,6 +82,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -139,11 +142,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -234,7 +241,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -276,14 +283,16 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">COO2 - Introduction R - importing, selecting, ordering, and missing data</h1>
+<h1 class="title toc-ignore">COO2 - Introduction R - importing,
+selecting, ordering, and missing data</h1>
 <h4 class="author">Hugo Kuijf</h4>
-<h4 class="date">7 September 2021</h4>
 
 </div>
 
 
-<p>In the second computer module, you will learn how to import files into R. In addition, you will learn how to select and order data within objects.</p>
+<p>In the second computer module, you will learn how to import files
+into R. In addition, you will learn how to select and order data within
+objects.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/5hTG-IQeDEw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
 </iframe>
 <ol style="list-style-type: decimal">
@@ -312,41 +321,96 @@ $(document).ready(function () {
 <h2>1 Importing data into R</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/RNP_dxv4lak" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
 </iframe>
-<p>We can import flat files into R and start working with them. Flat files are typically files that contain table data. These types of files are saved as text files, csv files (comma-separated values) or tab delimited files. The first line in these types of files are the Field names that correspond to the columns of the dataframe in R. We can use the <a href="https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table"><code>read.table()</code> function</a> to read any file in table format to create a dataframe.</p>
+<p>We can import flat files into R and start working with them. Flat
+files are typically files that contain table data. These types of files
+are saved as text files, csv files (comma-separated values) or tab
+delimited files. The first line in these types of files are the Field
+names that correspond to the columns of the dataframe in R. We can use
+the <a
+href="https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table"><code>read.table()</code>
+function</a> to read any file in table format to create a dataframe.</p>
 <div id="reading-a-table-file-with-read.table" class="section level3">
 <h3>1.1 Reading a table file with read.table()</h3>
-<p>We will use different datasets. Therefore, you first need to download the following files:</p>
+<p>We will use different datasets. Therefore, you first need to download
+the following files:</p>
 <ul>
 <li><a href="COO2/Mammogram.txt">Mammogram.txt</a></li>
 <li><a href="COO2/Heart_disease.txt">Heart_disease.txt</a></li>
 <li><a href="COO2/Countries.txt">Countries.txt</a></li>
 <li><a href="COO2/CountriesTD.txt">CountriesTD.txt</a></li>
 <li><a href="COO2/iris_dataset.csv">iris_dataset.csv</a></li>
-<li><a href="COO2/iris_data_incomplete.txt">iris_data_incomplete.txt</a></li>
+<li><a
+href="COO2/iris_data_incomplete.txt">iris_data_incomplete.txt</a></li>
 <li><a href="COO2/Grades.txt">Grades.txt</a></li>
 </ul>
-<p>Save the files in the same folder. The scripts that you have made can be saved in this folder as well. Use a proper name for your scripts to prevent chaos. Use for example the date (yy-mm-dd) + file name + version (e.g. 210907_RscriptCOO2_version1).</p>
-<p>Let’s first use the manual way to import data as shown in the lecture: File &gt; Import Dataset &gt; From Text (base) &gt; Import.</p>
+<p>Save the files in the same folder. You can do this by right-clicking
+on the link and pick ‘Save link as …’ to <em>directly</em> save the
+file. Note: opening the file and then saving it (e.g. using Excel) may
+alter the contents! The scripts that you have made can be saved in this
+folder as well. Use a proper name for your scripts to prevent chaos. Use
+for example the date (yy-mm-dd) + file name + version
+(e.g. 210907_RscriptCOO2_version1).</p>
+<p>Let’s first use the manual way to import data as shown in the
+lecture: File &gt; Import Dataset &gt; From Text (base) &gt; Import.</p>
 <p><strong>1. Import the Mammogram dataset manually.</strong></p>
-<p>You can see the command RStudio used to import the data in the Console. As you can see, the function RStudio used is <code>read.csv()</code>. You can see that the only argument in the function is the path to your text file, including the name and extension (.txt) of your file. And R automatically assigned the data to a variable with the name of the file (<code>Mammogram &lt;- read.csv()</code>).<br />
-<code>read.csv()</code> is a variant of the more general function <code>read.table()</code>. ‘csv’ Indicates that the values are comma-separated. If you open the original .txt file, you can see that each line contains a row of values, which can be numbers or letters, and each value is separated by a comma. In addition, <code>read.csv()</code> by default uses the first line in the text file as column names for the dataframe.</p>
-<p>Now, let’s import another dataset by using the more general function <code>read.table()</code> in your script. The advantages of scripting instead of manually importing are that you can find the command again when you need to, and you automatically open the data the next time you run this script.</p>
-<p><strong>2. Import the Heart_disease data by copying and editing the commands from your Console.</strong><br />
-<em>Change the variable name, the name of the .txt file and change the function to read.table().</em></p>
-<p>As you can see when you view your new data, it is loaded as a dataframe with one column and multiple values separated by commas in one cell. <code>read.table()</code> by default uses spaces in the text file to separate columns. Since our data is separated by commas instead of spaces, it is all put into one column. In addition, the first row is not used for column names. Therefore we need to define some new arguments (as shown in the lecture).</p>
-<p><strong>3. Adapt the following commands to correctly load the Heart_disease data:</strong></p>
+<p>You can see the command RStudio used to import the data in the
+Console. As you can see, the function RStudio used is
+<code>read.csv()</code>. You can see that the only argument in the
+function is the path to your text file, including the name and extension
+(.txt) of your file. And R automatically assigned the data to a variable
+with the name of the file
+(<code>Mammogram &lt;- read.csv()</code>).<br />
+<code>read.csv()</code> is a variant of the more general function
+<code>read.table()</code>. ‘csv’ Indicates that the values are
+comma-separated. If you open the original .txt file, you can see that
+each line contains a row of values, which can be numbers or letters, and
+each value is separated by a comma. In addition, <code>read.csv()</code>
+by default uses the first line in the text file as column names for the
+dataframe.</p>
+<p>Now, let’s import another dataset by using the more general function
+<code>read.table()</code> in your script. The advantages of scripting
+instead of manually importing are that you can find the command again
+when you need to, and you automatically open the data the next time you
+run this script.</p>
+<p><strong>2. Import the Heart_disease data by copying and editing the
+commands from your Console.</strong><br />
+<em>Change the variable name, the name of the .txt file and change the
+function to read.table().</em></p>
+<p>As you can see when you view your new data, it is loaded as a
+dataframe with one column and multiple values separated by commas in one
+cell. <code>read.table()</code> by default uses spaces in the text file
+to separate columns. Since our data is separated by commas instead of
+spaces, it is all put into one column. In addition, the first row is not
+used for column names. Therefore we need to define some new arguments
+(as shown in the lecture).</p>
+<p><strong>3. Adapt the following commands to correctly load the
+Heart_disease data:</strong></p>
 <pre class="r"><code>Heart_disease &lt;- read.table(&quot;C:/Folder1/Folder2/Heart_disease.txt&quot;,
                             header = TRUE,
                             sep = &quot;,&quot;)
 View(Heart_disease)</code></pre>
-<p>The next dataset we are going to import is the Countries dataset. This data does not only contain data of the type numeric (the other datasets did), but also text, such as country names.</p>
+<p>The next dataset we are going to import is the Countries dataset.
+This data does not only contain data of the type numeric (the other
+datasets did), but also text, such as country names.</p>
 <p><strong>4. What R data type is used to store text?</strong></p>
-<p>As explained before, many arguments in a function are set to default settings. One of the default settings of the <code>read.table()</code> function is that strings (data type ‘character’) will be converted to factors in older R versions (before R 4.0.0).</p>
-<p><strong>5. What is the difference between the data types ‘character’ and ‘factor’?</strong><br />
-<strong>6. Suppose a column in our dataframe contains 7 countries and the data type is factor. How many levels will this column have?</strong><br />
-<strong>7. What will happen if we want to add another country to this column?</strong></p>
-<p>To keep our options open, we will import character strings as character data and not as factors. Therefore, we make sure to set the argument <code>stringsAsFactors</code> to FALSE. We can call our dataframe df.countries. ‘df’ is short for dataframe, which helps us remember that the object with this name is a dataframe.</p>
-<p><strong>8. Import the dataset with the following commands:</strong></p>
+<p>As explained before, many arguments in a function are set to default
+settings. One of the default settings of the <code>read.table()</code>
+function is that strings (data type ‘character’) will be converted to
+factors in older R versions (before R 4.0.0).</p>
+<p><strong>5. What is the difference between the data types ‘character’
+and ‘factor’?</strong><br />
+<strong>6. Suppose a column in our dataframe contains 7 countries and
+the data type is factor. How many levels will this column
+have?</strong><br />
+<strong>7. What will happen if we want to add another country to this
+column?</strong></p>
+<p>To keep our options open, we will import character strings as
+character data and not as factors. Therefore, we make sure to set the
+argument <code>stringsAsFactors</code> to FALSE. We can call our
+dataframe df.countries. ‘df’ is short for dataframe, which helps us
+remember that the object with this name is a dataframe.</p>
+<p><strong>8. Import the dataset with the following
+commands:</strong></p>
 <pre class="r"><code>df.countries &lt;- read.table(&quot;C:/Folder1/Folder2/Countries.txt&quot;,
                          header = TRUE,
                          sep = &quot;,&quot;,
@@ -355,40 +419,62 @@ df.countries</code></pre>
 </div>
 <div id="reading-a-tab-delimited-file" class="section level3">
 <h3>1.2 Reading a tab delimited file</h3>
-<p>Now, take a look at the document “CountriesTD.txt” and try to find what looks different in this document compared to the document “Countries”. You can see that the text is not separated anymore by commas but now by tabs. We can still use the same functions as before but now slightly different in that we must change the argument <code>sep</code> to <code>"\t"</code> which means that this file is tab delimited.</p>
+<p>Now, take a look at the document “CountriesTD.txt” and try to find
+what looks different in this document compared to the document
+“Countries”. You can see that the text is not separated anymore by
+commas but now by tabs. We can still use the same functions as before
+but now slightly different in that we must change the argument
+<code>sep</code> to <code>"\t"</code> which means that this file is tab
+delimited.</p>
 <pre class="r"><code>countriestd &lt;- read.table(&quot;C:/Folder1/Folder2/CountriesTD.txt&quot;, 
                           header = TRUE, 
                           sep = &quot;\t&quot;, 
                           stringsAsFactors = FALSE) 
 countriestd</code></pre>
 <p>Notice how this gives the exact same table as before.</p>
-<p>We can write this shorter as well, with the <code>read.delim()</code> function:</p>
+<p>We can write this shorter as well, with the <code>read.delim()</code>
+function:</p>
 <pre class="r"><code>countriestd2 &lt;- read.delim(&quot;CountriesTD.txt&quot;, 
                            stringsAsFactors = FALSE)
 countriestd2</code></pre>
 </div>
 <div id="looking-at-your-data" class="section level3">
 <h3>1.3 Looking at your data</h3>
-<p>There are different ways to get information on our data. With these functions we can do some quality control, which is very important.<br />
+<p>There are different ways to get information on our data. With these
+functions we can do some quality control, which is very important.<br />
 We can view the dataframe in our Console:</p>
 <pre class="r"><code>df.countries</code></pre>
-<p>We can see the whole dataframe at once since this dataframe is not so big. But this is not always the case. Then, you can use:</p>
+<p>We can see the whole dataframe at once since this dataframe is not so
+big. But this is not always the case. Then, you can use:</p>
 <pre class="r"><code>View(df.countries)# view whole dataframe in separate window</code></pre>
 <p>We can then check the class of the df.countries object:</p>
 <pre class="r"><code>class(df.countries)</code></pre>
-<p>With the function <code>dim()</code> we can see how many rows and columns there are in this dataframe or we can see them separately using the <code>nrow()</code> and <code>ncol()</code> functions. The <code>dim()</code> function is different from the <code>length()</code> function shown previously. The <code>length()</code> function is typically applied to a one-dimensional vector or array and returns the number of elements. The <code>dim()</code> function, on the other hand, is applied on objects with multiple dimensions and gives you the number of rows and columns instead of the number of elements.</p>
+<p>With the function <code>dim()</code> we can see how many rows and
+columns there are in this dataframe or we can see them separately using
+the <code>nrow()</code> and <code>ncol()</code> functions. The
+<code>dim()</code> function is different from the <code>length()</code>
+function shown previously. The <code>length()</code> function is
+typically applied to a one-dimensional vector or array and returns the
+number of elements. The <code>dim()</code> function, on the other hand,
+is applied on objects with multiple dimensions and gives you the number
+of rows and columns instead of the number of elements.</p>
 <pre class="r"><code>dim(df.countries)# the first being the number of rows, the second being the number of columns</code></pre>
 <pre class="r"><code>nrow(df.countries)</code></pre>
 <pre class="r"><code>ncol(df.countries)</code></pre>
-<p>We now have a sense of how big the dataset is. We can see the elements included in the dataset:</p>
+<p>We now have a sense of how big the dataset is. We can see the
+elements included in the dataset:</p>
 <pre class="r"><code>names(df.countries)</code></pre>
-<p>The <code>head()</code> function allows us to see the first few rows of the dataset:</p>
+<p>The <code>head()</code> function allows us to see the first few rows
+of the dataset:</p>
 <pre class="r"><code>head(df.countries)</code></pre>
-<p>Note that you can now only see the first 6 rows. We can also narrow it down to the exact number of rows we want to see:</p>
+<p>Note that you can now only see the first 6 rows. We can also narrow
+it down to the exact number of rows we want to see:</p>
 <pre class="r"><code>head(df.countries,3)# Selecting to only see the first three rows of the dataframe</code></pre>
-<p>We can do this the same with the last couple of rows with the tail() function:</p>
+<p>We can do this the same with the last couple of rows with the tail()
+function:</p>
 <pre class="r"><code>tail(df.countries,2)# Selecting to only see the last two rows of the dataframe</code></pre>
-<p>Another useful function to study your data is the str() function. It compactly displays the structure of your data object.</p>
+<p>Another useful function to study your data is the str() function. It
+compactly displays the structure of your data object.</p>
 <pre class="r"><code>str(df.countries)</code></pre>
 </div>
 </div>
@@ -396,10 +482,17 @@ We can view the dataframe in our Console:</p>
 <h2>2 Selecting data</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Jrb5P20CCSo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
 </iframe>
-<p>To select data from any data type, use the index operator <code>[]</code>. In one-dimensional data, such as a vector, you provide one index. So, to select the third value of a vector, you use <code>vector[3]</code>. For two-dimensional data, if you want to select one value you need to indicate both the row, and column. Therefore, you need two indices. <code>dataframe[2, 5]</code> selects the value from the second row, fifth column.</p>
+<p>To select data from any data type, use the index operator
+<code>[]</code>. In one-dimensional data, such as a vector, you provide
+one index. So, to select the third value of a vector, you use
+<code>vector[3]</code>. For two-dimensional data, if you want to select
+one value you need to indicate both the row, and column. Therefore, you
+need two indices. <code>dataframe[2, 5]</code> selects the value from
+the second row, fifth column.</p>
 <div id="selecting-a-subset-of-a-vector" class="section level3">
 <h3>2.1 Selecting a subset of a vector</h3>
-<p>Use the following commands to create a vector and select some values from this vector:</p>
+<p>Use the following commands to create a vector and select some values
+from this vector:</p>
 <pre class="r"><code>a &lt;- c(2, 3, 4, 5)
 a</code></pre>
 <p>Select the third element of vector a:</p>
@@ -409,36 +502,53 @@ a</code></pre>
 <p>You can also do calculations with selected elements in a vector:</p>
 <pre class="r"><code>a[1 + 3] # The fourth element of a vector. 
 a[1] + a[3] # Adding the first to the third element, returning the sum. </code></pre>
-<p><strong>9. Now, select the first two elements of vector a.</strong></p>
+<p><strong>9. Now, select the first two elements of vector
+a.</strong></p>
 <p>You can also select multiple values in a row:</p>
 <pre class="r"><code>b &lt;- 10:1
 b[2:4] # Second to fourth element of vector b</code></pre>
-<p>You can also select a subset of a vector using logical values by asking R a question.</p>
+<p>You can also select a subset of a vector using logical values by
+asking R a question.</p>
 <pre class="r"><code>b &gt; 3 # Which values in the vector of b are greater than 3?</code></pre>
-<p>10:4 are all greater than 3 and therefore return TRUE, 1, 2 and 3 are smaller or equal to 3 and therefore return FALSE.</p>
-<p>Lastly, you can select by excluding values from your vector by using a minus: <code>[-1]</code> selects every value except 1.</p>
-<p><strong>10. Select every value of b except the second and sixth.</strong></p>
-<p>We can assign new values to a specific subset that we selected. For example we can select the fifth element of vector <code>b</code> and replace it with <code>0</code>, using the assignment operator <code>&lt;-</code>.</p>
+<p>10:4 are all greater than 3 and therefore return TRUE, 1, 2 and 3 are
+smaller or equal to 3 and therefore return FALSE.</p>
+<p>Lastly, you can select by excluding values from your vector by using
+a minus: <code>[-1]</code> selects every value except 1.</p>
+<p><strong>10. Select every value of b except the second and
+sixth.</strong></p>
+<p>We can assign new values to a specific subset that we selected. For
+example we can select the fifth element of vector <code>b</code> and
+replace it with <code>0</code>, using the assignment operator
+<code>&lt;-</code>.</p>
 <pre class="r"><code>b[5] &lt;- 0</code></pre>
 <p>We can also replace larger parts.</p>
 <pre class="r"><code>b[6:10] &lt;- 9</code></pre>
 </div>
 <div id="selecting-a-subset-of-a-matrix" class="section level3">
 <h3>2.2 Selecting a subset of a matrix</h3>
-<p>As explained before, to select from a matrix you can use two indices. You can also select a whole column or row. Then, we have to specify whether we want to select either the rows or columns by carefully placing commas. The first index is for rows, the second for columns <code>[rows, columns]</code>.</p>
+<p>As explained before, to select from a matrix you can use two indices.
+You can also select a whole column or row. Then, we have to specify
+whether we want to select either the rows or columns by carefully
+placing commas. The first index is for rows, the second for columns
+<code>[rows, columns]</code>.</p>
 <p>First, we make a new matrix with the following vectors:</p>
 <pre class="r"><code>vector.a &lt;- c(1, 2, 3) # vector 1
 vector.b &lt;- c(4, 5, 6) # vector 2
 vector.c &lt;- c(7, 8, 9) # vector 3</code></pre>
-<p><strong>11. Combine these vectors into columns of a new matrix, called matrix.a.</strong></p>
+<p><strong>11. Combine these vectors into columns of a new matrix,
+called matrix.a.</strong></p>
 <p>Now, you can select the first row:</p>
 <pre class="r"><code>matrix.a[1,] # select row 1 from matrix C</code></pre>
-<p>Now we see just the first row of the matrix created before. We can also show more than 1 row by making a vector in which we command to see both the first and second row <code>c(1,2)</code>.</p>
+<p>Now we see just the first row of the matrix created before. We can
+also show more than 1 row by making a vector in which we command to see
+both the first and second row <code>c(1,2)</code>.</p>
 <pre class="r"><code>matrix.a[c(1,2),] # select rows 1 and 2 from matrix C</code></pre>
 <p>To select columns put your indices after the comma:</p>
 <pre class="r"><code>matrix.a[,c(1,3)] # select columns 1 and 3 from matrix C</code></pre>
-<p><strong>12. Now, select the value in the third row, second column of matrix.a.</strong></p>
-<p><strong>13. Can you describe what this next line of code does to <code>matrix.a</code>?</strong></p>
+<p><strong>12. Now, select the value in the third row, second column of
+matrix.a.</strong></p>
+<p><strong>13. Can you describe what this next line of code does to
+<code>matrix.a</code>?</strong></p>
 <pre class="r"><code>matrix.a[2,1] &lt;- 999</code></pre>
 </div>
 <div id="selecting-a-subset-of-a-list" class="section level3">
@@ -446,20 +556,35 @@ vector.c &lt;- c(7, 8, 9) # vector 3</code></pre>
 <p>First, we need to create a list before we can subset it.</p>
 <pre class="r"><code>list1 &lt;- list(&quot;hello&quot;,&quot;how&quot;,&quot;are&quot;,&quot;you&quot;,&quot;?&quot;)
 list1[3] # calling for the third element in the list stored in list1</code></pre>
-<p>In a list you can store different data types of different lengths as well. You basically gather information under one object. Via that object name, you can then easily access these data. Let’s store our vector a, matrix.a, and list1 in a new list. For easy access we can also name the items in our list, using the following command:</p>
+<p>In a list you can store different data types of different lengths as
+well. You basically gather information under one object. Via that object
+name, you can then easily access these data. Let’s store our vector a,
+matrix.a, and list1 in a new list. For easy access we can also name the
+items in our list, using the following command:</p>
 <pre class="r"><code>list2 &lt;- list(my_vec = a, my_matrix = matrix.a, my_list = list1)</code></pre>
-<p>Now, we can acces our vector with two commands. You can use the index number to select an item on the list <code>[]</code>, or you can use the name, with the <code>$</code> sign:</p>
+<p>Now, we can acces our vector with two commands. You can use the index
+number to select an item on the list <code>[]</code>, or you can use the
+name, with the <code>$</code> sign:</p>
 <pre class="r"><code>list2[1] # first item on the list
 list2$my_vec # the item called &#39;my_vec&#39;</code></pre>
-<p>As you can see, when you use the <code>$</code> to access the list item it provides you with a pop-up list of the names of your items and a symbol that resembles the data type. You can choose an item from this pop-up list by clicking on it, or select the first item by pressing ‘Tab’.<br />
-We can also select the first item of an item on our list, for example:</p>
+<p>As you can see, when you use the <code>$</code> to access the list
+item it provides you with a pop-up list of the names of your items and a
+symbol that resembles the data type. You can choose an item from this
+pop-up list by clicking on it, or select the first item by pressing
+‘Tab’.<br />
+We can also select the first item of an item on our list, for
+example:</p>
 <pre class="r"><code>list2$my_list[4] # selects fourth item in the item called my_list
 list2[[3]][4] # selects fourth item in the third item</code></pre>
-<p><strong>14. Select the value in the second row, third column of the matrix in list2.</strong></p>
+<p><strong>14. Select the value in the second row, third column of the
+matrix in list2.</strong></p>
 </div>
 <div id="selecting-a-subset-of-a-dataframe" class="section level3">
 <h3>2.4 Selecting a subset of a dataframe</h3>
-<p>There are multiple ways to select data from a dataframe. You can use the index operator <code>[]</code>, you can use the dollar sign <code>$</code>, or you can provide the name of a column as character data:</p>
+<p>There are multiple ways to select data from a dataframe. You can use
+the index operator <code>[]</code>, you can use the dollar sign
+<code>$</code>, or you can provide the name of a column as character
+data:</p>
 <pre class="r"><code>df.countries[4,] # selecting row 4
 
 df.countries[,2] # selecting column 2
@@ -469,39 +594,83 @@ df.countries[&quot;Capital&quot;] # selecting the column called Capital
 df.countries[,&quot;Capital&quot;] # selecting the information in the column called Capital
 
 df.countries$Capital # selecting the information in the column called Capital</code></pre>
-<p>Note that <code>[,2]</code>, <code>[,"Capital"]</code>, and <code>$Capital</code> reproduced the information in the column as a vector with character data, while <code>["Capital"]</code> reproduced the whole column, as a dataframe with one column.</p>
-<p><strong>15. Use the <code>class()</code> function to return the class for each of the dataframe access commands above.</strong><br />
+<p>Note that <code>[,2]</code>, <code>[,"Capital"]</code>, and
+<code>$Capital</code> reproduced the information in the column as a
+vector with character data, while <code>["Capital"]</code> reproduced
+the whole column, as a dataframe with one column.</p>
+<p><strong>15. Use the <code>class()</code> function to return the class
+for each of the dataframe access commands above.</strong><br />
 <em>One example is provided:</em></p>
 <pre class="r"><code>class(df.countries[4,])</code></pre>
-<p>We can also provide some statistics on our dataframe with these selection commands. Some basic statistic functions are <code>mean()</code>, <code>min()</code>, and <code>max()</code>.</p>
-<p><strong>16. Calculate the mean of the inhabitants in the df.countries dataframe.</strong><br />
-<strong>17. Calculate the minimum and maximum age in the Heart_disease dataframe, using the dollar sign to get suggestions for the column names.</strong></p>
-<p>We can also select using logical operators, explained in the previous COO. The expressions created with logical operators are also called Boolean expressions. To get an overview of the countries with more than 12,000,000 inhabitants, you can use:</p>
+<p>We can also provide some statistics on our dataframe with these
+selection commands. Some basic statistic functions are
+<code>mean()</code>, <code>min()</code>, and <code>max()</code>.</p>
+<p><strong>16. Calculate the mean of the inhabitants in the df.countries
+dataframe.</strong><br />
+<strong>17. Calculate the minimum and maximum age in the Heart_disease
+dataframe, using the dollar sign to get suggestions for the column
+names.</strong></p>
+<p>We can also select using logical operators, explained in the previous
+COO. The expressions created with logical operators are also called
+Boolean expressions. To get an overview of the countries with more than
+12,000,000 inhabitants, you can use:</p>
 <pre class="r"><code>df.countries[&quot;Inhabitants&quot;] &gt; 12000000</code></pre>
-<p>We created a boolean expression that shows us that the second and sixth countries have fewer than 12,000,000 inhabitants. We can also use this information to select data from another column. Therefore, we us this boolean expression we created to select rows. You can do this with the following commands:</p>
+<p>We created a boolean expression that shows us that the second and
+sixth countries have fewer than 12,000,000 inhabitants. We can also use
+this information to select data from another column. Therefore, we us
+this boolean expression we created to select rows. You can do this with
+the following commands:</p>
 <pre class="r"><code>many_inhabitants &lt;- df.countries$Inhabitants &gt; 12000000
 df.countries[many_inhabitants, &quot;Countries&quot;]</code></pre>
-<p>We first created a vector containing the logical information <code>[1]  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE</code>. Then, we wanted to produce the country names with many inhabitants, so we used <code>"Countries"</code> to select the column and our logical vector to select the rows. It then selected the information in the first, third, fourth, fifth and seventh row of the column ‘Countries’, because those equaled ‘TRUE’. It left out the names of the countries with fewer inhabitants, because those equaled ‘FALSE’.</p>
-<p><strong>18. Produce the country names of the countries with fewer than 12,000,000 inhabitants in a similar manner.</strong></p>
+<p>We first created a vector containing the logical information
+<code>[1]  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE</code>. Then, we
+wanted to produce the country names with many inhabitants, so we used
+<code>"Countries"</code> to select the column and our logical vector to
+select the rows. It then selected the information in the first, third,
+fourth, fifth and seventh row of the column ‘Countries’, because those
+equaled ‘TRUE’. It left out the names of the countries with fewer
+inhabitants, because those equaled ‘FALSE’.</p>
+<p><strong>18. Produce the country names of the countries with fewer
+than 12,000,000 inhabitants in a similar manner.</strong></p>
 </div>
 </div>
 <div id="sorting-and-ordering-data" class="section level2">
 <h2>3 Sorting and ordering data</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/2LTb8HrjCL4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
 </iframe>
-<p>In this next bit, we will discuss the <code>sort()</code> and <code>order()</code> functions. The sort function returns the input data from lowest to highest value or in alphabetically ascending order. The order function returns the order in which the data are present in the object from lowest to highest value or in alphabetically ascending order. So for <code>alphabet &lt;- c("c", "a", "b"</code>, <code>sort(alphabet)</code> will return: <code>"a", "b", "c"</code> and <code>order(alphabet)</code> would return <code>2, 3, 1</code>, because the second value (a) is the highest in the alphabet, then the third value (b), and then the first value (c).</p>
-<p>So, we can (temporarily) sort the countries in our dataframe with:</p>
+<p>In this next bit, we will discuss the <code>sort()</code> and
+<code>order()</code> functions. The sort function returns the input data
+from lowest to highest value or in alphabetically ascending order. The
+order function returns the order in which the data are present in the
+object from lowest to highest value or in alphabetically ascending
+order. So for <code>alphabet &lt;- c("c", "a", "b")</code>,
+<code>sort(alphabet)</code> will return: <code>"a" "b" "c"</code> and
+<code>order(alphabet)</code> would return <code>2 3 1</code>, because
+the second value (<code>"a"</code>) is the lowest in the alphabet, then
+the third value (<code>"b"</code>), and then the first value
+(<code>"c"</code>).</p>
+<p>So, we can (temporarily) sort the countries in our dataframe
+with:</p>
 <pre class="r"><code>sort(df.countries$Countries)</code></pre>
 <pre class="r"><code>sort(df.countries$Countries, decreasing = TRUE)</code></pre>
-<p>As you can see in the df.countries dataframe, the actual order of the countries in the column ‘Countries’ has not changed. The sort function has just returned the column in alphabetical order in the Console.</p>
-<p>We can use the order function to create a new dataframe with our data sorted alphabetically on country name:</p>
+<p>As you can see in the df.countries dataframe, the actual order of the
+countries in the column ‘Countries’ has not changed. The sort function
+has just returned the column in alphabetical order in the Console.</p>
+<p>We can use the order function to create a new dataframe with our data
+sorted alphabetically on country name:</p>
 <pre class="r"><code>countries_sorted1 &lt;- df.countries[order(df.countries$Countries),] # ordering our countries alphabetically 
 countries_sorted1</code></pre>
 <p>The order we used is the following:</p>
 <pre class="r"><code>order(df.countries$Countries)</code></pre>
-<p>We use this order to indicate the rows to be used for our new dataframe. So, our new dataframe is constructed as follows: For the first row of countries_ordered1 the second row of the df.countries dataframe is used (containing Belgium), the second row is then filled with the third row of df.countries (containing France), and so on.</p>
-<p><strong>19. Now, create a dataframe called countries_sorted2, which is sorted on number of inhabitants.</strong></p>
-<p>In the lecture, the iris dataframe was sorted on two values. To try this yourself:</p>
+<p>We use this order to indicate the rows to be used for our new
+dataframe. So, our new dataframe is constructed as follows: For the
+first row of countries_ordered1 the second row of the df.countries
+dataframe is used (containing Belgium), the second row is then filled
+with the third row of df.countries (containing France), and so on.</p>
+<p><strong>19. Now, create a dataframe called countries_sorted2, which
+is sorted on number of inhabitants.</strong></p>
+<p>In the lecture, the iris dataframe was sorted on two values. To try
+this yourself:</p>
 <p><strong>20. Import the iris_dataset.csv as a dataframe.</strong></p>
 <p>The following commands were used in the lecture:</p>
 <pre class="r"><code>volgorde &lt;- order(iris_dataset$sepal_width)
@@ -511,57 +680,99 @@ iris_sorted &lt;- iris_dataset[order(iris_dataset$flower, iris_dataset$sepal_wid
 
 iris_sorted &lt;- iris_dataset[order(iris_dataset$flower, iris_dataset$sepal_width,
                                        decreasing = c(FALSE, TRUE)),]</code></pre>
-<p>The iris_sorted dataframe has sorted the iris_dataset data first in increasing order on flower name, and then in decreasing order on sepal width.</p>
+<p>The iris_sorted dataframe has sorted the iris_dataset data first in
+increasing order on flower name, and then in decreasing order on sepal
+width.</p>
 <p>Now, let’s try a similar sorting for our Heart_disease dataframe.</p>
-<p><strong>21. Create one new dataframe in which you sort the Heart_disease data first in decreasing order on sex, and then in increasing order on age.</strong></p>
+<p><strong>21. Create one new dataframe in which you sort the
+Heart_disease data first in decreasing order on sex, and then in
+increasing order on age.</strong></p>
 </div>
 <div id="missing-values" class="section level2">
 <h2>4 Missing values</h2>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/H-PuxMQcL-s" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
 </iframe>
-<p>It sometimes happens that you use a data.frame that is missing information. This will be displayed with a NA value (not available). It can be difficult to work with this because then, you are, for example, not able to calculate the mean. We must be cautious when drawing conclusions when our dataframe contains NAs. We can, for example remove observations with NA values.</p>
-<p>Let’s work with the iris dataset with missing values from the lecture. We will use a new variable name for our incomplete dataset.</p>
-<p><strong>22. Import the iris_data_incomplete.txt as a dataframe called iris_data_incomplete.</strong></p>
+<p>It sometimes happens that you use a data.frame that is missing
+information. This will be displayed with a NA value (not available). It
+can be difficult to work with this because then, you are, for example,
+not able to calculate the mean. We must be cautious when drawing
+conclusions when our dataframe contains NAs. We can, for example remove
+observations with NA values.</p>
+<p>Let’s work with the iris dataset with missing values from the
+lecture. We will use a new variable name for our incomplete dataset.</p>
+<p><strong>22. Import the iris_data_incomplete.txt as a dataframe called
+iris_data_incomplete.</strong></p>
 <p><strong>23. Run the commands from the lecture:</strong></p>
 <pre class="r"><code>summary(iris_data_incomplete)
 which(is.na(iris_data_incomplete$sepal_width)) # which row contains NA?
 iris_clean &lt;- na.exclude(iris_data_incomplete) # removes whole row containing NA
 mean(iris_data_incomplete$sepal_width) # includes the NA value
 mean(iris_data_incomplete$sepal_width, na.rm = TRUE) # excludes the NA value for this calculation</code></pre>
-<p>Note that the <code>na.exclude()</code> function itself does not remove the row containing NA, only if you assign it to a variable, this new variable will contain the original dataset with the row containing NA removed.<br />
-You can also check the number of NA values with <code>sum(is.na())</code>.</p>
-<p><strong>24. Check the number of NA values in the iris_dataset, iris_data_incomplete and iris_clean dataframes.</strong></p>
+<p>Note that the <code>na.exclude()</code> function itself does not
+remove the row containing NA, only if you assign it to a variable, this
+new variable will contain the original dataset with the row containing
+NA removed.<br />
+You can also check the number of NA values with
+<code>sum(is.na())</code>.</p>
+<p><strong>24. Check the number of NA values in the iris_dataset,
+iris_data_incomplete and iris_clean dataframes.</strong></p>
 </div>
 <div id="extra-assignment" class="section level2">
 <h2>5 Extra assignment</h2>
-<p>Now, take a look at the Grades.txt file. Use scripting to answer the following questions.<br />
-<strong>A1. Import the Grades.txt file as a dataframe and check whether it worked correctly.</strong><br />
-<strong>A2. How many rows and columns does the dataframe have?</strong><br />
+<p>Now, take a look at the Grades.txt file. Use scripting to answer the
+following questions.<br />
+<strong>A1. Import the Grades.txt file as a dataframe and check whether
+it worked correctly.</strong><br />
+<strong>A2. How many rows and columns does the dataframe
+have?</strong><br />
 <strong>A3. What are the column names?</strong><br />
-<strong>A4. What does the first part of this dataframe look like?</strong><br />
+<strong>A4. What does the first part of this dataframe look
+like?</strong><br />
 <strong>A5. Provide a summary of the data.</strong><br />
 <strong>A6. Are there errors in your data?</strong><br />
 <strong>A7. Calculate the number of NA values.</strong><br />
-<strong>A8. Calculate the mean of each exam. Exclude the NA values in your calculation.</strong><br />
-<strong>A9. Make a new dataframe that excludes the rows that contain NA values.</strong><br />
-<strong>A10. For both exams, create a logical vector that shows which grades are bigger than 10.</strong><br />
-<strong>A11. Use the vector that contains a ‘TRUE’ to return the grade that was bigger than 10.</strong><br />
-<strong>A12. For both exams, create a logical vector that shows which grades are lower than 0.</strong><br />
-<strong>A13. Use the vector that contains a ‘TRUE’ to return the grade that was lower than 0.</strong><br />
-Since grades can vary from 0 to 10, we are quite certain that the grade which is higher than 10 contains a typo and should be 7.5. And the grade lower than 0 accidentially got a minus in front of it. You check this on the original exams, and indeed the grades should be 7.5 and 6.5 respectively. Now, you can change the grades, with the following commands:<br />
-<strong>A14. Change the name of the dataframe and check whether the grades you change are indeed in the 10th and 9th row, in your dataframe. Then, change the grades with the following commands:</strong></p>
+<strong>A8. Calculate the mean of each exam. Exclude the NA values in
+your calculation.</strong><br />
+<strong>A9. Make a new dataframe that excludes the rows that contain NA
+values.</strong><br />
+<strong>A10. For both exams, create a logical vector that shows which
+grades are bigger than 10.</strong><br />
+<strong>A11. Use the vector that contains a ‘TRUE’ to return the grade
+that was bigger than 10.</strong><br />
+<strong>A12. For both exams, create a logical vector that shows which
+grades are lower than 0.</strong><br />
+<strong>A13. Use the vector that contains a ‘TRUE’ to return the grade
+that was lower than 0.</strong><br />
+Since grades can vary from 0 to 10, we are quite certain that the grade
+which is higher than 10 contains a typo and should be 7.5. And the grade
+lower than 0 accidentially got a minus in front of it. You check this on
+the original exams, and indeed the grades should be 7.5 and 6.5
+respectively. Now, you can change the grades, with the following
+commands:<br />
+<strong>A14. Change the name of the dataframe and check whether the
+grades you change are indeed in the 10th and 9th row, in your dataframe.
+Then, change the grades with the following commands:</strong></p>
 <pre class="r"><code>grades_complete[10, &quot;Exam1&quot;] &lt;- 7.5
 grades_complete[9, &quot;Exam2&quot;] &lt;- 6.5</code></pre>
-<p><strong>A15. Create a vector of the grades in Exam1 sorted with the lowest grade first.</strong><br />
-<strong>A16. Create a vector of the grades in Exam2 sorted with the highest grade first.</strong><br />
-<strong>A17. Create a new, sorted dataframe which first sorts on the first exam and then on the second exam.</strong><br />
-<strong>A18. Calculate the average grade again for both exams.</strong><br />
-<strong>A19. What is the highest grade for the first exam?</strong><br />
-<strong>A20. Create a logical vector that shows on which row(s) contain the highest grade.</strong><br />
-<em>Hint: use the code we used before for the number of inhabitants as an example of creating a logical vector:</em><br />
+<p><strong>A15. Create a vector of the grades in Exam1 sorted with the
+lowest grade first.</strong><br />
+<strong>A16. Create a vector of the grades in Exam2 sorted with the
+highest grade first.</strong><br />
+<strong>A17. Create a new, sorted dataframe which first sorts on the
+first exam and then on the second exam.</strong><br />
+<strong>A18. Calculate the average grade again for both
+exams.</strong><br />
+<strong>A19. What is the highest grade for the first
+exam?</strong><br />
+<strong>A20. Create a logical vector that shows which row(s) contain the
+highest grade.</strong><br />
+<em>Hint: use the code we used before for the number of inhabitants as
+an example of creating a logical vector:</em><br />
 <code>many_inhabitants &lt;- df.countries$Inhabitants &gt; 12000000</code><br />
-<strong>A21. Now, use this vector to get the name of the person with the highest grade.</strong><br />
-<strong>A22. Now, produce the name of the person with the lowest grade for the second exam.</strong></p>
+<strong>A21. Now, use this vector to get the name of the person with the
+highest grade.</strong><br />
+<strong>A22. Now, produce the name of the person with the lowest grade
+for the second exam.</strong></p>
 </div>
 
 

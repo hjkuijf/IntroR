@@ -14,8 +14,8 @@
 
 <title>Werkcollege statistiek Thema 2</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.15/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -61,6 +61,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -81,6 +82,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -138,11 +142,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -233,7 +241,7 @@ $(document).ready(function () {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -281,7 +289,10 @@ $(document).ready(function () {
 </div>
 
 
-<p>In dit COO leer je de coëfficiënten van een regressielijn schatten in R, een spreidingsdiagram met regressielijn maken, en predictieintervallen laten tekenen rondom een regressielijn en een ijklijn.</p>
+<p>In dit COO leer je de coëfficiënten van een regressielijn schatten in
+R, een spreidingsdiagram met regressielijn maken, en
+predictieintervallen laten tekenen rondom een regressielijn en een
+ijklijn.</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Voorbereiding</li>
 <li>Lineaire regressie (stap voor stap)</li>
@@ -303,26 +314,67 @@ $(document).ready(function () {
 </ol>
 <div id="voorbereiding" class="section level2">
 <h2>0. Voorbereiding</h2>
-<p>Zorg er voor dat je de benodigde databestanden hebt gedownload en lokaal hebt opgeslagen:</p>
+<p>Zorg er voor dat je de benodigde databestanden hebt gedownload en
+lokaal hebt opgeslagen:</p>
 <ul>
-<li><a href="Werkcollege_statistiek_Thema_2/huisstof.csv">huisstof.csv</a></li>
-<li><a href="Werkcollege_statistiek_Thema_2/CSFdat.csv">CSFdat.csv</a></li>
-<li><a href="Werkcollege_statistiek_Thema_2/zalmDNAconcabs.csv">zalmDNAconcabs.csv</a></li>
+<li><a
+href="Werkcollege_statistiek_Thema_2/huisstof.csv">huisstof.csv</a></li>
+<li><a
+href="Werkcollege_statistiek_Thema_2/CSFdat.csv">CSFdat.csv</a></li>
+<li><a
+href="Werkcollege_statistiek_Thema_2/zalmDNAconcabs.csv">zalmDNAconcabs.csv</a></li>
 </ul>
-<p>Het is ook handig om je ‘working directory’ te veranderen in deze map met databestanden. Dit kun je doen via het menu: Session - Set Working Directory - Choose Directory… of met code: <code>setwd("pathname")</code>. Let op dat je in je pad geen backslash (\) moet gebruiken maar of ‘forward slashes’ (/) of een <em>dubbele</em> backslash.</p>
-<p>Verder maken we gebruik van functies uit de packages <code>ggplot2</code> en <code>investr</code>. Als je die nog niet hebt geïnstalleerd, doe dat nu. Daarna kunnen we hem laden:</p>
+<p>Het is ook handig om je ‘working directory’ te veranderen in deze map
+met databestanden. Dit kun je doen via het menu: Session - Set Working
+Directory - Choose Directory… of met code:
+<code>setwd("pathname")</code>. Let op dat je in je pad geen backslash
+(\) moet gebruiken maar of ‘forward slashes’ (/) of een <em>dubbele</em>
+backslash.</p>
+<p>Verder maken we gebruik van functies uit de packages
+<code>ggplot2</code> en <code>investr</code>. Als je die nog niet hebt
+geïnstalleerd, doe dat nu. Daarna kunnen we hem laden:</p>
 <pre class="r"><code>library(ggplot2)
 library(investr)</code></pre>
 </div>
 <div id="lineaire-regressie-stap-voor-stap" class="section level2">
 <h2>1: Lineaire regressie (stap-voor-stap)</h2>
-<p>Er is in de afgelopen 15-20 jaar veel onderzoek uitgevoerd naar de invloed van de woonomgeving op de ontwikkeling en ernst van astma. Omdat een groot deel van alle astmapatiënten positief reageert in type I allergie tests voor huisstofmijten, wordt onder andere veelvuldig gekeken naar de concentraties in huisstof van hun zgn. ‘major allergens’ – eiwitten waaraan het IgE van de meeste mijt-allergische patiënten zich specifiek bindt. Er zijn in NW en Midden-Europa in ieder geval twee veel voorkomende huisstofmijtsoorten: Dermatophagoides pteronyssinus en Dermatophagoides farinae, waarvan de major allergens Der p1 en Der f1 elk afzonderlijk specifiek kunnen worden gemeten in extracten van huisstof. Allergeen hoeveelheden in huisstofmonsters worden meestal opgegeven in ng per m2 bemonsterd oppervlak, of in relatieve concentraties, dat wil zeggen in ng allergeen per mg huisstof.</p>
-<p>In deze opdracht hebben we de beschikking over een selectie van resultaten uit een in 2000-2004 uitgevoerde studie onder Deense schoolkinderen (DAMIB), bij wie onder andere matrasstofmonsters zijn geanalyseerd. Bij elk kind werd gedurende 2 minuten stof gezogen van het volledige oppervlak van het matras, waarbij het opgezogen stof werd verzameld op een filter.</p>
-<p>De variabele <code>Stof</code> geeft het gewicht van het aldus verzamelde stof (in mg), en de variabelen <code>Derp1</code> en <code>Derf1</code> geven de totale hoeveelheden van Der p1 en Der f1 (in ng), respectievelijk, die met immunoassays in het extract van het stof gemeten werden.</p>
-<p>De onderzoekers zijn vooral geïnteresseerd in het effect van de hoeveelheid stof op de hoeveelheid allergenen. Hier kijken we naar naar Der p1.</p>
+<p>Er is in de afgelopen 15-20 jaar veel onderzoek uitgevoerd naar de
+invloed van de woonomgeving op de ontwikkeling en ernst van astma. Omdat
+een groot deel van alle astmapatiënten positief reageert in type I
+allergie tests voor huisstofmijten, wordt onder andere veelvuldig
+gekeken naar de concentraties in huisstof van hun zgn. ‘major allergens’
+– eiwitten waaraan het IgE van de meeste mijt-allergische patiënten zich
+specifiek bindt. Er zijn in NW en Midden-Europa in ieder geval twee veel
+voorkomende huisstofmijtsoorten: Dermatophagoides pteronyssinus en
+Dermatophagoides farinae, waarvan de major allergens Der p1 en Der f1
+elk afzonderlijk specifiek kunnen worden gemeten in extracten van
+huisstof. Allergeen hoeveelheden in huisstofmonsters worden meestal
+opgegeven in ng per m2 bemonsterd oppervlak, of in relatieve
+concentraties, dat wil zeggen in ng allergeen per mg huisstof.</p>
+<p>In deze opdracht hebben we de beschikking over een selectie van
+resultaten uit een in 2000-2004 uitgevoerde studie onder Deense
+schoolkinderen (DAMIB), bij wie onder andere matrasstofmonsters zijn
+geanalyseerd. Bij elk kind werd gedurende 2 minuten stof gezogen van het
+volledige oppervlak van het matras, waarbij het opgezogen stof werd
+verzameld op een filter.</p>
+<p>De variabele <code>Stof</code> geeft het gewicht van het aldus
+verzamelde stof (in mg), en de variabelen <code>Derp1</code> en
+<code>Derf1</code> geven de totale hoeveelheden van Der p1 en Der f1 (in
+ng), respectievelijk, die met immunoassays in het extract van het stof
+gemeten werden.</p>
+<p>De onderzoekers zijn vooral geïnteresseerd in het effect van de
+hoeveelheid stof op de hoeveelheid allergenen. Hier kijken we naar naar
+Der p1.</p>
 <div id="data-uit-.csv-inlezen" class="section level3">
 <h3>1.1 Data uit .csv inlezen</h3>
-<p>We beginnen met het inlezen van het bestand en dat bekijken. (<em>NB: niet vergeten om de naam van de map, hier <code>mypath</code> genoemd, te veranderen in de map waar jij het bestand heb opgeslagen!</em>) De data staat in een .csv bestand <code>huisstof.csv</code>. We lezen de data in en noemen de data frame d1 (NB: niet vergeten om de naam van de map, hier <code>mypath</code> genoemd, te veranderen in de map waar jij het bestand heb opgeslagen). We bekijken de eerste regels met <code>head</code>:</p>
+<p>We beginnen met het inlezen van het bestand en dat bekijken. (<em>NB:
+niet vergeten om de naam van de map, hier <code>mypath</code> genoemd,
+te veranderen in de map waar jij het bestand heb opgeslagen!</em>) De
+data staat in een .csv bestand <code>huisstof.csv</code>. We lezen de
+data in en noemen de data frame d1 (NB: niet vergeten om de naam van de
+map, hier <code>mypath</code> genoemd, te veranderen in de map waar jij
+het bestand heb opgeslagen). We bekijken de eerste regels met
+<code>head</code>:</p>
 <pre class="r"><code>mypath &lt;- &quot;Werkcollege_statistiek_Thema_2&quot;
 d1 &lt;- data.frame(read.csv(file.path(mypath, &quot;huisstof.csv&quot;), sep=&quot;,&quot;))
 head(d1)</code></pre>
@@ -336,17 +388,32 @@ head(d1)</code></pre>
 </div>
 <div id="spreidingsdiagram" class="section level3">
 <h3>1.2 Spreidingsdiagram</h3>
-<p>Nu gaan we een spreidingsdiagram maken van de data. Dat kan via base R, met de functie <code>plot</code> of we kunnen mooiere plaatjes maken met behulp van de functies in de package <code>ggplot2</code>. We beginnen met base R.</p>
+<p>Nu gaan we een spreidingsdiagram maken van de data. Dat kan via base
+R, met de functie <code>plot</code> of we kunnen mooiere plaatjes maken
+met behulp van de functies in de package <code>ggplot2</code>. We
+beginnen met base R.</p>
 <pre class="r"><code>plot(d1$Derp1~d1$Stof)</code></pre>
-<p>Dit kan natuurlijk mooier, met labels op de assen enz. Probeer bijvoorbeeld:</p>
+<p>Dit kan natuurlijk mooier, met labels op de assen enz. Probeer
+bijvoorbeeld:</p>
 <pre class="r"><code>plot(d1$Derp1~d1$Stof, xlab=&quot;Gewicht stof (mg)&quot;, ylab=&quot;Der p1 (ng)&quot;, main=&quot;Relatie Der p1 en gewicht stof&quot;)</code></pre>
 <p><img src="Werkcollege_statistiek_Thema_2_files/figure-html/unnamed-chunk-4-1.png" width="480" /></p>
-<p>Ben je verder tevreden met de plot? Denk aan de range van de assen, bijvoorbeeld? Probeer de x-as te laten lopen vanaf 0 met de <code>xlim=</code> optie.</p>
-<p><strong>Vraag 1a. Beschrijf de relatie tussen Der p1 en de hoeveelheid stof verzameld. Is er een verband? Zo ja, wat voor verband? (Denk aan vorm, sterkte en richting.)</strong></p>
+<p>Ben je verder tevreden met de plot? Denk aan de range van de assen,
+bijvoorbeeld? Probeer de x-as te laten lopen vanaf 0 met de
+<code>xlim=</code> optie.</p>
+<p><strong>Vraag 1a. Beschrijf de relatie tussen Der p1 en de
+hoeveelheid stof verzameld. Is er een verband? Zo ja, wat voor verband?
+(Denk aan vorm, sterkte en richting.)</strong></p>
 </div>
-<div id="regressielijn-schatten-en-toevoegen-aan-plot" class="section level3">
+<div id="regressielijn-schatten-en-toevoegen-aan-plot"
+class="section level3">
 <h3>1.3 Regressielijn schatten en toevoegen aan plot</h3>
-<p>We gaan uit van een (redelijk) lineair verband. Om het lineair model te schatten, gebruiken we de functie <code>lm()</code>. Gebruik de help functie van R om daar meer over te leren. We slaan het model op als een object; op die manier kunnen we de informatie uit het model gebruiken (bijvoorbeeld om toe te voegen aan de spreidingsdiagram). We noemen het object lm.dp. Om de vergelijking van de lijn te krijgen, moeten we vragen om de <code>summary()</code> van het model:</p>
+<p>We gaan uit van een (redelijk) lineair verband. Om het lineair model
+te schatten, gebruiken we de functie <code>lm()</code>. Gebruik de help
+functie van R om daar meer over te leren. We slaan het model op als een
+object; op die manier kunnen we de informatie uit het model gebruiken
+(bijvoorbeeld om toe te voegen aan de spreidingsdiagram). We noemen het
+object lm.dp. Om de vergelijking van de lijn te krijgen, moeten we
+vragen om de <code>summary()</code> van het model:</p>
 <pre class="r"><code>lm.dp &lt;- lm(Derp1~Stof, data=d1)
 summary(lm.dp)</code></pre>
 <pre><code>## 
@@ -367,28 +434,53 @@ summary(lm.dp)</code></pre>
 ## Residual standard error: 58.73 on 23 degrees of freedom
 ## Multiple R-squared:  0.4061, Adjusted R-squared:  0.3803 
 ## F-statistic: 15.73 on 1 and 23 DF,  p-value: 0.0006122</code></pre>
-<p><strong>Vraag 1b. Stel de vergelijking van de lijn op op basis van de uitdraai.</strong></p>
-<p><strong>Vraag 1c. Wat is de voorspelde waarde van de hoeveelheid Der p1 in een monster wanneer de hoeveelheid stof gelijk is aan 1000 mg?</strong></p>
-<p><strong>Vraag 1d. Wat is de correlatie van Der p1 met Stof?</strong></p>
-<p>Omdat de grafiek nog ‘open’ staat in R (tot we een nieuwe grafiek maken, of <code>dev.off()</code> gebruiken om de grafiek te sluiten), kunnen we nog dingen toevoegen aan de grafiek, zoals nieuwe punten (die hebben we niet), tekst (‘annotation’) of lijnen. We voegen een lijn toe op basis van de regressielijn, die in het object <code>lm.dp</code> zit.</p>
+<p><strong>Vraag 1b. Stel de vergelijking van de lijn op op basis van de
+uitdraai.</strong></p>
+<p><strong>Vraag 1c. Wat is de voorspelde waarde van de hoeveelheid Der
+p1 in een monster wanneer de hoeveelheid stof gelijk is aan 1000
+mg?</strong></p>
+<p><strong>Vraag 1d. Wat is de correlatie van Der p1 met
+Stof?</strong></p>
+<p>Omdat de grafiek nog ‘open’ staat in R (tot we een nieuwe grafiek
+maken, of <code>dev.off()</code> gebruiken om de grafiek te sluiten),
+kunnen we nog dingen toevoegen aan de grafiek, zoals nieuwe punten (die
+hebben we niet), tekst (‘annotation’) of lijnen. We voegen een lijn toe
+op basis van de regressielijn, die in het object <code>lm.dp</code>
+zit.</p>
 <pre class="r"><code>abline(reg=lm.dp)</code></pre>
 <p><img src="Werkcollege_statistiek_Thema_2_files/figure-html/unnamed-chunk-6-1.png" width="480" /></p>
 </div>
 <div id="voorspellingen-met-predictieintevallen" class="section level3">
 <h3>1.4 Voorspellingen met predictieintevallen</h3>
-<div id="regressielijn-met-predictieinterval-in-investr" class="section level4">
+<div id="regressielijn-met-predictieinterval-in-investr"
+class="section level4">
 <h4>1.4.1 Regressielijn met predictieinterval in investr</h4>
-<p>In dit thema zijn we vooral geïnteresseerd in predictieintervallen, dus is het makkelijkst om gebruik te maken van de <code>plotFit</code> functie van de <code>investr</code> package.</p>
+<p>In dit thema zijn we vooral geïnteresseerd in predictieintervallen,
+dus is het makkelijkst om gebruik te maken van de <code>plotFit</code>
+functie van de <code>investr</code> package.</p>
 <pre class="r"><code>plotFit(lm.dp, interval = &quot;prediction&quot;, shade = TRUE, col.pred = &quot;lightblue&quot;,
         extend.range = FALSE)</code></pre>
 <p><img src="Werkcollege_statistiek_Thema_2_files/figure-html/unnamed-chunk-7-1.png" width="480" /></p>
-<p><strong>Vraag 1e. Wat is (ongeveer) het predictieinterval voor de voorspelde hoeveelheid Der p1 in een monster wanneer de hoeveelheid stof gelijk is aan 1000 mg? Probeer dit van de grafiek af te lezen.</strong></p>
-<p><strong>Vraag 1f (optioneel). Als je extra wilt oefenen, kun je de stappen hierboven herhalven met Der f1.</strong></p>
+<p><strong>Vraag 1e. Wat is (ongeveer) het predictieinterval voor de
+voorspelde hoeveelheid Der p1 in een monster wanneer de hoeveelheid stof
+gelijk is aan 1000 mg? Probeer dit van de grafiek af te
+lezen.</strong></p>
+<p><strong>Vraag 1f (optioneel). Als je extra wilt oefenen, kun je de
+stappen hierboven herhalven met Der f1.</strong></p>
 </div>
-<div id="regressielijn-met-betrouwbaarheids--en-predictieinterval-in-base-r-optioneel" class="section level4">
-<h4>1.4.2 Regressielijn met betrouwbaarheids- en predictieinterval in base R (optioneel)</h4>
-<p>Om te kijken naar het betrouwbaarheidsinterval en het predictieinterval van de lijn moeten we die intervallen laten uitrekenen en opslaan in een object en die vervolgens ook toevoegen aan de plot.</p>
-<p>We kijken eerst naar het minimum en maximum van de x-variabele, en maken een nieuwe vector met veel waarden tussen die twee in, vervolgens vragen we om voorspellingen met betrouwbaarheidsinterval of predictieinterval. Die intervallen voegen we toe aan plot.</p>
+<div
+id="regressielijn-met-betrouwbaarheids--en-predictieinterval-in-base-r-optioneel"
+class="section level4">
+<h4>1.4.2 Regressielijn met betrouwbaarheids- en predictieinterval in
+base R (optioneel)</h4>
+<p>Om te kijken naar het betrouwbaarheidsinterval en het
+predictieinterval van de lijn moeten we die intervallen laten uitrekenen
+en opslaan in een object en die vervolgens ook toevoegen aan de
+plot.</p>
+<p>We kijken eerst naar het minimum en maximum van de x-variabele, en
+maken een nieuwe vector met veel waarden tussen die twee in, vervolgens
+vragen we om voorspellingen met betrouwbaarheidsinterval of
+predictieinterval. Die intervallen voegen we toe aan plot.</p>
 <pre class="r"><code>min(d1$Stof)</code></pre>
 <pre><code>## [1] 166</code></pre>
 <pre class="r"><code>max(d1$Stof)</code></pre>
@@ -404,9 +496,19 @@ lines(newx, pred_interval[,2], col=&quot;orange&quot;, lty=2)
 lines(newx, pred_interval[,3], col=&quot;orange&quot;, lty=2)</code></pre>
 <p><img src="Werkcollege_statistiek_Thema_2_files/figure-html/unnamed-chunk-8-1.png" width="480" /></p>
 </div>
-<div id="regressielijn-met-betrouwbaarheids--en-predictieinterval-in-ggplot2-optioneel" class="section level4">
-<h4>1.4.3 Regressielijn met betrouwbaarheids- en predictieinterval in ggplot2 (optioneel!)</h4>
-<p>Gebruik van <code>ggplot2</code> helpt bij het plotten van een regressielijn met betrouwbaarheidsinterval, maar een predictieinterval moeten we nog altijd zelf toevoegen. We definiëren eerst het object <code>p.dp</code>, een plot van Der p1 tegenover stof. We voegen vervolgens langzaam elementen toe aan de plot. Hier laten we alleen de laatste versie van de plot zien, maar we raden je aan om elke stap (aangegeven hieronder met dubbele hashtag) apart te doen, dan zie je wat de aparte elementen doen. Om de scatterplot te krijgen:</p>
+<div
+id="regressielijn-met-betrouwbaarheids--en-predictieinterval-in-ggplot2-optioneel"
+class="section level4">
+<h4>1.4.3 Regressielijn met betrouwbaarheids- en predictieinterval in
+ggplot2 (optioneel!)</h4>
+<p>Gebruik van <code>ggplot2</code> helpt bij het plotten van een
+regressielijn met betrouwbaarheidsinterval, maar een predictieinterval
+moeten we nog altijd zelf toevoegen. We definiëren eerst het object
+<code>p.dp</code>, een plot van Der p1 tegenover stof. We voegen
+vervolgens langzaam elementen toe aan de plot. Hier laten we alleen de
+laatste versie van de plot zien, maar we raden je aan om elke stap
+(aangegeven hieronder met dubbele hashtag) apart te doen, dan zie je wat
+de aparte elementen doen. Om de scatterplot te krijgen:</p>
 <pre class="r"><code>p.dp &lt;- ggplot(data=d1, aes(x=Stof, y=Derp1))
 ## p.dp + geom_point()
 ## p.dp + geom_point() + 
@@ -424,7 +526,14 @@ p.dp + geom_point() +
   geom_smooth(method=&quot;lm&quot;, se=TRUE)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="Werkcollege_statistiek_Thema_2_files/figure-html/unnamed-chunk-9-1.png" width="480" /></p>
-<p>Wanneer we een predictieinterval willen toevoegen, moeten we dezelfde stappen volgen als bij de plot in base R hierboven: eerst een nieuwe x variabele aanmaken met veel waarden tussen het minimum en maximum van x=Stof, dan de twee intervallen uit laten rekenen en opslaan, en dan toevoegen aan de plot. Sterker nog, er volgt nog een stap: we moeten het predictieinterval uit laten rekenen voor alle data punten in de data frame, en die toevoegen aan de data frame. Op die manier wordt het best omslachtig:</p>
+<p>Wanneer we een predictieinterval willen toevoegen, moeten we dezelfde
+stappen volgen als bij de plot in base R hierboven: eerst een nieuwe x
+variabele aanmaken met veel waarden tussen het minimum en maximum van
+x=Stof, dan de twee intervallen uit laten rekenen en opslaan, en dan
+toevoegen aan de plot. Sterker nog, er volgt nog een stap: we moeten het
+predictieinterval uit laten rekenen voor alle data punten in de data
+frame, en die toevoegen aan de data frame. Op die manier wordt het best
+omslachtig:</p>
 <pre class="r"><code>tmp.var &lt;- predict(lm.dp, interval=&quot;prediction&quot;)
 newd1 &lt;- cbind(d1, tmp.var)
 p.dp2 &lt;- ggplot(data=newd1, aes(x=Stof, y=Derp1))
@@ -441,28 +550,68 @@ p.dp2 + geom_point() +
 </div>
 <div id="csf-tau-en-genormaliseerde-breinvolume" class="section level2">
 <h2>2. CSF tau en genormaliseerde breinvolume</h2>
-<p>Neurowetenschappers hebben onderzocht in welke mate het volume van de hersenen (NWBV = Normalized Whole Brain Volume, bepaald met MRI en gegeven als een fractie van de intracraniale volume) de concentratie van een eiwit in de cerebrospinale vloeistof, (CSF tau in pg/ml) voorspelt in 29 personen met een milde vorm van de ziekte van Alzheimer. De data kun je vinden in het bestand <code>CSFdata.csv</code>. Lees de data in en bekijk de eerste 6 regels met de <code>head()</code> functie:</p>
+<p>Neurowetenschappers hebben onderzocht in welke mate het volume van de
+hersenen (NWBV = Normalized Whole Brain Volume, bepaald met MRI en
+gegeven als een fractie van de intracraniale volume) de concentratie van
+een eiwit in de cerebrospinale vloeistof, (CSF tau in pg/ml) voorspelt
+in 29 personen met een milde vorm van de ziekte van Alzheimer. De data
+kun je vinden in het bestand <code>CSFdata.csv</code>. Lees de data in
+en bekijk de eerste 6 regels met de <code>head()</code> functie:</p>
 <pre class="r"><code>d2 &lt;- data.frame(read.csv(file.path(mypath, &quot;CSFdata.csv&quot;), sep=&quot;,&quot;))
 ## head(d2)</code></pre>
-<p><font size="2">Bron: <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ana.21559">Fagan AM et al. Decreased cerebrospinal fluid Aβ42 correlates with brain atrophy in cognitively normal elderly Annals of Neurology. 2009; 65:176-183</a> De data zijn geschat uit figuur 2c.</font></p>
-<p><strong>Vraag 2a. Maak een spreidingsdiagram (met aandacht voor de x- en y-assen, inclusief labels) van deze data. Gezien de vraagstelling, welke variabele hoort op de x-as en welke op de y-as?</strong></p>
-<p><strong>Vraag 2b. Beschrijf de relatie tussen de twee variabelen (denk aan vorm, sterkte en richting).</strong></p>
-<p><strong>Vraag 2c. Bereken de coëfficiënten voor de regressielijn en stel de vergelijking van de lijn op.</strong></p>
-<p><strong>Vraag 2d. Voeg de regressielijn toe aan de spreidingsdiagram uit 2a.</strong></p>
-<p><strong>Vraag 2e. Aan de hand va de vergelijking van de regressielijn, geef een voorspelling van de gemiddelde CSF-tau concentratie voor mensen met milde Alzheimer die een NWBV van 0.7 en 0.75 hebben.</strong></p>
+<p><font size="2">Bron: <a
+href="https://onlinelibrary.wiley.com/doi/full/10.1002/ana.21559">Fagan
+AM et al. Decreased cerebrospinal fluid Aβ42 correlates with brain
+atrophy in cognitively normal elderly Annals of Neurology. 2009;
+65:176-183</a> De data zijn geschat uit figuur 2c.</font></p>
+<p><strong>Vraag 2a. Maak een spreidingsdiagram (met aandacht voor de x-
+en y-assen, inclusief labels) van deze data. Gezien de vraagstelling,
+welke variabele hoort op de x-as en welke op de y-as?</strong></p>
+<p><strong>Vraag 2b. Beschrijf de relatie tussen de twee variabelen
+(denk aan vorm, sterkte en richting).</strong></p>
+<p><strong>Vraag 2c. Bereken de coëfficiënten voor de regressielijn en
+stel de vergelijking van de lijn op.</strong></p>
+<p><strong>Vraag 2d. Voeg de regressielijn toe aan de spreidingsdiagram
+uit 2a.</strong></p>
+<p><strong>Vraag 2e. Aan de hand va de vergelijking van de
+regressielijn, geef een voorspelling van de gemiddelde CSF-tau
+concentratie voor mensen met milde Alzheimer die een NWBV van 0.7 en
+0.75 hebben.</strong></p>
 </div>
 <div id="ijklijn-zalm-sperma-dna" class="section level2">
 <h2>3. IJklijn zalm sperma DNA</h2>
-<p>We gebruiken hier de data van de zelfstudie: een kalibratielijn opgesteld d.m.v. UV spectrofotometrie (absorptie bij 260 nm) met bekende concentraties zalm sperma DNA. De data voor de kalibratielijn staan in het bestand <code>zalmDNAconcabs.csv</code>. We lezen het bestand in, noemen de data frame d3, en bekijken de data:</p>
+<p>We gebruiken hier de data van de zelfstudie: een kalibratielijn
+opgesteld d.m.v. UV spectrofotometrie (absorptie bij 260 nm) met bekende
+concentraties zalm sperma DNA. De data voor de kalibratielijn staan in
+het bestand <code>zalmDNAconcabs.csv</code>. We lezen het bestand in,
+noemen de data frame d3, en bekijken de data:</p>
 <pre class="r"><code>d3 &lt;- data.frame(read.csv(file.path(mypath, &quot;zalmDNAconcabs.csv&quot;), sep=&quot;,&quot;))
 ## d3</code></pre>
-<p><font size="2">Bron: <a href="https://www.sciencedirect.com/science/article/pii/S0168365913008298?via%3Dihub#s0110">Almalik A. et al. Hyaluronic acid-coated chitosan nanoparticles: Molecular weight-dependent effects on morphology and hyaluronic acid presentation. Journal of Controlled Release. 2013; 172:1142–1150.</a> De data zijn (op het oog) geschat uit figuur S3.</font></p>
-<p><strong>Vraag 3a. Maak een spreidingsdiagram (met aandacht voor de x- en y-assen, inclusief labels) van deze data. Welke variabele hoort op de x-as en welke op de y-as?</strong></p>
-<p><strong>Vraag 3b. Schat de ijklijn en voeg deze toe aan de plot.</strong></p>
-<p><strong>Vraag 3c. De R<sup>2</sup> van deze lijn is natuurlijk veel hoger dan de voorgaande voorbeelden. Hoe komt dat?</strong></p>
-<p><strong>Vraag 3d. Een onbekend monster geeft een absorptie van 0.20. Wat is de op basis van de ijklijn geschatte concentratie DNA in het monster? Reken dit uit, schat het niet alleen af uit de plot. Hoe nauwkeurig denk je dat deze schatting is?</strong></p>
-<p><strong>Vraag 3e. Gebruik de <code>plotFit</code> functie om de predictieintervallen rondom de ijklijn te plotten. Je kunt jouw plot vergelijken met die in de kennisclip over kalibratielijnen.</strong></p>
-<p><strong>Vraag 3f. Gebruik de <code>invest()</code> functie (tip: gebruik de help functie!) uit de <code>investr</code> package om je voorspelling uit 3c te checken, en om predictieinterval rondom die voorspelling te krijgen. Interpreteer dit interval. Voor het type interval mag je de default gebruiken.</strong></p>
+<p><font size="2">Bron: <a
+href="https://www.sciencedirect.com/science/article/pii/S0168365913008298?via%3Dihub#s0110">Almalik
+A. et al. Hyaluronic acid-coated chitosan nanoparticles: Molecular
+weight-dependent effects on morphology and hyaluronic acid presentation.
+Journal of Controlled Release. 2013; 172:1142–1150.</a> De data zijn (op
+het oog) geschat uit figuur S3.</font></p>
+<p><strong>Vraag 3a. Maak een spreidingsdiagram (met aandacht voor de x-
+en y-assen, inclusief labels) van deze data. Welke variabele hoort op de
+x-as en welke op de y-as?</strong></p>
+<p><strong>Vraag 3b. Schat de ijklijn en voeg deze toe aan de
+plot.</strong></p>
+<p><strong>Vraag 3c. De R<sup>2</sup> van deze lijn is natuurlijk veel
+hoger dan de voorgaande voorbeelden. Hoe komt dat?</strong></p>
+<p><strong>Vraag 3d. Een onbekend monster geeft een absorptie van 0.20.
+Wat is de op basis van de ijklijn geschatte concentratie DNA in het
+monster? Reken dit uit, schat het niet alleen af uit de plot. Hoe
+nauwkeurig denk je dat deze schatting is?</strong></p>
+<p><strong>Vraag 3e. Gebruik de <code>plotFit</code> functie om de
+predictieintervallen rondom de ijklijn te plotten. Je kunt jouw plot
+vergelijken met die in de kennisclip over kalibratielijnen.</strong></p>
+<p><strong>Vraag 3f. Gebruik de <code>invest()</code> functie (tip:
+gebruik de help functie!) uit de <code>investr</code> package om je
+voorspelling uit 3c te checken, en om predictieinterval rondom die
+voorspelling te krijgen. Interpreteer dit interval. Voor het type
+interval mag je de default gebruiken.</strong></p>
 <p><strong>Vraag 3g. Interpreteer het interval uit 3e.</strong></p>
 </div>
 
