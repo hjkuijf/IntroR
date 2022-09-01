@@ -679,10 +679,11 @@ iris_sorted &lt;- iris_dataset[order(iris_dataset$sepal_width),]
 iris_sorted &lt;- iris_dataset[order(iris_dataset$flower, iris_dataset$sepal_width),]
 
 iris_sorted &lt;- iris_dataset[order(iris_dataset$flower, iris_dataset$sepal_width,
-                                       decreasing = c(FALSE, TRUE)),]</code></pre>
+                                       decreasing = c(FALSE, TRUE), method = &#39;radix&#39;),]</code></pre>
 <p>The iris_sorted dataframe has sorted the iris_dataset data first in
 increasing order on flower name, and then in decreasing order on sepal
-width.</p>
+width. Note: you have to specify <code>method='radix'</code> to enable
+multi-column decreasing sorting in R.</p>
 <p>Now, let’s try a similar sorting for our Heart_disease dataframe.</p>
 <p><strong>21. Create one new dataframe in which you sort the
 Heart_disease data first in decreasing order on sex, and then in
