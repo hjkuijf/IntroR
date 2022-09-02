@@ -14,7 +14,7 @@
 
 <title>COO4: Descriptive Statistics in R</title>
 
-<script src="site_libs/header-attrs-2.15/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -271,6 +271,9 @@ $(document).ready(function () {
 <li>
   <a href="Werkcollege_statistiek_Thema_2.html">Statistiek 2</a>
 </li>
+<li>
+  <a href="Werkcollege_statistiek_Thema_3.html">Statistiek 3</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -463,11 +466,11 @@ the <code>describe</code> function.</p>
 ## group: Current
 ##   vars   n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
 ## 1    1 670 121.73 17.94  81 221   140 0.69  18   111  119   129
-## ------------------------------------------------------ 
+## ------------------------------------------------------------- 
 ## group: Former
 ##   vars   n   mean    sd min max range   se IQR Q0.25  Q0.5 Q0.75
 ## 1    1 846 125.24 17.96  85 217   132 0.62  22   113 122.5   135
-## ------------------------------------------------------ 
+## ------------------------------------------------------------- 
 ## group: Never
 ##   vars    n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
 ## 1    1 1953 120.18 16.51  82 209   127 0.37  20   109  119   129</code></pre>
@@ -490,10 +493,8 @@ to mg/dL for an American physician?</p>
 descriptive statistics for this new variable:</p>
 <pre class="r"><code>d$TotCholmgdl &lt;- d$TotChol*38.61004
 describe(d$TotCholmgdl, na.rm=TRUE, skew=FALSE, quant=c(0.25, 0.5, 0.75), IQR=TRUE)</code></pre>
-<pre><code>##   vars    n   mean    sd   min    max  range   se   IQR  Q0.25   Q0.5
-## 1    1 3500 193.01 40.79 59.07 474.13 415.06 0.69 54.05 163.71 189.58
-##    Q0.75
-## 1 217.76</code></pre>
+<pre><code>##   vars    n   mean    sd   min    max  range   se   IQR  Q0.25   Q0.5  Q0.75
+## 1    1 3500 193.01 40.79 59.07 474.13 415.06 0.69 54.05 163.71 189.58 217.76</code></pre>
 <p>Since all of the statistics we’re examining (mean, median, sd, IQR)
 are in the same units as the variable itself, we can multiply the
 descriptive statistics of <code>TotChol</code> to get the descriptive

@@ -17,6 +17,8 @@ navbar:
       href: Werkcollege_statistiek_Thema_1.html
     - text: "Statistiek 2"
       href: Werkcollege_statistiek_Thema_2.html
+    - text: "Statistiek 3"
+      href: Werkcollege_statistiek_Thema_3.html
 output:
   html_document:
     theme: cosmo
