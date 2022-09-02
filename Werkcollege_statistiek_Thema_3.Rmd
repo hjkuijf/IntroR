@@ -10,11 +10,14 @@ In het zelfstudie document is aan de hand van twee datasets een aantal toetsen b
 
 In dit COO maken we gebruik van een aantal packages en functies in R. Voor het inlezen van bestanden en voor de beschrijvende statistiek zijn deze al geïntroduceerd in de COO’s over R. We verwijzen je naar deze COO’s wanneer je niet meer goed weet hoe deze functies werken. Voor de toetsen staat het benodigde R script in de betreffende vraag. 
 
+Zorg er voor dat je de benodigde databestanden hebt gedownload en lokaal hebt opgeslagen:  
+
+* [spirometrie.csv](Werkcollege_statistiek_Thema_3/spirometrie.csv)
+* [paracetamol.csv](Werkcollege_statistiek_Thema_3/paracetamol.csv)
+
 ## Vraag 1 Spirometrie data.
 
 Je gaat de stappen behandeld in het zelfstudie document nu zelf uitvoeren in R.
-
-Hiervoor lees je de spirometrie data (`'spirometrie.csv'`) allereerst in R in. Zorg er voor dat je het bestand van BB hebt gehaald en lokaal hebt bewaard.
 
 We beginnen met het inlezen van het bestand en dat bekijken. (_NB: niet vergeten om de naam van de map, hier `mypath` genoemd, te veranderen in de map waar jij het bestand heb opgeslagen!_) De data staat in een .csv bestand `spirometrie.csv`. We lezen de data in en noemen de data frame d (NB: niet vergeten om de naam van de map, hier `mypath` genoemd, te veranderen in de map waar jij het bestand heb opgeslagen).
 
