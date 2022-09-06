@@ -45,7 +45,7 @@ Save the files in the same folder. You can do this by right-clicking on the link
 
 Let's first use the manual way to import data as shown in the lecture: File > Import Dataset > From Text (base) > Import.  
 
-**1. Import the Mammogram dataset manually.**  
+**1. Import the Mammogram dataset manually.**  *Note: unfortunately, newer versions of RStudio give a warning about default.stringsAsFactors. This is a bug in RStudio, but does not affect this COO. You can ignore this warning.*
 
 You can see the command RStudio used to import the data in the Console. As you can see, the function RStudio used is `read.csv()`. You can see that the only argument in the function is the path to your text file, including the name and extension (.txt) of your file. And R automatically assigned the data to a variable with the name of the file (`Mammogram <- read.csv()`).  
 `read.csv()` is a variant of the more general function `read.table()`. 'csv' Indicates that the values are comma-separated. If you open the original .txt file, you can see that each line contains a row of values, which can be numbers or letters, and each value is separated by a comma. In addition, `read.csv()` by default uses the first line in the text file as column names for the dataframe.

@@ -355,7 +355,10 @@ for example the date (yy-mm-dd) + file name + version
 (e.g. 210907_RscriptCOO2_version1).</p>
 <p>Let’s first use the manual way to import data as shown in the
 lecture: File &gt; Import Dataset &gt; From Text (base) &gt; Import.</p>
-<p><strong>1. Import the Mammogram dataset manually.</strong></p>
+<p><strong>1. Import the Mammogram dataset manually.</strong> <em>Note:
+unfortunately, newer versions of RStudio give a warning about
+default.stringsAsFactors. This is a bug in RStudio, but does not affect
+this COO. You can ignore this warning.</em></p>
 <p>You can see the command RStudio used to import the data in the
 Console. As you can see, the function RStudio used is
 <code>read.csv()</code>. You can see that the only argument in the
