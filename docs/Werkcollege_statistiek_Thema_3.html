@@ -13,7 +13,6 @@
 
 <title>Werkcollege statistiek Thema 3</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -290,37 +289,19 @@ $(document).ready(function () {
 </div>
 
 
-<p>In het zelfstudie document is aan de hand van twee datasets een
-aantal toetsen behandeld: de z-toets, de t-toets en de chi-kwadraat
-toets. In dit COO komen deze toetsen opnieuw aan de orde, waarbij je
-gebruik maakt van dezelfde datasets.</p>
-<p>In dit COO maken we gebruik van een aantal packages en functies in R.
-Voor het inlezen van bestanden en voor de beschrijvende statistiek zijn
-deze al geïntroduceerd in de COO’s over R. We verwijzen je naar deze
-COO’s wanneer je niet meer goed weet hoe deze functies werken. Voor de
-toetsen staat het benodigde R script in de betreffende vraag.</p>
-<p>Zorg er voor dat je de benodigde databestanden hebt gedownload en
-lokaal hebt opgeslagen:</p>
+<p>In het zelfstudie document is aan de hand van twee datasets een aantal toetsen behandeld: de z-toets, de t-toets en de chi-kwadraat toets. In dit COO komen deze toetsen opnieuw aan de orde, waarbij je gebruik maakt van dezelfde datasets.</p>
+<p>In dit COO maken we gebruik van een aantal packages en functies in R. Voor het inlezen van bestanden en voor de beschrijvende statistiek zijn deze al geïntroduceerd in de COO’s over R. We verwijzen je naar deze COO’s wanneer je niet meer goed weet hoe deze functies werken. Voor de toetsen staat het benodigde R script in de betreffende vraag.</p>
+<p>Zorg er voor dat je de benodigde databestanden hebt gedownload en lokaal hebt opgeslagen:</p>
 <ul>
-<li><a
-href="Werkcollege_statistiek_Thema_3/spirometrie.csv">spirometrie.csv</a></li>
-<li><a
-href="Werkcollege_statistiek_Thema_3/paracetamol.csv">paracetamol.csv</a></li>
+<li><a href="Werkcollege_statistiek_Thema_3/spirometrie.csv">spirometrie.csv</a></li>
+<li><a href="Werkcollege_statistiek_Thema_3/paracetamol.csv">paracetamol.csv</a></li>
 </ul>
 <div id="vraag-1-spirometrie-data." class="section level2">
 <h2>Vraag 1 Spirometrie data.</h2>
-<p>Je gaat de stappen behandeld in het zelfstudie document nu zelf
-uitvoeren in R.</p>
-<p>We beginnen met het inlezen van het bestand en dat bekijken. (<em>NB:
-niet vergeten om de naam van de map, hier <code>mypath</code> genoemd,
-te veranderen in de map waar jij het bestand heb opgeslagen!</em>) De
-data staat in een .csv bestand <code>spirometrie.csv</code>. We lezen de
-data in en noemen de data frame d (NB: niet vergeten om de naam van de
-map, hier <code>mypath</code> genoemd, te veranderen in de map waar jij
-het bestand heb opgeslagen).</p>
-<pre class="r"><code>mypath &lt;- &quot;Werkcollege_statistiek_Thema_3&quot;
-d &lt;- data.frame(read.csv2(file.path(mypath, &quot;spirometrie.csv&quot;)))
-head(d)</code></pre>
+<p>Je gaat de stappen behandeld in het zelfstudie document nu zelf uitvoeren in R.</p>
+<p>We beginnen met het inlezen van het bestand en dat bekijken. De data staat in een .csv bestand <code>spirometrie.csv</code>. We lezen de data in en noemen de data frame <code>d</code>.</p>
+<pre class="r"><code>d &lt;-read.csv2(&quot;spirometrie.csv&quot;)</code></pre>
+<pre class="r"><code>head(d)</code></pre>
 <pre><code>##   Student Geslacht Leeftijd Lengte Gewicht Teugvolume  ERV  IRV  FVC FEV1
 ## 1       1        V       19    174      63       1.14 0.70 1.41 3.03 3.04
 ## 2       2        V       19    175      67       1.10 1.22 1.92 4.22 2.49
@@ -328,11 +309,7 @@ head(d)</code></pre>
 ## 4       4        V       21    178      63       1.23 2.17 1.51 4.81 3.95
 ## 5       5        M       20    196      93       0.65 2.21 3.22 6.20 5.79
 ## 6       6        V       21    172      78         NA 1.65 1.51 4.36 3.91</code></pre>
-<p>Om te beginnen, zijn de data in een boxplot weergegeven. Hierin is
-een onderscheid gemaakt tussen mannen en vrouwen. <strong>Geef de FEV1
-in een dergelijk boxplot weer. Bereken ook de beschrijvende statistieken
-voor mannen en vrouwen (gemiddelde en standaard deviatie) in
-R.</strong></p>
+<p>Om te beginnen, zijn de data in een boxplot weergegeven. Hierin is een onderscheid gemaakt tussen mannen en vrouwen. <strong>Geef de FEV1 in een dergelijk boxplot weer. Bereken ook de beschrijvende statistieken voor mannen en vrouwen (gemiddelde en standaard deviatie) in R.</strong></p>
 <pre><code>  Quanjer (1993)
 
   Referentiewaarden
@@ -340,21 +317,9 @@ R.</strong></p>
   Mannen:   verwachte FEV1 = 4.30H – 0.029A – 2.49
 
   H = lengte in meters, A = leeftijd in jaren</code></pre>
-<p><strong>Bereken op basis van de formules van Quanjer (1993) de
-verwachte FEV1 voor ieder van de studenten in je databestand.</strong>
-Let op: de lengte in het databestand is in centimeters, de formule van
-Quanjer gebruikt lengte in meters. <strong>Bereken vervolgens het
-verschil tussen de geobserveerde FEV1 en de verwachte FEV1.</strong></p>
-<p><strong>Aan de hand van de gevonden verschillen, toets je of de FEV1
-van studenten overeenkomt met de algemene populatie in
-Nederland.</strong> In eerste instantie mag je veronderstellen dat de
-standaard deviatie van de populatie bekend is, en wel gelijk aan
-<code>0.5</code>. Verder ga je er vanuit dat de data normaal verdeeld
-zijn. Je wil <span class="math inline">\(H_0:\mu = 0\)</span> en <span
-class="math inline">\(H_1:\mu \neq 0\)</span> toetsen.</p>
-<p>In R is er in de package <code>BSDA</code> een z-toets beschikbaar.
-Wil je de z-waarde uitrekenen in R, dan gaat dit als volgt. Voor de
-mannen:</p>
+<p><strong>Bereken op basis van de formules van Quanjer (1993) de verwachte FEV1 voor ieder van de studenten in je databestand.</strong> Let op: de lengte in het databestand is in centimeters, de formule van Quanjer gebruikt lengte in meters. <strong>Bereken vervolgens het verschil tussen de geobserveerde FEV1 en de verwachte FEV1.</strong></p>
+<p><strong>Aan de hand van de gevonden verschillen, toets je of de FEV1 van studenten overeenkomt met de algemene populatie in Nederland.</strong> In eerste instantie mag je veronderstellen dat de standaard deviatie van de populatie bekend is, en wel gelijk aan <code>0.5</code>. Verder ga je er vanuit dat de data normaal verdeeld zijn. Je wil <span class="math inline">\(H_0:\mu = 0\)</span> en <span class="math inline">\(H_1:\mu \neq 0\)</span> toetsen.</p>
+<p>In R is er in de package <code>BSDA</code> een z-toets beschikbaar. Als je die nog niet hebt geïnstalleerd, doe dat nu met de functie <code>install.packages("BSDA")</code>. Wil je de z-waarde uitrekenen in R, dan gaat dit als volgt. Voor de mannen:</p>
 <pre class="r"><code>library(BSDA)
 
 z.test(d$verschil[d$Geslacht == &quot;M&quot;],
@@ -362,58 +327,24 @@ z.test(d$verschil[d$Geslacht == &quot;M&quot;],
        alternative = &quot;two.sided&quot;,
        mu = 0,
        conf.level = 0.95)</code></pre>
-<p>Default in R is de waarde voor <span
-class="math inline">\(\mu\)</span> gelijk aan <code>0</code>. Ook
-default wordt er een tweezijdig 95%-betrouwbaarheidsinterval geschat.
-Dus <code>mu = 0, alternative = c("two.sided"), conf.level = 0.95</code>
-is in het R script niet nodig om de toets te laten uitvoeren, maar is nu
-voor de volledigheid wel vermeld.</p>
-<p><strong>Maak de boxplots en histogrammen waarmee je kunt beoordelen
-in hoeverre je voldoet aan de aanname van normaliteit.</strong> Houd
-hierbij rekening met mogelijke verschillen in geslacht. Naast deze
-plots, is het gebruikelijk om een ‘normal probability plot’ te gebruiken
-voor het beoordelen van normaliteit van de data. Deze plot is al
-geïntroduceerd in Oog voor Impact (voor opfrissen: (zie PSLS hoofdstuk
-11, paragraaf ‘Normal quantile plots’ en <a
-href="https://umcutrecht.mediamission.nl/Mediasite/Play/0e2109843156409ca053a07af8cca2e91d">https://umcutrecht.mediamission.nl/Mediasite/Play/0e2109843156409ca053a07af8cca2e91d</a>).
-Maak ook een normal probability plot voor de FEV1 uitgesplitst naar
-geslacht.</p>
-<p><strong>Voer, zowel voor de mannen als voor de vrouwen afzonderlijk,
-een z-toets uit. Interpreteer je gevonden resultaat.</strong></p>
-<p><strong>Voer tenslotte een t-toets uit voor zowel mannen als
-vrouwen.</strong> De t-toets is onderdeel van de basis van R, je hebt
-hier geen aparte package voor nodig. Voor de mannen ziet het script er
-als volgt uit:</p>
+<p>Default in R is de waarde voor <span class="math inline">\(\mu\)</span> gelijk aan <code>0</code>. Ook default wordt er een tweezijdig 95%-betrouwbaarheidsinterval geschat. Dus <code>mu = 0, alternative = c("two.sided"), conf.level = 0.95</code> is in het R script niet nodig om de toets te laten uitvoeren, maar is nu voor de volledigheid wel vermeld.</p>
+<p><strong>Maak de boxplots en histogrammen waarmee je kunt beoordelen in hoeverre je voldoet aan de aanname van normaliteit.</strong> Houd hierbij rekening met mogelijke verschillen in geslacht. Naast deze plots, is het gebruikelijk om een ‘normal probability plot’ te gebruiken voor het beoordelen van normaliteit van de data. Deze plot is al geïntroduceerd in Oog voor Impact (voor opfrissen: (zie PSLS hoofdstuk 11, paragraaf ‘Normal quantile plots’ en <a href="https://umcutrecht.mediamission.nl/Mediasite/Play/0e2109843156409ca053a07af8cca2e91d">https://umcutrecht.mediamission.nl/Mediasite/Play/0e2109843156409ca053a07af8cca2e91d</a>). Maak ook een normal probability plot voor de FEV1 uitgesplitst naar geslacht.</p>
+<p><strong>Voer, zowel voor de mannen als voor de vrouwen afzonderlijk, een z-toets uit. Interpreteer je gevonden resultaat.</strong></p>
+<p><strong>Voer tenslotte een t-toets uit voor zowel mannen als vrouwen.</strong> De t-toets is onderdeel van de basis van R, je hebt hier geen aparte package voor nodig. Voor de mannen ziet het script er als volgt uit:</p>
 <pre class="r"><code>t.test(d$verschil[d$Geslacht == &quot;M&quot;],
        mu = 0,
        alternative = &quot;two.sided&quot;,
        conf.level = 0.95)</code></pre>
-<p>Ook nu zijn de defaults <code>mu = 0</code>,
-<code>alternative = "two.sided"</code> en
-<code>conf.level = 0.95</code>. <strong>Verandert je conclusie ten
-aanzien van de nulhypothese voor mannen en vrouwen nu je een t-toets
-gebruikt? En als je conclusie verandert, kun je dan aangeven welke
-parameter hiervoor verantwoordelijk is?</strong></p>
-<p>In het databestand spirometrie staan ook de variabelen lengte en
-gewicht. Bereken de BMI (gewicht [in kg])/(lengte [in m])<span
-class="math inline">\(^2\)</span>. De gemiddelde BMI voor volwassen
-mannen is in Nederland <code>26.9</code> en voor volwassen vrouwen
-<code>26.6</code>. Toets of de studenten gemiddeld genomen een lagere
-BMI hebben dan de gemiddelde Nederlandse BMI. Houd hierbij rekening met
-de variabele <code>Geslacht</code>. Gebruik het stappenplan voor
-toetsen.</p>
+<p>Ook nu zijn de defaults <code>mu = 0</code>, <code>alternative = "two.sided"</code> en <code>conf.level = 0.95</code>. <strong>Verandert je conclusie ten aanzien van de nulhypothese voor mannen en vrouwen nu je een t-toets gebruikt? En als je conclusie verandert, kun je dan aangeven welke parameter hiervoor verantwoordelijk is?</strong></p>
+<p>In het databestand spirometrie staan ook de variabelen lengte en gewicht. Bereken de BMI (gewicht [in kg])/(lengte [in m])<span class="math inline">\(^2\)</span>. De gemiddelde BMI voor volwassen mannen is in Nederland <code>26.9</code> en voor volwassen vrouwen <code>26.6</code>. Toets of de studenten gemiddeld genomen een lagere BMI hebben dan de gemiddelde Nederlandse BMI. Houd hierbij rekening met de variabele <code>Geslacht</code>. Gebruik het stappenplan voor toetsen.</p>
 </div>
 <div id="vraag-2-sars-cov-2-en-bloedgroep-data" class="section level2">
 <h2>Vraag 2 SARS-CoV-2 en bloedgroep data</h2>
-<p>Ook met deze dataset ga je de analyse in R uitvoeren. We gebruiken
-hiervoor de oorspronkelijke dataset uit het artikel. Maak deze zelf in R
-met behulp van onderstaande code: <strong>Maak de dataset in
-R.</strong></p>
+<p>Ook met deze dataset ga je de analyse in R uitvoeren. We gebruiken hiervoor de oorspronkelijke dataset uit het artikel. Maak deze zelf in R met behulp van onderstaande code: <strong>Maak de dataset in R.</strong></p>
 <pre class="r"><code>d &lt;- matrix(c(398, 25, 65, 462, 377, 36, 71, 291), 4)
 rownames(d) &lt;- c(&quot;A&quot;, &quot;AB&quot;, &quot;B&quot;, &quot;O&quot;)
 colnames(d) &lt;- c(&quot;cases&quot;, &quot;controls&quot;)</code></pre>
-<p>Om R de matrix als een frequentie tabel te laten zien, is er nog een
-extra stap nodig: gebruik hiervoor de functie as.table().</p>
+<p>Om R de matrix als een frequentie tabel te laten zien, is er nog een extra stap nodig: gebruik hiervoor de functie as.table().</p>
 <pre class="r"><code>dtab &lt;- as.table(d)
 dtab</code></pre>
 <pre><code>##    cases controls
@@ -421,42 +352,18 @@ dtab</code></pre>
 ## AB    25       36
 ## B     65       71
 ## O    462      291</code></pre>
-<p>Voor de interpretatie van de studie is het inzichtelijker om de
-frequenties niet als absolute, maar als relatieve (of procentuele)
-frequenties weer te geven. <strong>Maak een tabel met relatieve
-frequenties.</strong> Hiervoor gebruik je de functie
-<code>prop.table()</code>: <code>prop.table(dtab)</code>. Je kunt nog
-een <code>1</code> of <code>2</code> toevoegen aan de functie:
-<code>prop.table(dtab,1)</code> of <code>prop.table(dtab,2)</code>.
-<strong>Welke informatie je krijgt met de verschillende relatieve
-frequenties die je kunt berekenen? Welke relatieve frequenties hebben
-jouw voorkeur bij de interpretatie?</strong></p>
+<p>Voor de interpretatie van de studie is het inzichtelijker om de frequenties niet als absolute, maar als relatieve (of procentuele) frequenties weer te geven. <strong>Maak een tabel met relatieve frequenties.</strong> Hiervoor gebruik je de functie <code>prop.table()</code>: <code>prop.table(dtab)</code>. Je kunt nog een <code>1</code> of <code>2</code> toevoegen aan de functie: <code>prop.table(dtab, 1)</code> of <code>prop.table(dtab, 2)</code>. <strong>Welke informatie je krijgt met de verschillende relatieve frequenties die je kunt berekenen? Welke relatieve frequenties hebben jouw voorkeur bij de interpretatie?</strong></p>
 <p><strong>Voer een chi-kwadraat toets uit op de data:</strong></p>
 <pre class="r"><code>dtest &lt;- chisq.test(dtab)
 dtest</code></pre>
-<p><strong>Welke hypothese heb je nu getoetst? Geef ook de frequenties
-die je onder de nulhypothese verwacht. Interpreteer je gevonden
-resultaat (betrek hierbij ook de verwachte waardes).</strong></p>
+<p><strong>Welke hypothese heb je nu getoetst? Geef ook de frequenties die je onder de nulhypothese verwacht. Interpreteer je gevonden resultaat (betrek hierbij ook de verwachte waardes).</strong></p>
 </div>
 <div id="vraag-3-progeria" class="section level2">
 <h2>Vraag 3 Progeria</h2>
-<p>Bij een kind met de genetische aandoening Progeria wordt het lichaam
-snel ouder. Een groot deel van de kinderen met Progeria overlijdt jong,
-in de tienerjaren, aan cardiovasculaire aandoeningen. In een klinische
-studie wordt een aantal fysiologische variabelen, waaronder de
-polsgolfsnelheid (PWV, Pulse Wave Velocity), onderzocht. De PWV wordt
-vaak gebruikt als maat voor de vasculaire stijfheid, welke samenhangt
-met de cardiovasculaire gezondheid van een individu. Wanneer de PWV
-boven de <code>6.6</code> m/s komt, spreekt men van een abnormaal hoge
-PWV. De onderzoekers vragen zich af of bij kinderen met Progeria deze
-PWV waarde ook abnormaal hoog is. De onderzoekers hebben de volgende PWV
-waarden gevonden:</p>
+<p>Bij een kind met de genetische aandoening Progeria wordt het lichaam snel ouder. Een groot deel van de kinderen met Progeria overlijdt jong, in de tienerjaren, aan cardiovasculaire aandoeningen. In een klinische studie wordt een aantal fysiologische variabelen, waaronder de polsgolfsnelheid (PWV, Pulse Wave Velocity), onderzocht. De PWV wordt vaak gebruikt als maat voor de vasculaire stijfheid, welke samenhangt met de cardiovasculaire gezondheid van een individu. Wanneer de PWV boven de <code>6.6</code> m/s komt, spreekt men van een abnormaal hoge PWV. De onderzoekers vragen zich af of bij kinderen met Progeria deze PWV waarde ook abnormaal hoog is. De onderzoekers hebben de volgende PWV waarden gevonden:</p>
 <pre><code>## 18.8 17.6 17.5 16 17.8 14.1 13.7 13.1 12.9 12.9 12.4 10.1 9.3 9.1 8.3 8.3 7.9 7.2</code></pre>
-<p><strong>Doorloop het 4-stappenplan voor toetsen. Voer de analyse uit
-in R.</strong></p>
-<p><strong>Veel programma’s geven niet de mogelijkheid om aan te geven
-of je één- of tweezijdig toetst: de berekeningen zijn dan gebaseerd op
-een tweezijdige toets.</strong></p>
+<p><strong>Doorloop het 4-stappenplan voor toetsen. Voer de analyse uit in R.</strong></p>
+<p><strong>Veel programma’s geven niet de mogelijkheid om aan te geven of je één- of tweezijdig toetst: de berekeningen zijn dan gebaseerd op een tweezijdige toets.</strong></p>
 <pre class="r"><code>t.test(d, mu = 6.6, conf.level = 0.95)</code></pre>
 <pre><code>## 
 ##  One Sample t-test
@@ -469,22 +376,12 @@ een tweezijdige toets.</strong></p>
 ## sample estimates:
 ## mean of x 
 ##  12.61111</code></pre>
-<p><strong>Hoe kun je met dergelijke output dan toch éénzijdig
-toetsen?</strong></p>
+<p><strong>Hoe kun je met dergelijke output dan toch éénzijdig toetsen?</strong></p>
 </div>
 <div id="vraag-4-paracetamol" class="section level2">
 <h2>Vraag 4 Paracetamol</h2>
-<p>In een paracetamol tablet zit – volgens de verpakking – 500 mg
-paracetamol. Deze hoeveelheid paracetamol is een variabele, dat wil
-zeggen, in een tablet zal nooit exact 500 mg paracetamol zitten. De
-vraag is nu of de fabrikant van de tabletten doet wat er wordt beloofd.
-Is de hoeveelheid paracetamol in een steekproef van tabletten gelijk aan
-500 mg? In het bestand <code>paracetamol.csv</code> vind je metingen van
-een practicum van een eerder studiejaar. Er zijn twee metingen met UV en
-twee metingen met HPLC uitgevoerd. Als uitkomstvariabelen gebruik je het
-gemiddelde van de twee UV metingen.</p>
-<p><strong>Doorloop het 4-stappenplan voor toetsen voor deze dataset.
-Voer de analyse uit in R.</strong></p>
+<p>In een paracetamol tablet zit – volgens de verpakking – 500 mg paracetamol. Deze hoeveelheid paracetamol is een variabele, dat wil zeggen, in een tablet zal nooit exact 500 mg paracetamol zitten. De vraag is nu of de fabrikant van de tabletten doet wat er wordt beloofd. Is de hoeveelheid paracetamol in een steekproef van tabletten gelijk aan 500 mg? In het bestand <code>paracetamol.csv</code> vind je metingen van een practicum van een eerder studiejaar. Er zijn twee metingen met UV en twee metingen met HPLC uitgevoerd. Als uitkomstvariabelen gebruik je het gemiddelde van de twee UV metingen.</p>
+<p><strong>Doorloop het 4-stappenplan voor toetsen voor deze dataset. Voer de analyse uit in R.</strong></p>
 </div>
 
 

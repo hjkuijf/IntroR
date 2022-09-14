@@ -5,7 +5,6 @@ author: 'Rebecca Stellato'
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 ```
 
 In dit COO leer je gemiddelden en (95%) betrouwbaarheidsintervallen berekenen, en absorptie data plotten tegenover de concentraties van een antibioticum.  
@@ -24,26 +23,29 @@ Zorg er voor dat je de benodigde databestanden hebt gedownload en lokaal hebt op
 * [OD250.csv](Werkcollege_statistiek_Thema_1/OD250.csv)
 * [ODdatavb.csv](Werkcollege_statistiek_Thema_1/ODdatavb.csv)
 
+Het is ook handig om je 'working directory' te veranderen in deze map met databestanden. Dit kun je doen via het menu: Session > Set Working Directory > Choose Directory... > selecteer de map waarin de databestanden staan. Let op tijdens het instellen van je ‘working directory’ zie je de bestanden meestal niet staan.
 
-Het is ook handig om je 'working directory' te veranderen in deze map met databestanden. Dit kun je doen via het menu: Session - Set Working Directory - Choose Directory... of met code: `setwd("pathname")`. Let op dat je in je pad geen backslash (\\) moet gebruiken maar of 'forward slashes' (/) of een _dubbele_ backslash. Je kunt er ook voor kiezen om pad te definiëren en te werken met de `file.path()` functie, zoals we in de opgaven hieronder doen.  
-
-Verder maken we gebruik van functies uit de `psych` package. Als je die nog niet hebt geïnstalleerd, doe dat nu. Daarna kunnen we hem laden:
+Verder maken we gebruik van functies uit de `psych` package. Als je die nog niet hebt geïnstalleerd, doe dat nu met de functie `install.packages(“psych”)`. Daarna kunnen we hem inladen:
 
 ```{r, warning=FALSE}
 library(psych)
 ```
 
-
 ## 1: Betrouwbaarheidsintervallen in R
 In de zelfstudie is gekeken naar de optische densiteit (OD) bij een concentratie van het antibioticum van 250 mg/l. We gebruiken hier hetzelfde voorbeeld en kijken stap-voor-stap hoe we de data kunnen beschrijven, en hoe een 95% betrouwbaarheidsinterval (BHI) in R te laten berekenen.  
 
 ### 1.1 Data inlezen
-De data zijn opgeslagen in een het bestand `OD250.csv`. We lezen de data in en noemen de data frame d1 (NB: niet vergeten om de naam van de map, hier `mypath` genoemd, te veranderen in de map waar jij het bestand heb opgeslagen). We bekijken de eerste regels met `head`:
+De data zijn opgeslagen in een het bestand `OD250.csv`. We lezen de data in en noemen de data frame `d1`. We bekijken de eerste regels met `head`:
 
+```{r, eval = FALSE}
+d1 <-read.csv("OD250.csv")
+```
+
+```{r, echo = FALSE}
+d1 <-read.csv("Werkcollege_statistiek_Thema_1/OD250.csv")
+```
 
 ```{r}
-mypath <- "Werkcollege_statistiek_Thema_1"
-d1 <-read.table(file.path(mypath, "OD250.csv"), sep=",", header=TRUE) 
 dim(d1)
 head(d1)
 ```
@@ -56,7 +58,7 @@ head(d1)
 
 Om een gemiddelde OD en standaarddeviatie per stam te krijgen, kunnen we steeds een selectie maken op de verschillende stammen en vrage om die kengetallen. Veel makkelijker: we kunnen de `describeBy()` functie gebruiken (we krijgen dan veel meer dan mean & SD):  
 ```{r}
-describeBy(d1$OD250, group=d1$stam, skew = FALSE)
+describeBy(d1$OD250, group = d1$stam, skew = FALSE)
 ```
 
 **Vraag 2. Welke stam heeft de hoogste gemiddelde OD? Welke stam heeft de kleinste standaarddeviatie? En de grootste?**  
@@ -69,11 +71,11 @@ Laten we nu kijken naar stam 2. We hebben al een gemiddelde OD uitgerekend, wat 
 We gaan het toch doen. Om een 95% BHI (op basis van de t-verdeling) uit te rekenen, maken we gebruik van de `t-test()` functie. De t-toets wordt in Thema 3 behandeld, hier gebruiken we de functie alleen voor het 95% BHI. We maken eerst een selectie van stam 2:
 
 ```{r}
-stam2 <- d1[d1$stam==2,]
+stam2 <- d1[d1$stam == 2,]
 t.test(stam2$OD)
 ```
 
-De gemiddelde OD is `r round(t.test(stam2$OD)$estimate,3)`, met 95% BHI (`r round(t.test(stam2$OD)$conf.int[1],3)` -- `r round(t.test(stam2$OD)$conf.int[2],3)`).  
+De gemiddelde OD is `r round(t.test(stam2$OD)$estimate, 3)`, met 95% BHI (`r round(t.test(stam2$OD)$conf.int[1], 3)` -- `r round(t.test(stam2$OD)$conf.int[2], 3)`).  
 
 **Vraag 4. Geef een interpretatie van dit BHI.**  
 
@@ -82,10 +84,10 @@ De gemiddelde OD is `r round(t.test(stam2$OD)$estimate,3)`, met 95% BHI (`r roun
 Stel dat we de optical density bij concentratie 250 mg/l willen vergelijken tussen stammen twee en drie. Dan hebben we twee groepen van metingen die we hier voor het gemak beschouwen als onafhankelijk van elkaar (zie overpeinzingen in de zelfstudie). Is het verschil dat we in de boxplot zien tussen de twee stammen een weerspiegeling van een werkelijk verschil in de populaties (alle mogelijke OD metingen bij 250 mg/l for stammen 2 en 3), of zou dit verschil door toeval (steekproefvariabiliteit) kunnen zijn onstaan? Om die vraag te beantwoorden, kunnen we een 95% BHI voor het verschil in gemiddelden uitrekenen. Daartoe maken we eerst een selectie van alleen die twee stammen, en daarna gebruiken weer de `t-test()` functie.
 
 ```{r}
-stam23 <- d1[d1$stam==2 | d1$stam==3,]
-t.test(stam23$OD~stam23$stam)
+stam23 <- d1[d1$stam == 2 | d1$stam == 3,]
+t.test(stam23$OD ~ stam23$stam)
 ```
-Het verschil in gemiddelden in de steekproeven is `r t.test(stam23$OD~stam23$stam)$estimate[1]`-`r t.test(stam23$OD~stam23$stam)$estimate[2]` = `r round(t.test(stam23$OD~stam23$stam)$estimate[1] - t.test(stam23$OD~stam23$stam)$estimate[2],3)`, met 95% BHI (`r round(t.test(stam23$OD~stam23$stam)$conf.int[1],3)` -- `r round(t.test(stam23$OD~stam23$stam)$conf.int[2],3)`).  
+Het verschil in gemiddelden in de steekproeven is `r t.test(stam23$OD ~ stam23$stam)$estimate[1]`-`r t.test(stam23$OD ~ stam23$stam)$estimate[2]` = `r round(t.test(stam23$OD ~ stam23$stam)$estimate[1] - t.test(stam23$OD ~ stam23$stam)$estimate[2], 3)`, met 95% BHI (`r round(t.test(stam23$OD ~ stam23$stam)$conf.int[1], 3)` -- `r round(t.test(stam23$OD ~ stam23$stam)$conf.int[2], 3)`).
 
 **Vraag 5a. Geef een interpretatie van dit BHI. Denk je dat er een verschil is in gemiddelden in de populatie?**  
 
@@ -94,8 +96,15 @@ Het verschil in gemiddelden in de steekproeven is `r t.test(stam23$OD~stam23$sta
 ## 2. OD data inlezen en analyseren
 In het bestand `ODdatavb.csv` staan data van een experiment zoals je zelf gaat uitvoeren: voor zes verschillende bacteriestammen kijk je bij verschillende concentraties van een antibioticum naar de groei(remming). De groei wordt uitgedrukt als OD. Lees de data in en bekijk het:
 
+```{r, eval = FALSE}
+od.dat <-read.csv("ODdatavb.csv")
+```
+
+```{r, echo = FALSE}
+od.dat <-read.csv("Werkcollege_statistiek_Thema_1/ODdatavb.csv")
+```
+
 ```{r}
-od.dat <-read.table(file.path(mypath, "ODdatavb.csv"), sep=",", header=TRUE) 
 od.dat
 ```
 
@@ -124,9 +133,9 @@ Hoe kun je checken of dit gelukt is?
 Om grafieken te maken per stam, moeten we de data omvormen. De gegevens staan nu in zgn. 'wide format', met één regel per stam, maar om een grafiek te krijgen van OD per concentratie moeten we één regel per concentratie per stam hebben ('long format'). Dat doen we met de `reshape()` functie. Omdat deze functie meestal wordt gebruikt bij longitudinale data, heet de optie om de verschillende regels per concentratie te maken 'times'. Dat is wellicht verwarrend, 'time' is in dit geval dus concentratie. Als we kijken naar de resulterend data frame, dan zien we dat het handig is om de tweede variabele te hernoemen. Dat doen we met `colnames()`.
 
 ```{r}
-od.long <- reshape(od.dat, idvar="Stam", varying=list(2:7), v.names = "OD",
-                   direction="long", times=c(1000, 500, 250, 125, 62.5, 31.25),
-                   drop=c("Negatief"))
+od.long <- reshape(od.dat, idvar = "Stam", varying = list(2:7), v.names = "OD",
+                   direction = "long", times = c(1000, 500, 250, 125, 62.5, 31.25),
+                   drop = c("Negatief"))
 head(od.long)
 colnames(od.long) <- c("Stam", "Positief", "conc", "OD")
 ```
@@ -134,10 +143,10 @@ colnames(od.long) <- c("Stam", "Positief", "conc", "OD")
 Nu kunnen we een plot maken per stam van OD vs. concentratie. We doen hier stam 1.
 
 ```{r}
-st1 <- od.long[od.long$Stam==1,]
+st1 <- od.long[od.long$Stam == 1,]
 st1 #check
-plot(st1$OD ~ st1$conc, pch=19,
-     main="Stam 1", ylab="OD", xlab="concentratie AB")
+plot(st1$OD ~ st1$conc, pch = 19,
+     main = "Stam 1", ylab = "OD", xlab = "concentratie AB")
 ```
 
 **Vraag 10. Beschrijf de relatie tussen OD en concentratie van het antibioticum. Lijkt het alsof stam 1 gevoelig is voor het AB?**  
@@ -145,14 +154,13 @@ plot(st1$OD ~ st1$conc, pch=19,
 We voegen een lijn toe aan het plaatje voor de waarde van de positieve controle, en ook nog eens lijnen voor het gemiddelde van de negatieve controles en het 95% BHI. Waarom moeten we nu de grenzen van de y-as veranderen?
 
 ```{r}
-plot(st1$OD ~ st1$conc, ylim=c(0,st1$Positief[1]+0.1), pch=19,
-     main="Stam 1", ylab="OD", xlab="concentratie AB")
-abline(h=st1$Positief, col="green")
-abline(h=mean.nc, col="red")
-abline(h=ll.nc, col="red", lty=2)
-abline(h=ul.nc, col="red", lty=2)
+plot(st1$OD ~ st1$conc, ylim = c(0,st1$Positief[1] + 0.1), pch = 19,
+     main = "Stam 1", ylab = "OD", xlab = "concentratie AB")
+abline(h = st1$Positief, col = "green")
+abline(h = mean.nc, col = "red")
+abline(h = ll.nc, col = "red", lty = 2)
+abline(h = ul.nc, col = "red", lty = 2)
 ```
- 
  
 **Vraag 11. Als we groeiremming definiëren als 'OD lager dan het de bovengrens van het 95% BHI van de negatieve controles', wat moeten we concluderen bij stam 1?**  
 

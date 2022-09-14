@@ -26,19 +26,17 @@ In dit COO leer je de coëfficiënten van een regressielijn schatten in R, een s
 Zorg er voor dat je de benodigde databestanden hebt gedownload en lokaal hebt opgeslagen:  
 
 * [huisstof.csv](Werkcollege_statistiek_Thema_2/huisstof.csv)
-* [CSFdat.csv](Werkcollege_statistiek_Thema_2/CSFdat.csv)
+* [CSFdata.csv](Werkcollege_statistiek_Thema_2/CSFdata.csv)
 * [zalmDNAconcabs.csv](Werkcollege_statistiek_Thema_2/zalmDNAconcabs.csv)
 
+Het is ook handig om je 'working directory' te veranderen in deze map met databestanden. Dit kun je doen via het menu: Session > Set Working Directory > Choose Directory... > selecteer de map waarin de databestanden staan. Let op tijdens het instellen van je ‘working directory’ zie je de bestanden meestal niet staan.
 
-Het is ook handig om je 'working directory' te veranderen in deze map met databestanden. Dit kun je doen via het menu: Session - Set Working Directory - Choose Directory... of met code: `setwd("pathname")`. Let op dat je in je pad geen backslash (\\) moet gebruiken maar of 'forward slashes' (/) of een _dubbele_ backslash.  
-
-Verder maken we gebruik van functies uit de packages `ggplot2` en `investr`. Als je die nog niet hebt geïnstalleerd, doe dat nu. Daarna kunnen we hem laden:
+Verder maken we gebruik van functies uit de packages `ggplot2` en `investr`. Als je die nog niet hebt geïnstalleerd, doe dat nu met de functie `install.packages(c("ggplot2", "investr"))`. Daarna kunnen we ze inladen:
 
 ```{r, warning=FALSE}
 library(ggplot2)
 library(investr)
 ```
-
 
 ## 1: Lineaire regressie (stap-voor-stap)
 Er is in de afgelopen 15-20 jaar veel onderzoek uitgevoerd naar de invloed van de woonomgeving op de ontwikkeling en ernst van astma. Omdat een groot deel van alle astmapatiënten positief reageert in type I allergie tests voor huisstofmijten, wordt onder andere veelvuldig gekeken naar de concentraties in huisstof van hun zgn. ‘major allergens’ – eiwitten waaraan het IgE van de meeste mijt-allergische patiënten zich specifiek bindt. Er zijn in NW en Midden-Europa in ieder geval twee veel voorkomende huisstofmijtsoorten: Dermatophagoides pteronyssinus en Dermatophagoides farinae, waarvan de major allergens Der p1 en Der f1 elk afzonderlijk specifiek kunnen worden gemeten in extracten van huisstof. 
@@ -51,25 +49,30 @@ De variabele `Stof` geeft het gewicht van het aldus verzamelde stof (in mg), en 
 De onderzoekers zijn vooral geïnteresseerd in het effect van de hoeveelheid stof op de hoeveelheid allergenen. Hier kijken we naar naar Der p1.  
 
 ### 1.1 Data uit .csv inlezen
-We beginnen met het inlezen van het bestand en dat bekijken. (_NB: niet vergeten om de naam van de map, hier `mypath` genoemd, te veranderen in de map waar jij het bestand heb opgeslagen!_) De data staat in een .csv bestand `huisstof.csv`. We lezen de data in en noemen de data frame d1 (NB: niet vergeten om de naam van de map, hier `mypath` genoemd, te veranderen in de map waar jij het bestand heb opgeslagen). We bekijken de eerste regels met `head`:
+We beginnen met het inlezen van het bestand en dat bekijken. We lezen de data in en noemen de data frame `d1`. We bekijken de eerste regels met `head`:
 
-```{r}
-mypath <- "Werkcollege_statistiek_Thema_2"
-d1 <- data.frame(read.csv(file.path(mypath, "huisstof.csv"), sep=","))
-head(d1)
+```{r, eval = FALSE}
+d1 <-read.csv("huisstof.csv")
 ```
 
+```{r, echo = FALSE}
+d1 <-read.csv("Werkcollege_statistiek_Thema_2/huisstof.csv")
+```
+
+```{r}
+head(d1)
+```
 
 ### 1.2 Spreidingsdiagram
 Nu gaan we een spreidingsdiagram maken van de data. Dat kan via base R, met de functie `plot` of we kunnen mooiere plaatjes maken met behulp van de functies in de package `ggplot2`. We beginnen met base R.  
 
 ```{r, eval=F}
-plot(d1$Derp1~d1$Stof)
+plot(d1$Derp1 ~ d1$Stof)
 ```
 
 Dit kan natuurlijk mooier, met labels op de assen enz. Probeer bijvoorbeeld:
 ```{r, fig.height=5, fig.width=5}
-plot(d1$Derp1~d1$Stof, xlab="Gewicht stof (mg)", ylab="Der p1 (ng)", main="Relatie Der p1 en gewicht stof")
+plot(d1$Derp1 ~ d1$Stof, xlab = "Gewicht stof (mg)", ylab = "Der p1 (ng)", main = "Relatie Der p1 en gewicht stof")
 ```
 
 Ben je verder tevreden met de plot? Denk aan de range van de assen, bijvoorbeeld? Probeer de x-as te laten lopen vanaf 0 met de `xlim=` optie.  
@@ -81,7 +84,7 @@ Ben je verder tevreden met de plot? Denk aan de range van de assen, bijvoorbeeld
 We gaan uit van een (redelijk) lineair verband. Om het lineair model te schatten, gebruiken we de functie `lm()`. Gebruik de help functie van R om daar meer over te leren. We slaan het model op als een object; op die manier kunnen we de informatie uit het model gebruiken (bijvoorbeeld om toe te voegen aan de spreidingsdiagram). We noemen het object lm.dp. Om de vergelijking van de lijn te krijgen, moeten we vragen om de `summary()` van het model:
 
 ```{r}
-lm.dp <- lm(Derp1~Stof, data=d1)
+lm.dp <- lm(Derp1 ~ Stof, data = d1)
 summary(lm.dp)
 ```
 
@@ -98,8 +101,8 @@ Omdat de grafiek nog 'open' staat in R (tot we een nieuwe grafiek maken, of `dev
 
 
 ```{r, echo = -1, fig.height=5, fig.width=5}
-plot(d1$Derp1~d1$Stof, xlab="Gewicht stof (mg)", ylab="Der p1 (ng)", main="Relatie Der p1 en gewicht stof")
-abline(reg=lm.dp)
+plot(d1$Derp1 ~ d1$Stof, xlab = "Gewicht stof (mg)", ylab = "Der p1 (ng)", main = "Relatie Der p1 en gewicht stof")
+abline(reg = lm.dp)
 ```
 
 
@@ -125,20 +128,20 @@ Om te kijken naar het betrouwbaarheidsinterval en het predictieinterval van de l
 We kijken eerst naar het minimum en maximum van de x-variabele, en maken een nieuwe vector met veel waarden tussen die twee in, vervolgens vragen we om voorspellingen met betrouwbaarheidsinterval of predictieinterval. Die intervallen voegen we toe aan plot.
 
 ```{r, echo=3:13, fig.height=5, fig.width=5, warning=FALSE}
-plot(d1$Derp1~d1$Stof, xlab="Gewicht stof (mg)", ylab="Der p1 (ng)", main="Relatie Der p1 en gewicht stof",
-     ylim=c(-100,400))
-abline(reg=lm.dp)
+plot(d1$Derp1 ~ d1$Stof, xlab = "Gewicht stof (mg)", ylab = "Der p1 (ng)", main = "Relatie Der p1 en gewicht stof",
+     ylim = c(-100, 400))
+abline(reg = lm.dp)
 min(d1$Stof)
 max(d1$Stof)
-newx <- seq(0, 2500, by=5)
-conf_interval <- predict(lm.dp, newdata=data.frame(Stof=newx), interval="confidence",
+newx <- seq(0, 2500, by = 5)
+conf_interval <- predict(lm.dp, newdata = data.frame(Stof = newx), interval = "confidence",
                          level = 0.95)
-pred_interval <- predict(lm.dp, newdata=data.frame(Stof=newx), interval="prediction",
+pred_interval <- predict(lm.dp, newdata = data.frame(Stof = newx), interval = "prediction",
                          level = 0.95)
-lines(newx, conf_interval[,2], col="blue", lty=2)
-lines(newx, conf_interval[,3], col="blue", lty=2)
-lines(newx, pred_interval[,2], col="orange", lty=2)
-lines(newx, pred_interval[,3], col="orange", lty=2)
+lines(newx, conf_interval[,2], col = "blue", lty = 2)
+lines(newx, conf_interval[,3], col = "blue", lty = 2)
+lines(newx, pred_interval[,2], col = "orange", lty = 2)
+lines(newx, pred_interval[,3], col = "orange", lty = 2)
 ```
 
 
@@ -146,43 +149,50 @@ lines(newx, pred_interval[,3], col="orange", lty=2)
 Gebruik van `ggplot2` helpt bij het plotten van een regressielijn met betrouwbaarheidsinterval, maar een predictieinterval moeten we nog altijd zelf toevoegen. We definiëren eerst het object `p.dp`, een plot van Der p1 tegenover stof. We voegen vervolgens langzaam elementen toe aan de plot. Hier laten we alleen de laatste versie van de plot zien, maar we raden je aan om elke stap (aangegeven hieronder met dubbele hashtag) apart te doen, dan zie je wat de aparte elementen doen. Om de scatterplot te krijgen:
 
 ```{r, fig.height=5, fig.width=5, eval=c(1,6), warning=FALSE}
-p.dp <- ggplot(data=d1, aes(x=Stof, y=Derp1))
+p.dp <- ggplot(data = d1, aes(x = Stof, y = Derp1))
 p.dp + geom_point()
 p.dp + geom_point() + 
-  labs(title="Relatie Der p1 en gewicht stof", x = "Gewicht stof (mg)", y="Der p1 (ng)")
+  labs(title = "Relatie Der p1 en gewicht stof", x = "Gewicht stof (mg)", y = "Der p1 (ng)")
 p.dp + geom_point() + 
-  labs(title="Relatie Der p1 en gewicht stof", x = "Gewicht stof (mg)", y="Der p1 (ng)") +
+  labs(title = "Relatie Der p1 en gewicht stof", x = "Gewicht stof (mg)", y = "Der p1 (ng)") +
   theme_classic()
 p.dp + geom_point() + 
-  labs(title="Relatie Der p1 en gewicht stof met BHI lijn", x = "Gewicht stof (mg)", y="Der p1 (ng)") +
+  labs(title = "Relatie Der p1 en gewicht stof met BHI lijn", x = "Gewicht stof (mg)", y = "Der p1 (ng)") +
   theme_classic() +
-  geom_smooth(method="lm", se=FALSE)
+  geom_smooth(method = "lm", se = FALSE)
 p.dp + geom_point() + 
-  labs(title="Relatie Der p1 en gewicht stof met BHI lijn", x = "Gewicht stof (mg)", y="Der p1 (ng)") +
+  labs(title = "Relatie Der p1 en gewicht stof met BHI lijn", x = "Gewicht stof (mg)", y = "Der p1 (ng)") +
   theme_classic() +
-  geom_smooth(method="lm", se=TRUE)
+  geom_smooth(method = "lm", se = TRUE)
 ```
 
-Wanneer we een predictieinterval willen toevoegen, moeten we dezelfde stappen volgen als bij de plot in base R hierboven: eerst een nieuwe x variabele aanmaken met veel waarden tussen het minimum en maximum van x=Stof, dan de twee intervallen uit laten rekenen en opslaan, en dan toevoegen aan de plot. Sterker nog, er volgt nog een stap: we moeten het predictieinterval uit laten rekenen voor alle data punten in de data frame, en die toevoegen aan de data frame. Op die manier wordt het best omslachtig:
+Wanneer we een predictieinterval willen toevoegen, moeten we dezelfde stappen volgen als bij de plot in base R hierboven: eerst een nieuwe x variabele aanmaken met veel waarden tussen het minimum en maximum van x = Stof, dan de twee intervallen uit laten rekenen en opslaan, en dan toevoegen aan de plot. Sterker nog, er volgt nog een stap: we moeten het predictieinterval uit laten rekenen voor alle data punten in de data frame, en die toevoegen aan de data frame. Op die manier wordt het best omslachtig:
 
 ```{r, fig.height=5, fig.width=5, warning=FALSE}
-tmp.var <- predict(lm.dp, interval="prediction")
+tmp.var <- predict(lm.dp, interval = "prediction")
 newd1 <- cbind(d1, tmp.var)
-p.dp2 <- ggplot(data=newd1, aes(x=Stof, y=Derp1))
+p.dp2 <- ggplot(data = newd1, aes(x = Stof, y = Derp1))
 p.dp2 + geom_point() + 
-  labs(title="Relatie Der p1 en gewicht stof", x = "Gewicht stof (mg)", y="Der p1 (ng)") +
+  labs(title = "Relatie Der p1 en gewicht stof", x = "Gewicht stof (mg)", y = "Der p1 (ng)") +
   theme_classic() +
-  geom_smooth(method="lm", se=FALSE) +
-  geom_line(aes(y=lwr), color = "blue", linetype = "dashed") +
-  geom_line(aes(y=upr), color = "blue", linetype = "dashed")
+  geom_smooth(method = "lm", se=FALSE) +
+  geom_line(aes(y = lwr), color = "blue", linetype = "dashed") +
+  geom_line(aes(y = upr), color = "blue", linetype = "dashed")
 ```
 
 
 ## 2. CSF tau en genormaliseerde breinvolume
 Neurowetenschappers hebben  onderzocht in welke mate het volume van de hersenen (NWBV = Normalized Whole Brain Volume, bepaald met MRI en gegeven als een fractie van de intracraniale volume) de concentratie van een eiwit in de cerebrospinale vloeistof, (CSF tau in pg/ml) voorspelt in 29 personen met een milde vorm van de ziekte van Alzheimer. De data kun je vinden in het bestand `CSFdata.csv`. Lees de data in en bekijk de eerste 6 regels met de `head()` functie:
 
+```{r, eval = FALSE}
+d2 <-read.csv("CSFdata.csv")
+```
+
+```{r, echo = FALSE}
+d2 <-read.csv("Werkcollege_statistiek_Thema_2/CSFdata.csv")
+```
+
 ```{r, eval=-2}
-d2 <- data.frame(read.csv(file.path(mypath, "CSFdata.csv"), sep=","))
 head(d2)
 ```
 
@@ -201,10 +211,17 @@ De data zijn geschat uit figuur 2c.</font>
 
 
 ## 3. IJklijn zalm sperma DNA
-We gebruiken hier de data van de zelfstudie: een kalibratielijn opgesteld d.m.v. UV spectrofotometrie (absorptie bij 260 nm) met bekende concentraties zalm sperma DNA. De data voor de kalibratielijn staan in het bestand `zalmDNAconcabs.csv`. We lezen het bestand in, noemen de data frame d3, en bekijken de data:
+We gebruiken hier de data van de zelfstudie: een kalibratielijn opgesteld d.m.v. UV spectrofotometrie (absorptie bij 260 nm) met bekende concentraties zalm sperma DNA. De data voor de kalibratielijn staan in het bestand `zalmDNAconcabs.csv`. We lezen het bestand in, noemen de data frame `d3`, en bekijken de data:
+
+```{r, eval = FALSE}
+d3 <-read.csv("zalmDNAconcabs.csv")
+```
+
+```{r, echo = FALSE}
+d3 <-read.csv("Werkcollege_statistiek_Thema_2/zalmDNAconcabs.csv")
+```
 
 ```{r, eval=-2}
-d3 <- data.frame(read.csv(file.path(mypath, "zalmDNAconcabs.csv"), sep=","))
 d3
 ```
 
@@ -221,6 +238,6 @@ De data zijn (op het oog) geschat uit figuur S3.</font>
 
 **Vraag 3e. Gebruik de `plotFit` functie om de predictieintervallen rondom de ijklijn te plotten. Je kunt jouw plot vergelijken met die in de kennisclip over kalibratielijnen.**  
 
-**Vraag 3f. Gebruik de `invest()` functie (tip: gebruik de help functie!) uit de `investr` package om je voorspelling uit 3c te checken, en om predictieinterval rondom die voorspelling te krijgen. Interpreteer dit interval. Voor het type interval mag je de default gebruiken.**  
+**Vraag 3f. Gebruik de `invest()` functie (tip: gebruik de help functie!) uit de `investr` package om je voorspelling uit 3d te checken, en om predictieinterval rondom die voorspelling te krijgen. Interpreteer dit interval. Voor het type interval mag je de default gebruiken.**  
 
 **Vraag 3g. Interpreteer het interval uit 3e.**  

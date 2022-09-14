@@ -14,7 +14,6 @@
 
 <title>Werkcollege statistiek Thema 1</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -292,9 +291,7 @@ $(document).ready(function () {
 </div>
 
 
-<p>In dit COO leer je gemiddelden en (95%) betrouwbaarheidsintervallen
-berekenen, en absorptie data plotten tegenover de concentraties van een
-antibioticum.</p>
+<p>In dit COO leer je gemiddelden en (95%) betrouwbaarheidsintervallen berekenen, en absorptie data plotten tegenover de concentraties van een antibioticum.</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Voorbereiding</li>
 <li>Betrouwbaarheidsintervallen (stap voor stap)</li>
@@ -303,52 +300,30 @@ antibioticum.</p>
 <li>1.1 Data inlezen</li>
 <li>1.2 Beschrijvende statistiek</li>
 <li>1.3 Betrouwbaarheidsinterval voor een gemiddelde</li>
-<li>1.4 Betrouwbaarheidsinterval voor het verschil tussen twee
-gemiddelden</li>
+<li>1.4 Betrouwbaarheidsinterval voor het verschil tussen twee gemiddelden</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li>OD data inlezen en analyseren</li>
 </ol>
 <div id="voorbereiding" class="section level2">
 <h2>0. Voorbereiding</h2>
-<p>Zorg er voor dat je de benodigde databestanden hebt gedownload en
-lokaal hebt opgeslagen:</p>
+<p>Zorg er voor dat je de benodigde databestanden hebt gedownload en lokaal hebt opgeslagen:</p>
 <ul>
-<li><a
-href="Werkcollege_statistiek_Thema_1/OD250.csv">OD250.csv</a></li>
-<li><a
-href="Werkcollege_statistiek_Thema_1/ODdatavb.csv">ODdatavb.csv</a></li>
+<li><a href="Werkcollege_statistiek_Thema_1/OD250.csv">OD250.csv</a></li>
+<li><a href="Werkcollege_statistiek_Thema_1/ODdatavb.csv">ODdatavb.csv</a></li>
 </ul>
-<p>Het is ook handig om je ‘working directory’ te veranderen in deze map
-met databestanden. Dit kun je doen via het menu: Session - Set Working
-Directory - Choose Directory… of met code:
-<code>setwd("pathname")</code>. Let op dat je in je pad geen backslash
-(\) moet gebruiken maar of ‘forward slashes’ (/) of een <em>dubbele</em>
-backslash. Je kunt er ook voor kiezen om pad te definiëren en te werken
-met de <code>file.path()</code> functie, zoals we in de opgaven
-hieronder doen.</p>
-<p>Verder maken we gebruik van functies uit de <code>psych</code>
-package. Als je die nog niet hebt geïnstalleerd, doe dat nu. Daarna
-kunnen we hem laden:</p>
+<p>Het is ook handig om je ‘working directory’ te veranderen in deze map met databestanden. Dit kun je doen via het menu: Session &gt; Set Working Directory &gt; Choose Directory… &gt; selecteer de map waarin de databestanden staan. Let op tijdens het instellen van je ‘working directory’ zie je de bestanden meestal niet staan.</p>
+<p>Verder maken we gebruik van functies uit de <code>psych</code> package. Als je die nog niet hebt geïnstalleerd, doe dat nu met de functie <code>install.packages(“psych”)</code>. Daarna kunnen we hem inladen:</p>
 <pre class="r"><code>library(psych)</code></pre>
 </div>
 <div id="betrouwbaarheidsintervallen-in-r" class="section level2">
 <h2>1: Betrouwbaarheidsintervallen in R</h2>
-<p>In de zelfstudie is gekeken naar de optische densiteit (OD) bij een
-concentratie van het antibioticum van 250 mg/l. We gebruiken hier
-hetzelfde voorbeeld en kijken stap-voor-stap hoe we de data kunnen
-beschrijven, en hoe een 95% betrouwbaarheidsinterval (BHI) in R te laten
-berekenen.</p>
+<p>In de zelfstudie is gekeken naar de optische densiteit (OD) bij een concentratie van het antibioticum van 250 mg/l. We gebruiken hier hetzelfde voorbeeld en kijken stap-voor-stap hoe we de data kunnen beschrijven, en hoe een 95% betrouwbaarheidsinterval (BHI) in R te laten berekenen.</p>
 <div id="data-inlezen" class="section level3">
 <h3>1.1 Data inlezen</h3>
-<p>De data zijn opgeslagen in een het bestand <code>OD250.csv</code>. We
-lezen de data in en noemen de data frame d1 (NB: niet vergeten om de
-naam van de map, hier <code>mypath</code> genoemd, te veranderen in de
-map waar jij het bestand heb opgeslagen). We bekijken de eerste regels
-met <code>head</code>:</p>
-<pre class="r"><code>mypath &lt;- &quot;Werkcollege_statistiek_Thema_1&quot;
-d1 &lt;-read.table(file.path(mypath, &quot;OD250.csv&quot;), sep=&quot;,&quot;, header=TRUE) 
-dim(d1)</code></pre>
+<p>De data zijn opgeslagen in een het bestand <code>OD250.csv</code>. We lezen de data in en noemen de data frame <code>d1</code>. We bekijken de eerste regels met <code>head</code>:</p>
+<pre class="r"><code>d1 &lt;-read.csv(&quot;OD250.csv&quot;)</code></pre>
+<pre class="r"><code>dim(d1)</code></pre>
 <pre><code>## [1] 72  2</code></pre>
 <pre class="r"><code>head(d1)</code></pre>
 <pre><code>##   stam OD250
@@ -361,55 +336,42 @@ dim(d1)</code></pre>
 </div>
 <div id="beschrijvende-statistiek" class="section level3">
 <h3>1.2 Beschrijvende statistiek</h3>
-<p><strong>Vraag 1. Maak de side-by-side boxplot uit de zelfstudie van
-de OD bij 250 mg/l per stam.</strong></p>
-<p>Om een gemiddelde OD en standaarddeviatie per stam te krijgen, kunnen
-we steeds een selectie maken op de verschillende stammen en vrage om die
-kengetallen. Veel makkelijker: we kunnen de <code>describeBy()</code>
-functie gebruiken (we krijgen dan veel meer dan mean &amp; SD):</p>
-<pre class="r"><code>describeBy(d1$OD250, group=d1$stam, skew = FALSE)</code></pre>
+<p><strong>Vraag 1. Maak de side-by-side boxplot uit de zelfstudie van de OD bij 250 mg/l per stam.</strong></p>
+<p>Om een gemiddelde OD en standaarddeviatie per stam te krijgen, kunnen we steeds een selectie maken op de verschillende stammen en vrage om die kengetallen. Veel makkelijker: we kunnen de <code>describeBy()</code> functie gebruiken (we krijgen dan veel meer dan mean &amp; SD):</p>
+<pre class="r"><code>describeBy(d1$OD250, group = d1$stam, skew = FALSE)</code></pre>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: 1
 ##    vars  n mean   sd  min  max range   se
 ## X1    1 12 0.12 0.11 0.07 0.45  0.38 0.03
-## ------------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## group: 2
 ##    vars  n mean   sd  min  max range   se
 ## X1    1 12 0.28 0.11 0.14 0.49  0.36 0.03
-## ------------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## group: 3
 ##    vars  n mean   sd  min  max range   se
 ## X1    1 12 0.46 0.18 0.06 0.73  0.67 0.05
-## ------------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## group: 4
 ##    vars  n mean   sd  min  max range   se
 ## X1    1 12 0.61 0.12 0.42 0.82   0.4 0.03
-## ------------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## group: 5
 ##    vars  n mean   sd  min  max range   se
 ## X1    1 12 0.18 0.15 0.09 0.59   0.5 0.04
-## ------------------------------------------------------------- 
+## ------------------------------------------------------------ 
 ## group: 6
 ##    vars  n mean  sd  min  max range   se
 ## X1    1 12 0.33 0.1 0.12 0.46  0.34 0.03</code></pre>
-<p><strong>Vraag 2. Welke stam heeft de hoogste gemiddelde OD? Welke
-stam heeft de kleinste standaarddeviatie? En de grootste?</strong></p>
+<p><strong>Vraag 2. Welke stam heeft de hoogste gemiddelde OD? Welke stam heeft de kleinste standaarddeviatie? En de grootste?</strong></p>
 </div>
-<div id="betrouwbaarheidsinterval-voor-een-gemiddelde"
-class="section level3">
+<div id="betrouwbaarheidsinterval-voor-een-gemiddelde" class="section level3">
 <h3>1.3 Betrouwbaarheidsinterval voor een gemiddelde</h3>
-<p>Laten we nu kijken naar stam 2. We hebben al een gemiddelde OD
-uitgerekend, wat is het 95% BHI voor de gemiddelde OD bij een
-concentratie van het antibioticum van 250 mg/l voor stam 2?</p>
-<p><strong>Vraag 3. Voor je het BHI uitrekent, kijk nogmaals naar de
-boxplot. Mogen we voor zo’n steekproef een BHI uitrekenen? Wat nemen we
-aan wanneer we dat doen?</strong></p>
-<p>We gaan het toch doen. Om een 95% BHI (op basis van de t-verdeling)
-uit te rekenen, maken we gebruik van de <code>t-test()</code> functie.
-De t-toets wordt in Thema 3 behandeld, hier gebruiken we de functie
-alleen voor het 95% BHI. We maken eerst een selectie van stam 2:</p>
-<pre class="r"><code>stam2 &lt;- d1[d1$stam==2,]
+<p>Laten we nu kijken naar stam 2. We hebben al een gemiddelde OD uitgerekend, wat is het 95% BHI voor de gemiddelde OD bij een concentratie van het antibioticum van 250 mg/l voor stam 2?</p>
+<p><strong>Vraag 3. Voor je het BHI uitrekent, kijk nogmaals naar de boxplot. Mogen we voor zo’n steekproef een BHI uitrekenen? Wat nemen we aan wanneer we dat doen?</strong></p>
+<p>We gaan het toch doen. Om een 95% BHI (op basis van de t-verdeling) uit te rekenen, maken we gebruik van de <code>t-test()</code> functie. De t-toets wordt in Thema 3 behandeld, hier gebruiken we de functie alleen voor het 95% BHI. We maken eerst een selectie van stam 2:</p>
+<pre class="r"><code>stam2 &lt;- d1[d1$stam == 2,]
 t.test(stam2$OD)</code></pre>
 <pre><code>## 
 ##  One Sample t-test
@@ -425,24 +387,11 @@ t.test(stam2$OD)</code></pre>
 <p>De gemiddelde OD is 0.277, met 95% BHI (0.208 – 0.347).</p>
 <p><strong>Vraag 4. Geef een interpretatie van dit BHI.</strong></p>
 </div>
-<div
-id="betrouwbaarheidsinterval-voor-het-verschil-tussen-twee-gemiddelden"
-class="section level3">
-<h3>1.4 Betrouwbaarheidsinterval voor het verschil tussen twee
-gemiddelden</h3>
-<p>Stel dat we de optical density bij concentratie 250 mg/l willen
-vergelijken tussen stammen twee en drie. Dan hebben we twee groepen van
-metingen die we hier voor het gemak beschouwen als onafhankelijk van
-elkaar (zie overpeinzingen in de zelfstudie). Is het verschil dat we in
-de boxplot zien tussen de twee stammen een weerspiegeling van een
-werkelijk verschil in de populaties (alle mogelijke OD metingen bij 250
-mg/l for stammen 2 en 3), of zou dit verschil door toeval
-(steekproefvariabiliteit) kunnen zijn onstaan? Om die vraag te
-beantwoorden, kunnen we een 95% BHI voor het verschil in gemiddelden
-uitrekenen. Daartoe maken we eerst een selectie van alleen die twee
-stammen, en daarna gebruiken weer de <code>t-test()</code> functie.</p>
-<pre class="r"><code>stam23 &lt;- d1[d1$stam==2 | d1$stam==3,]
-t.test(stam23$OD~stam23$stam)</code></pre>
+<div id="betrouwbaarheidsinterval-voor-het-verschil-tussen-twee-gemiddelden" class="section level3">
+<h3>1.4 Betrouwbaarheidsinterval voor het verschil tussen twee gemiddelden</h3>
+<p>Stel dat we de optical density bij concentratie 250 mg/l willen vergelijken tussen stammen twee en drie. Dan hebben we twee groepen van metingen die we hier voor het gemak beschouwen als onafhankelijk van elkaar (zie overpeinzingen in de zelfstudie). Is het verschil dat we in de boxplot zien tussen de twee stammen een weerspiegeling van een werkelijk verschil in de populaties (alle mogelijke OD metingen bij 250 mg/l for stammen 2 en 3), of zou dit verschil door toeval (steekproefvariabiliteit) kunnen zijn onstaan? Om die vraag te beantwoorden, kunnen we een 95% BHI voor het verschil in gemiddelden uitrekenen. Daartoe maken we eerst een selectie van alleen die twee stammen, en daarna gebruiken weer de <code>t-test()</code> functie.</p>
+<pre class="r"><code>stam23 &lt;- d1[d1$stam == 2 | d1$stam == 3,]
+t.test(stam23$OD ~ stam23$stam)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -454,23 +403,16 @@ t.test(stam23$OD~stam23$stam)</code></pre>
 ## sample estimates:
 ## mean in group 2 mean in group 3 
 ##          0.2775          0.4610</code></pre>
-<p>Het verschil in gemiddelden in de steekproeven is 0.2775-0.461 =
--0.184, met 95% BHI (-0.309 – -0.058).</p>
-<p><strong>Vraag 5a. Geef een interpretatie van dit BHI. Denk je dat er
-een verschil is in gemiddelden in de populatie?</strong></p>
-<p><strong>Vraag 5b. Wat nemen we aan bij het uitrekenen van dit BHI?
-Voldoen de gegevens aan deze aannames?</strong></p>
+<p>Het verschil in gemiddelden in de steekproeven is 0.2775-0.461 = -0.184, met 95% BHI (-0.309 – -0.058).</p>
+<p><strong>Vraag 5a. Geef een interpretatie van dit BHI. Denk je dat er een verschil is in gemiddelden in de populatie?</strong></p>
+<p><strong>Vraag 5b. Wat nemen we aan bij het uitrekenen van dit BHI? Voldoen de gegevens aan deze aannames?</strong></p>
 </div>
 </div>
 <div id="od-data-inlezen-en-analyseren" class="section level2">
 <h2>2. OD data inlezen en analyseren</h2>
-<p>In het bestand <code>ODdatavb.csv</code> staan data van een
-experiment zoals je zelf gaat uitvoeren: voor zes verschillende
-bacteriestammen kijk je bij verschillende concentraties van een
-antibioticum naar de groei(remming). De groei wordt uitgedrukt als OD.
-Lees de data in en bekijk het:</p>
-<pre class="r"><code>od.dat &lt;-read.table(file.path(mypath, &quot;ODdatavb.csv&quot;), sep=&quot;,&quot;, header=TRUE) 
-od.dat</code></pre>
+<p>In het bestand <code>ODdatavb.csv</code> staan data van een experiment zoals je zelf gaat uitvoeren: voor zes verschillende bacteriestammen kijk je bij verschillende concentraties van een antibioticum naar de groei(remming). De groei wordt uitgedrukt als OD. Lees de data in en bekijk het:</p>
+<pre class="r"><code>od.dat &lt;-read.csv(&quot;ODdatavb.csv&quot;)</code></pre>
+<pre class="r"><code>od.dat</code></pre>
 <pre><code>##   Stam v1000  v500  v250  v125 v62.5 v31.25 Positief Negatief
 ## 1    1 0.082 0.079 0.084 0.093 0.157  0.384    0.559    0.199
 ## 2    2 0.246 0.191 0.200 0.187 0.292  0.383    0.423    0.203
@@ -478,47 +420,21 @@ od.dat</code></pre>
 ## 4    4 0.535 0.544 0.534 0.571 0.571  0.572    0.614    0.550
 ## 5    5 0.079 0.087 0.091 0.091 0.106  0.130    0.344    0.204
 ## 6    6 0.349 0.393 0.389 0.414 0.407  0.417    0.385    0.135</code></pre>
-<p><strong>Let op</strong>: dit bestand is gemaakt door het Excel
-bestand eerst op te ruimen, met maar één rij voor de variabelenamen, en
-één woord in de kolommen variabelenaam. Daarna is het tabblad opgeslagen
-als een .csv bestand.</p>
-<p>De positieve controles per stam verschillen logischerwijze van elkaar
-maar in principe zijn de negatieve controles - hoewel per stam gemeten -
-allemaal schatters voor hetzelfde, namelijk de OD bij een monster zonder
-bacteriën. Deze kunnen we dan middelen, en met een 95% BHI van het
-gemiddelde hebben we een 95% kans om de werkelijke (gemiddelde) OD van
-ons experiment (wanneer we het eindeloos zouden uitvoeren) te
-bevatten.</p>
-<p><strong>Vraag 6. Beschrijf (getallen, plaatjes) de OD van de
-negatieve controles voor de 6 stammen. Wat zie je?</strong></p>
-<p><strong>Vraag 7. Wat is het 95% BHI voor de gemiddelde OD van de
-negatieve controles in dit experiment?</strong></p>
-<p><strong>Vraag 8. Wat vind je van het gemiddelde OD voor de negatieve
-controles?</strong></p>
-<p><strong>Vraag 9. Wat vind je van de breedte het 95% BHI van het
-gemiddelde negatieve controle? Hoe zouden we het interval smaller kunnen
-krijgen?</strong></p>
-<p>Het is handig om het gemiddelde en de uiteinden van het BHI van de
-negatieve controle op te slaan voor de plot. We halen de onder- en
-bovengrens (elementen [1] en [2] van de <code>conf.int</code>) uit het
-object dat gemaakt wordt door de <code>t.test()</code> functie:</p>
+<p><strong>Let op</strong>: dit bestand is gemaakt door het Excel bestand eerst op te ruimen, met maar één rij voor de variabelenamen, en één woord in de kolommen variabelenaam. Daarna is het tabblad opgeslagen als een .csv bestand.</p>
+<p>De positieve controles per stam verschillen logischerwijze van elkaar maar in principe zijn de negatieve controles - hoewel per stam gemeten - allemaal schatters voor hetzelfde, namelijk de OD bij een monster zonder bacteriën. Deze kunnen we dan middelen, en met een 95% BHI van het gemiddelde hebben we een 95% kans om de werkelijke (gemiddelde) OD van ons experiment (wanneer we het eindeloos zouden uitvoeren) te bevatten.</p>
+<p><strong>Vraag 6. Beschrijf (getallen, plaatjes) de OD van de negatieve controles voor de 6 stammen. Wat zie je?</strong></p>
+<p><strong>Vraag 7. Wat is het 95% BHI voor de gemiddelde OD van de negatieve controles in dit experiment?</strong></p>
+<p><strong>Vraag 8. Wat vind je van het gemiddelde OD voor de negatieve controles?</strong></p>
+<p><strong>Vraag 9. Wat vind je van de breedte het 95% BHI van het gemiddelde negatieve controle? Hoe zouden we het interval smaller kunnen krijgen?</strong></p>
+<p>Het is handig om het gemiddelde en de uiteinden van het BHI van de negatieve controle op te slaan voor de plot. We halen de onder- en bovengrens (elementen [1] en [2] van de <code>conf.int</code>) uit het object dat gemaakt wordt door de <code>t.test()</code> functie:</p>
 <pre class="r"><code>mean.nc &lt;- mean(od.dat$Negatief)
 ll.nc &lt;- t.test(od.dat$Negatief)$conf.int[1]
 ul.nc &lt;- t.test(od.dat$Negatief)$conf.int[2]</code></pre>
 <p>Hoe kun je checken of dit gelukt is?</p>
-<p>Om grafieken te maken per stam, moeten we de data omvormen. De
-gegevens staan nu in zgn. ‘wide format’, met één regel per stam, maar om
-een grafiek te krijgen van OD per concentratie moeten we één regel per
-concentratie per stam hebben (‘long format’). Dat doen we met de
-<code>reshape()</code> functie. Omdat deze functie meestal wordt
-gebruikt bij longitudinale data, heet de optie om de verschillende
-regels per concentratie te maken ‘times’. Dat is wellicht verwarrend,
-‘time’ is in dit geval dus concentratie. Als we kijken naar de
-resulterend data frame, dan zien we dat het handig is om de tweede
-variabele te hernoemen. Dat doen we met <code>colnames()</code>.</p>
-<pre class="r"><code>od.long &lt;- reshape(od.dat, idvar=&quot;Stam&quot;, varying=list(2:7), v.names = &quot;OD&quot;,
-                   direction=&quot;long&quot;, times=c(1000, 500, 250, 125, 62.5, 31.25),
-                   drop=c(&quot;Negatief&quot;))
+<p>Om grafieken te maken per stam, moeten we de data omvormen. De gegevens staan nu in zgn. ‘wide format’, met één regel per stam, maar om een grafiek te krijgen van OD per concentratie moeten we één regel per concentratie per stam hebben (‘long format’). Dat doen we met de <code>reshape()</code> functie. Omdat deze functie meestal wordt gebruikt bij longitudinale data, heet de optie om de verschillende regels per concentratie te maken ‘times’. Dat is wellicht verwarrend, ‘time’ is in dit geval dus concentratie. Als we kijken naar de resulterend data frame, dan zien we dat het handig is om de tweede variabele te hernoemen. Dat doen we met <code>colnames()</code>.</p>
+<pre class="r"><code>od.long &lt;- reshape(od.dat, idvar = &quot;Stam&quot;, varying = list(2:7), v.names = &quot;OD&quot;,
+                   direction = &quot;long&quot;, times = c(1000, 500, 250, 125, 62.5, 31.25),
+                   drop = c(&quot;Negatief&quot;))
 head(od.long)</code></pre>
 <pre><code>##        Stam Positief time    OD
 ## 1.1000    1    0.559 1000 0.082
@@ -528,9 +444,8 @@ head(od.long)</code></pre>
 ## 5.1000    5    0.344 1000 0.079
 ## 6.1000    6    0.385 1000 0.349</code></pre>
 <pre class="r"><code>colnames(od.long) &lt;- c(&quot;Stam&quot;, &quot;Positief&quot;, &quot;conc&quot;, &quot;OD&quot;)</code></pre>
-<p>Nu kunnen we een plot maken per stam van OD vs. concentratie. We doen
-hier stam 1.</p>
-<pre class="r"><code>st1 &lt;- od.long[od.long$Stam==1,]
+<p>Nu kunnen we een plot maken per stam van OD vs. concentratie. We doen hier stam 1.</p>
+<pre class="r"><code>st1 &lt;- od.long[od.long$Stam == 1,]
 st1 #check</code></pre>
 <pre><code>##         Stam Positief    conc    OD
 ## 1.1000     1    0.559 1000.00 0.082
@@ -539,35 +454,22 @@ st1 #check</code></pre>
 ## 1.125      1    0.559  125.00 0.093
 ## 1.62.5     1    0.559   62.50 0.157
 ## 1.31.25    1    0.559   31.25 0.384</code></pre>
-<pre class="r"><code>plot(st1$OD ~ st1$conc, pch=19,
-     main=&quot;Stam 1&quot;, ylab=&quot;OD&quot;, xlab=&quot;concentratie AB&quot;)</code></pre>
-<p><img src="Werkcollege_statistiek_Thema_1_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p><strong>Vraag 10. Beschrijf de relatie tussen OD en concentratie van
-het antibioticum. Lijkt het alsof stam 1 gevoelig is voor het
-AB?</strong></p>
-<p>We voegen een lijn toe aan het plaatje voor de waarde van de
-positieve controle, en ook nog eens lijnen voor het gemiddelde van de
-negatieve controles en het 95% BHI. Waarom moeten we nu de grenzen van
-de y-as veranderen?</p>
-<pre class="r"><code>plot(st1$OD ~ st1$conc, ylim=c(0,st1$Positief[1]+0.1), pch=19,
-     main=&quot;Stam 1&quot;, ylab=&quot;OD&quot;, xlab=&quot;concentratie AB&quot;)
-abline(h=st1$Positief, col=&quot;green&quot;)
-abline(h=mean.nc, col=&quot;red&quot;)
-abline(h=ll.nc, col=&quot;red&quot;, lty=2)
-abline(h=ul.nc, col=&quot;red&quot;, lty=2)</code></pre>
-<p><img src="Werkcollege_statistiek_Thema_1_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<p><strong>Vraag 11. Als we groeiremming definiëren als ‘OD lager dan
-het de bovengrens van het 95% BHI van de negatieve controles’, wat
-moeten we concluderen bij stam 1?</strong></p>
-<p><strong>Vraag 12. Herhaal het plaatje voor stam 2 en trek een
-conclusie.</strong></p>
-<p><strong>Vraag 13a. Stel dat we de negatieve controles zouden
-gebruiken van alle studenten die het practicum doen. Hoe zal dit de
-grenzen van het 95% BHI beïnvloeden?</strong></p>
-<p><strong>Vraag 13b. Er zijn twee belangrijke aannames voor het
-berekenen van een BHI. Hoe denk je dat het zit met deze twee aannames
-met de negatieve controles wanneer we data gebruiken van alle
-studenten?</strong></p>
+<pre class="r"><code>plot(st1$OD ~ st1$conc, pch = 19,
+     main = &quot;Stam 1&quot;, ylab = &quot;OD&quot;, xlab = &quot;concentratie AB&quot;)</code></pre>
+<p><img src="Werkcollege_statistiek_Thema_1_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><strong>Vraag 10. Beschrijf de relatie tussen OD en concentratie van het antibioticum. Lijkt het alsof stam 1 gevoelig is voor het AB?</strong></p>
+<p>We voegen een lijn toe aan het plaatje voor de waarde van de positieve controle, en ook nog eens lijnen voor het gemiddelde van de negatieve controles en het 95% BHI. Waarom moeten we nu de grenzen van de y-as veranderen?</p>
+<pre class="r"><code>plot(st1$OD ~ st1$conc, ylim = c(0,st1$Positief[1] + 0.1), pch = 19,
+     main = &quot;Stam 1&quot;, ylab = &quot;OD&quot;, xlab = &quot;concentratie AB&quot;)
+abline(h = st1$Positief, col = &quot;green&quot;)
+abline(h = mean.nc, col = &quot;red&quot;)
+abline(h = ll.nc, col = &quot;red&quot;, lty = 2)
+abline(h = ul.nc, col = &quot;red&quot;, lty = 2)</code></pre>
+<p><img src="Werkcollege_statistiek_Thema_1_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><strong>Vraag 11. Als we groeiremming definiëren als ‘OD lager dan het de bovengrens van het 95% BHI van de negatieve controles’, wat moeten we concluderen bij stam 1?</strong></p>
+<p><strong>Vraag 12. Herhaal het plaatje voor stam 2 en trek een conclusie.</strong></p>
+<p><strong>Vraag 13a. Stel dat we de negatieve controles zouden gebruiken van alle studenten die het practicum doen. Hoe zal dit de grenzen van het 95% BHI beïnvloeden?</strong></p>
+<p><strong>Vraag 13b. Er zijn twee belangrijke aannames voor het berekenen van een BHI. Hoe denk je dat het zit met deze twee aannames met de negatieve controles wanneer we data gebruiken van alle studenten?</strong></p>
 </div>
 
 

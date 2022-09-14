@@ -14,7 +14,6 @@
 
 <title>COO 3 - Introduction R - Plotting</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -295,15 +294,8 @@ $(document).ready(function () {
 <div id="general-remarks" class="section level3">
 <h3>General remarks</h3>
 <p><strong>R style guide</strong><br />
-As mentioned before, it is very important to create a readable code. As
-<a href="https://style.tidyverse.org/">The tidyverse style guide
-says</a>: “Good coding style is like correct punctuation: you can manage
-without it, butitsuremakesthingseasiertoread.”<br />
-During this course, and later in your studies, you will most likely
-reuse these first COOs to look up how you can use different functions
-and data structures. So, you need to be able to read and understand your
-own script, even when some of the knowledge has become rusty. Therefore,
-use empty lines and comments to structure your script, for example:</p>
+As mentioned before, it is very important to create a readable code. As <a href="https://style.tidyverse.org/">The tidyverse style guide says</a>: “Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.”<br />
+During this course, and later in your studies, you will most likely reuse these first COOs to look up how you can use different functions and data structures. So, you need to be able to read and understand your own script, even when some of the knowledge has become rusty. Therefore, use empty lines and comments to structure your script, for example:</p>
 <pre class="r"><code>############################################
 ##                                        ##
 ## Code COO2 complete                     ##
@@ -347,10 +339,8 @@ countriestd # To check whether it has imported correctly.</code></pre>
 </div>
 <div id="this-coo" class="section level3">
 <h3>This COO</h3>
-<p>In this COO you will learn how to visualize data in plots. Next, you
-will learn how to save and customize your plots.<br />
-A playlist of all the HC video’s can be found <a
-href="https://www.youtube.com/playlist?list=PL3pDMfDjzlKI0wIPgMVjUw5F1ZUpsjSlA">here</a>.</p>
+<p>In this COO you will learn how to visualize data in plots. Next, you will learn how to save and customize your plots.<br />
+A playlist of all the HC video’s can be found <a href="https://www.youtube.com/playlist?list=PL3pDMfDjzlKI0wIPgMVjUw5F1ZUpsjSlA">here</a>.</p>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/LKV-KbN71BM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
 </iframe>
 <ol style="list-style-type: decimal">
@@ -373,10 +363,7 @@ href="https://www.youtube.com/playlist?list=PL3pDMfDjzlKI0wIPgMVjUw5F1ZUpsjSlA">
 </div>
 <div id="introduction" class="section level3">
 <h3>1. Introduction</h3>
-<p>We will use some datasets that are built-in in R. To obtain some
-information on the dataset, you can use different commands, as
-introduced in the previous COO. Below, you see an example for the
-dataset DNase.</p>
+<p>We will use some datasets that are built-in in R. To obtain some information on the dataset, you can use different commands, as introduced in the previous COO. Below, you see an example for the dataset DNase.</p>
 <pre class="r"><code>class(DNase)</code></pre>
 <pre><code>## [1] &quot;nfnGroupedData&quot; &quot;nfGroupedData&quot;  &quot;groupedData&quot;    &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>dim(DNase) # the first being the number of rows, the second being the number of columns</code></pre>
@@ -393,144 +380,67 @@ dataset DNase.</p>
 ## 5   1 0.39062500   0.206
 ## 6   1 0.39062500   0.215</code></pre>
 <pre class="r"><code>View(DNase) #view results in a separate window</code></pre>
-<p>You can also find information on the built-in datasets in the ‘Help’
-panel:</p>
+<p>You can also find information on the built-in datasets in the ‘Help’ panel:</p>
 <pre class="r"><code>help(DNase)</code></pre>
-<p><strong>Now, in the same manner, collect information on the mtcars
-dataset.</strong><br />
-<strong>1. What type of R data structure is the mtcars
-dataset?</strong></p>
-<p><strong>2. How many rows and columns does the mtcars dataset
-have?</strong></p>
-<p><strong>3. How are the data of the mtcars dataset
-obtained?</strong></p>
+<p><strong>Now, in the same manner, collect information on the mtcars dataset.</strong><br />
+<strong>1. What type of R data structure is the mtcars dataset?</strong></p>
+<p><strong>2. How many rows and columns does the mtcars dataset have?</strong></p>
+<p><strong>3. How are the data of the mtcars dataset obtained?</strong></p>
 </div>
 <div id="packages" class="section level3">
 <h3>2. Packages</h3>
-<p>We want to visualize the data in the mtcars dataset. There are many
-ways to visualize data. Base R contains a standard set of functions, but
-it can easily be extended. The system allows you to write new functions
-and share those with other users. Such sharable code is called a
-package.<br />
-R packages can contain multiple functions, data, documentation on how to
-use the functions, and much more. R packages are stored under a
-directory in the R environment, which is called a “library”.<br />
-In each basic version of R there are some basic graphs you can produce.
-In addition to those, you can install packages with which you can create
-other graphs. The most commonly used package for creating graphs is
-‘ggplot2’.<br />
-Later on, you will use some packages that are not present in base R.
-Therefore, it is handy to know how to install packages and how to use
-them.<br />
-To install the package ‘ggplot2’, you can use the following
-function:</p>
+<p>We want to visualize the data in the mtcars dataset. There are many ways to visualize data. Base R contains a standard set of functions, but it can easily be extended. The system allows you to write new functions and share those with other users. Such sharable code is called a package.<br />
+R packages can contain multiple functions, data, documentation on how to use the functions, and much more. R packages are stored under a directory in the R environment, which is called a “library”.<br />
+In each basic version of R there are some basic graphs you can produce. In addition to those, you can install packages with which you can create other graphs. The most commonly used package for creating graphs is ‘ggplot2’.<br />
+Later on, you will use some packages that are not present in base R. Therefore, it is handy to know how to install packages and how to use them.<br />
+To install the package ‘ggplot2’, you can use the following function:</p>
 <pre class="r"><code>install.packages(&quot;ggplot2&quot;) # put the package name between quotation marks</code></pre>
-<p>It can take some time to install packages. In the console, you can
-see a STOP-sign when it is running code:<br />
+<p>It can take some time to install packages. In the console, you can see a STOP-sign when it is running code:<br />
 <img src="COO3/Console-running-2.png" /></p>
-<p>Wait until the STOP sign dissapears, and the &gt; sign appears again
-in the Console, before running the next line of code. Before a new
-package can be used in the current script, you need to load it into the
-R environment. You need to do this every time you open a new
-environment. You install your package once, but you load the package
-every time you use it in a new environment. To see which packages are
-loaded in your environment, you can click on ‘Global Environment’:<br />
-<img src="Global-environment.PNG" /></p>
+<p>Wait until the STOP sign dissapears, and the &gt; sign appears again in the Console, before running the next line of code. Before a new package can be used in the current script, you need to load it into the R environment. You need to do this every time you open a new environment. You install your package once, but you load the package every time you use it in a new environment. To see which packages are loaded in your environment, you can click on ‘Global Environment’:<br />
+<img src="COO3/Global-environment.png" /></p>
 <p>To load a package, use the following function:</p>
 <pre class="r"><code>library(&quot;ggplot2&quot;)</code></pre>
-<p>For every package you use in a script, it might be useful to load the
-libraries on the top of your script. When you open your script again in
-a new environment, you can run these <code>library()</code> commands
-first, to load all of the necessary packages again.</p>
+<p>For every package you use in a script, it might be useful to load the libraries on the top of your script. When you open your script again in a new environment, you can run these <code>library()</code> commands first, to load all of the necessary packages again.</p>
 </div>
 <div id="plotting-basics" class="section level3">
 <h3>3. Plotting basics</h3>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/CMcV0WVA-fw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
 </iframe>
 <p>This COO, we will only use base R plotting functions.<br />
-To find information about each plot type, you can of course use the
-‘Help’ function, but there are also many online resources. A great
-resource that shows the basics and more advanced possibilities with
-plots in both ‘base R’ and ‘ggplot2’ is <a
-href="https://www.r-graph-gallery.com/">The R Graph Gallery</a>. They
-provide many examples on how to produce and customize graphs.</p>
-<p>You can navigate through the <a
-href="https://www.r-graph-gallery.com/">R graph gallery</a> yourself to
-find information on different types of graphs. <strong>Look around on
-the website to see what types of graphs you can make with R.</strong>
-Under ‘chart types’ you can select the type you are interested in. If
-you scroll down, you will see that for most chart types there is a
-‘GGPLOT2’ section with examples, and a ‘BASE R’ section.</p>
+To find information about each plot type, you can of course use the ‘Help’ function, but there are also many online resources. A great resource that shows the basics and more advanced possibilities with plots in both ‘base R’ and ‘ggplot2’ is <a href="https://www.r-graph-gallery.com/">The R Graph Gallery</a>. They provide many examples on how to produce and customize graphs.</p>
+<p>You can navigate through the <a href="https://www.r-graph-gallery.com/">R graph gallery</a> yourself to find information on different types of graphs. <strong>Look around on the website to see what types of graphs you can make with R.</strong> Under ‘chart types’ you can select the type you are interested in. If you scroll down, you will see that for most chart types there is a ‘GGPLOT2’ section with examples, and a ‘BASE R’ section.</p>
 <div id="scatterplot" class="section level4">
 <h4>3.1 Scatterplot</h4>
-<p><strong>Look up the scatterplot and click under ‘BASE R’ on the first
-graph ‘Most basic scatterplot’.</strong> On this page you can find some
-information on the use of scatterplots. On the top of the page there is
-often a link to ‘DATA TO VIZ’, a website that provides information on
-how to select the right type of graph for your data. If you scroll down
-you see an example script and some information on how to customize your
-graph.</p>
-<p>Let’s make a scatterplot ourselves. We want to display the
-relationship between the horsepower and weight of the cars in the
-<code>mtcars</code> dataset.<br />
-First, we need to select the correct columns. Remember that to access
-variables from a dataframe you can use two methods, with square brackets
-or with the dollar sign. In the previous COO you selected the first row
-of the people dataframe with <code>people.df[1,]</code>, and the first
-column with either <code>people.df[,1]</code> or with
-<code>people.df$Name</code>.</p>
-<p><strong>4. Select the horsepower column with the dollar
-sign.</strong><br />
-<em>If you can’t remember the name of the column, you can of course use
-the <code>head(mtcars)</code> function, <code>names(mtcars)</code> or
-<code>help(mtcars)</code>.</em><br />
-The output in your console should show the values in the horsepower
-column:</p>
+<p><strong>Look up the scatterplot and click under ‘BASE R’ on the first graph ‘Most basic scatterplot’.</strong> On this page you can find some information on the use of scatterplots. On the top of the page there is often a link to ‘DATA TO VIZ’, a website that provides information on how to select the right type of graph for your data. If you scroll down you see an example script and some information on how to customize your graph.</p>
+<p>Let’s make a scatterplot ourselves. We want to display the relationship between the horsepower and weight of the cars in the <code>mtcars</code> dataset.<br />
+First, we need to select the correct columns. Remember that to access variables from a dataframe you can use two methods, with square brackets or with the dollar sign. In the previous COO you selected the first row of the people dataframe with <code>people.df[1,]</code>, and the first column with either <code>people.df[,1]</code> or with <code>people.df$Name</code>.</p>
+<p><strong>4. Select the horsepower column with the dollar sign.</strong><br />
+<em>If you can’t remember the name of the column, you can of course use the <code>head(mtcars)</code> function, <code>names(mtcars)</code> or <code>help(mtcars)</code>.</em><br />
+The output in your console should show the values in the horsepower column:</p>
 <pre><code>##  [1] 110 110  93 110 175 105 245  62  95 123 123 180 180 180 205 215 230  66  52
 ## [20]  65  97 150 150 245 175  66  91 113 264 175 335 109</code></pre>
-<p>For our scatterplot, we will plot the horsepower on the x-axis and
-the weight on the y-axis.<br />
+<p>For our scatterplot, we will plot the horsepower on the x-axis and the weight on the y-axis.<br />
 For other columns, this command would look like this:</p>
 <pre class="r"><code>plot(x = mtcars$mpg, y = mtcars$gear)</code></pre>
-<p><strong>5. Make a scatterplot that shows the relationship between the
-horsepower and weight of the cars in the mtcars dataset.</strong></p>
+<p><strong>5. Make a scatterplot that shows the relationship between the horsepower and weight of the cars in the mtcars dataset.</strong></p>
 <p>The plotviewer should show this:<br />
 <img src="COO3_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p>You can view a larger version of the plot when you click in the
-plotviewer on ‘Zoom’. You can scroll through the plots you made in an R
-session with the arrows next to the zoom function.</p>
-<p>By accessing the columns of a dataframe we are actually selecting a
-vector (a set of values of the same data type) with numeric values
-(numbers). So, now we know that we can make a scatterplot of two vectors
-with numeric values plotted against each other.<br />
+<p>You can view a larger version of the plot when you click in the plotviewer on ‘Zoom’. You can scroll through the plots you made in an R session with the arrows next to the zoom function.</p>
+<p>By accessing the columns of a dataframe we are actually selecting a vector (a set of values of the same data type) with numeric values (numbers). So, now we know that we can make a scatterplot of two vectors with numeric values plotted against each other.<br />
 Let’s try to make a scatterplot of a whole dataframe.</p>
-<p><strong>6. Make a scatterplot of the dataframe <code>mtcars</code>.
-What do you see in the plot viewer? Can you explain what you
-see?</strong></p>
-<p><strong>7. In which row and column of this new plot can you find the
-plot we made before (with horsepower on the x-axis and weight on the
-y-axis)?</strong></p>
-<p>We can also use the <code>plot()</code> function to create line
-graphs. Then, we use the <code>x =</code> and <code>type = "l"</code>
-arguments. Remember that all arguments of a function are used between
-the () and separated with a comma.</p>
-<p><strong>8. Plot the horsepower of the mtcars data in a line
-graph.</strong></p>
+<p><strong>6. Make a scatterplot of the dataframe <code>mtcars</code>. What do you see in the plot viewer? Can you explain what you see?</strong></p>
+<p><strong>7. In which row and column of this new plot can you find the plot we made before (with horsepower on the x-axis and weight on the y-axis)?</strong></p>
+<p>We can also use the <code>plot()</code> function to create line graphs. Then, we use the <code>x =</code> and <code>type = "l"</code> arguments. Remember that all arguments of a function are used between the () and separated with a comma.</p>
+<p><strong>8. Plot the horsepower of the mtcars data in a line graph.</strong></p>
 </div>
 <div id="barplot" class="section level4">
 <h4>3.2 Barplot</h4>
-<p>With the scatterplot, we compared the values of two different
-variables in a visual manner.<br />
-If we want to compare the weights (one variable) of the different cars
-(the rows) in the mtcars dataset in a visual manner, we can use a
-barplot.<br />
-<strong>Look up the characteristics of a barplot and what it is for on
-the R graph Gallery and Data to Viz websites.</strong></p>
-<p><strong>9. In our dataset <code>mtcars</code>, what is the categoric
-variable and what the numeric, between which we want to show the
-relationship?</strong></p>
-<p>Below, you find an example of a barplot for the dataframe you made
-during the first COO.</p>
+<p>With the scatterplot, we compared the values of two different variables in a visual manner.<br />
+If we want to compare the weights (one variable) of the different cars (the rows) in the mtcars dataset in a visual manner, we can use a barplot.<br />
+<strong>Look up the characteristics of a barplot and what it is for on the R graph Gallery and Data to Viz websites.</strong></p>
+<p><strong>9. In our dataset <code>mtcars</code>, what is the categoric variable and what the numeric, between which we want to show the relationship?</strong></p>
+<p>Below, you find an example of a barplot for the dataframe you made during the first COO.</p>
 <pre class="r"><code>#creating the dataframe again:
 name &lt;- c(&quot;Tom&quot;, &quot;Nadia&quot;, &quot;Anna&quot;, &quot;Inge&quot;) 
 age &lt;- c(24, 20, 21, 23)
@@ -539,337 +449,126 @@ people.df &lt;- data.frame(name, age, relationship)
 
 #plotting the ages of the people in a barplot:
 barplot(height = people.df$age, names = people.df$name)</code></pre>
-<p>As you can see, we use the numeric vector ‘age’ as
-<code>height</code> in the function <code>barplot()</code>, and the
-categorical value ‘name’ as <code>names</code> for the bars. On the R
-graph Gallery website they used similar code for the ‘Most basic
-barplot’. You could also try their code by copy-pasting it to your
-script. If all goes well, you should produce the same graph as is shown
-on the site.</p>
-<p>Again, we accessed a column of a dataframe. Let’s try to barplot the
-whole people dataframe, just like we did with the scatterplot and the
-<code>mtcars</code> dataframe.</p>
+<p>As you can see, we use the numeric vector ‘age’ as <code>height</code> in the function <code>barplot()</code>, and the categorical value ‘name’ as <code>names</code> for the bars. On the R graph Gallery website they used similar code for the ‘Most basic barplot’. You could also try their code by copy-pasting it to your script. If all goes well, you should produce the same graph as is shown on the site.</p>
+<p>Again, we accessed a column of a dataframe. Let’s try to barplot the whole people dataframe, just like we did with the scatterplot and the <code>mtcars</code> dataframe.</p>
 <p><strong>Run the following code:</strong></p>
 <pre class="r"><code>barplot(height = people.df)</code></pre>
 <p>You will get an error message in your Console:<br />
-<span style="     color: red !important;">Error in
-barplot.default(people.df):</span><br />
-<span style="     color: red !important;">‘height’ must be a vector or a
-matrix</span></p>
-<p>You get this message because we used a dataframe for the argument
-<code>height</code> of the function. If you get such error messages and
-do not immediately understand what you did wrong, you can try to find
-the answer in the ‘Help’ panel. An explanation of how to read the ‘Help’
-panel can be found <a
-href="https://robwschlegel.github.io/Intro_R_Workshop/workflow.html#help">here</a>.
-Another option for finding more information on an error message is of
-course to Google it. However, be aware that many websites require more
-than a basic understanding of R programming to be of use.</p>
-<p><strong>10. Now, make a barplot of the weight of the cars in the
-<code>mtcars</code> dataset. Don’t forget to assign names with the
-<code>names = rownames(mtcars)</code> format.</strong></p>
-<p><strong>11. There are so many cars, that you can’t see all the labels
-on the x-axis. So, let’s make a barplot of the weight of the first five
-cars in the <code>mtcars</code> dataset. Use the
-<code>mtcars[row numbers, column number]</code> command to access the
-correct data. Don’t forget to assign names with the
-<code>names = rownames(mtcars[row numbers,])</code>
-command.</strong></p>
+<span style="     color: red !important;">Error in barplot.default(people.df):</span><br />
+<span style="     color: red !important;">‘height’ must be a vector or a matrix</span></p>
+<p>You get this message because we used a dataframe for the argument <code>height</code> of the function. If you get such error messages and do not immediately understand what you did wrong, you can try to find the answer in the ‘Help’ panel. An explanation of how to read the ‘Help’ panel can be found <a href="https://robwschlegel.github.io/Intro_R_Workshop/workflow.html#help">here</a>. Another option for finding more information on an error message is of course to Google it. However, be aware that many websites require more than a basic understanding of R programming to be of use.</p>
+<p><strong>10. Now, make a barplot of the weight of the cars in the <code>mtcars</code> dataset. Don’t forget to assign names with the <code>names = rownames(mtcars)</code> format.</strong></p>
+<p><strong>11. There are so many cars, that you can’t see all the labels on the x-axis. So, let’s make a barplot of the weight of the first five cars in the <code>mtcars</code> dataset. Use the <code>mtcars[row numbers, column number]</code> command to access the correct data. Don’t forget to assign names with the <code>names = rownames(mtcars[row numbers,])</code> command.</strong></p>
 </div>
 <div id="histogram" class="section level4">
 <h4>3.3 Histogram</h4>
-<p>So, a barplot shows the numeric value (weight) of each categorical
-value (car type) as a bar. Now, we want to know the distribution of the
-weights in this dataset. Therefore, we can make a histogram or a
-boxplot. We will make both, but start with the histogram. <strong>Start
-by reading the info of the Data-to-Viz website on histograms (<a
-href="https://www.data-to-viz.com/graph/histogram.html">Data-to-viz</a>).</strong><br />
-To make a histogram of the weights of the cars in <code>mtcars</code>,
-you can use the function <code>hist(x = mtcars$wt)</code>.<br />
-<strong>12. What is the default interval that is used to cut the
-variable weight into bins? </strong><br />
-<em>If you don’t understand how you can deduct this from the graph, look
-at the apartment example of Data-to-Viz.</em></p>
-<p><strong>13. What does the fifth bin from the left tell
-you?</strong></p>
-<p>With the <code>hist()</code> function we can also change the binsize
-(width of the bars). We can either determine the number of bins or the
-breakpoints, with the function argument <code>breaks =</code>. Let’s try
-out different bin sizes for a simple dataset. With the following code,
-we draw numbers from a normal distribution, then we plot them with
-default settings, and then we change the number of bins to 50.</p>
+<p>So, a barplot shows the numeric value (weight) of each categorical value (car type) as a bar. Now, we want to know the distribution of the weights in this dataset. Therefore, we can make a histogram or a boxplot. We will make both, but start with the histogram. <strong>Start by reading the info of the Data-to-Viz website on histograms (<a href="https://www.data-to-viz.com/graph/histogram.html">Data-to-viz</a>).</strong><br />
+To make a histogram of the weights of the cars in <code>mtcars</code>, you can use the function <code>hist(x = mtcars$wt)</code>.<br />
+<strong>12. What is the default interval that is used to cut the variable weight into bins? </strong><br />
+<em>If you don’t understand how you can deduct this from the graph, look at the apartment example of Data-to-Viz.</em></p>
+<p><strong>13. What does the fifth bin from the left tell you?</strong></p>
+<p>With the <code>hist()</code> function we can also change the binsize (width of the bars). We can either determine the number of bins or the breakpoints, with the function argument <code>breaks =</code>. Let’s try out different bin sizes for a simple dataset. With the following code, we draw numbers from a normal distribution, then we plot them with default settings, and then we change the number of bins to 50.</p>
 <pre class="r"><code>normal1 &lt;- rnorm(1000)
 hist(x = normal1)
 hist(x = normal1, breaks = 50)</code></pre>
-<p>As you can also read in the ‘Help’ section about <code>hist()</code>,
-if you provide a single number for breaks, it is used as a suggestion.
-The breakpoints will be set to ‘pretty’ values. So, in our example, 41
-bins are used, with breakpoints every 0.2. You can also define these
-breakpoints yourself. Therefore, it might be useful to know the minimum
-and maximum of the numeric value you are plotting. Then, you can
-determine the breakpoints of the bins with the <code>seq()</code>
-function introduced in the previous COO.</p>
-<p><strong>14. Determine the lowest and highest value of the created
-vector normal1 with the functions introduced in a previous
-COO.</strong></p>
-<p><strong>15. Determine the breakpoints you want to use. Plot the
-normal1 vector in a histogram, and set the breakpoints by adapting the
-following command:</strong></p>
+<p>As you can also read in the ‘Help’ section about <code>hist()</code>, if you provide a single number for breaks, it is used as a suggestion. The breakpoints will be set to ‘pretty’ values. So, in our example, 41 bins are used, with breakpoints every 0.2. You can also define these breakpoints yourself. Therefore, it might be useful to know the minimum and maximum of the numeric value you are plotting. Then, you can determine the breakpoints of the bins with the <code>seq()</code> function introduced in the previous COO.</p>
+<p><strong>14. Determine the lowest and highest value of the created vector normal1 with the functions introduced in a previous COO.</strong></p>
+<p><strong>15. Determine the breakpoints you want to use. Plot the normal1 vector in a histogram, and set the breakpoints by adapting the following command:</strong></p>
 <pre class="r"><code>hist(x = normal1, breaks = seq(from = -6, to = 6, by = 0.5))</code></pre>
-<p><strong>16. Try some different breakpoints, until you find a
-representation that, according to you, best represents your
-data.</strong><br />
-<em>N.B. There are different statistical rules to determine the binsize,
-for example Sturges formula or the Freedman-Diaconis rule. This is
-beyond the scope of this introduction to R.</em></p>
+<p><strong>16. Try some different breakpoints, until you find a representation that, according to you, best represents your data.</strong><br />
+<em>N.B. There are different statistical rules to determine the binsize, for example Sturges formula or the Freedman-Diaconis rule. This is beyond the scope of this introduction to R.</em></p>
 </div>
 <div id="boxplot" class="section level4">
 <h4>3.4 Boxplot</h4>
-<p>You can also visualize the distribution of data with a boxplot. A
-boxplot can summarize the distribution of a numeric value. <strong>Read
-about the boxplot on the <a
-href="https://www.data-to-viz.com/graph/histogram.html">Data-to-viz</a>
-website.</strong></p>
-<p><strong>17. Make a boxplot of the normal1 vector with the following
-command:</strong></p>
+<p>You can also visualize the distribution of data with a boxplot. A boxplot can summarize the distribution of a numeric value. <strong>Read about the boxplot on the <a href="https://www.data-to-viz.com/graph/histogram.html">Data-to-viz</a> website.</strong></p>
+<p><strong>17. Make a boxplot of the normal1 vector with the following command:</strong></p>
 <pre class="r"><code>boxplot(x = normal1)</code></pre>
-<p>The advantage of a boxplot over a histogram is that you can easliy
-visualize multiple datasets in one graph. Let’s visualize a few normal
-distributions. Therefore, we first need to make additional vectors and
-put these together in a matrix or list. <strong>Do this with the
-following commands:</strong></p>
+<p>The advantage of a boxplot over a histogram is that you can easliy visualize multiple datasets in one graph. Let’s visualize a few normal distributions. Therefore, we first need to make additional vectors and put these together in a matrix or list. <strong>Do this with the following commands:</strong></p>
 <pre class="r"><code>normal2 &lt;- rnorm(1000, mean = 3, sd = 1)
 normal3 &lt;- rnorm(1000, mean = 4, sd = 2)
 normal4 &lt;- rnorm(1000, mean = -2, sd = 0.5)
 normal.matrix1 &lt;- cbind(normal1, normal2, normal3, normal4) #cbind puts each vector in a column of a matrix
 normal.list1 &lt;- list(normal1, normal2, normal3, normal4)</code></pre>
-<p><strong>18. Make a boxplot of the normal.matrix1 and normal.list1.
-What difference do you see?</strong></p>
-<p>Another difference is that with a list you can store vectors of
-different lengths (and different data types). So, when your data
-contains vectors of numerics of different lengths, you would like to
-compare in a boxplot, you can create a list. For example:</p>
+<p><strong>18. Make a boxplot of the normal.matrix1 and normal.list1. What difference do you see?</strong></p>
+<p>Another difference is that with a list you can store vectors of different lengths (and different data types). So, when your data contains vectors of numerics of different lengths, you would like to compare in a boxplot, you can create a list. For example:</p>
 <pre class="r"><code>normal5 &lt;- rnorm(100, mean = 7, sd = 1.5)
 normal6 &lt;- rnorm(500, mean = 7, sd = 1.5)
 normal7 &lt;- rnorm(300, mean = 4, sd = 2)
 normal.list2 &lt;- list(normal5, normal6, normal7)
 boxplot(normal.list2)</code></pre>
-<p>We can also make boxplots of our dataframe. We can either plot the
-whole dataframe, or select the columns we want to plot.<br />
-<strong>19. Make a boxplot of the <code>mtcars</code>
-dataframe.</strong><br />
-As you can see, not all variables (columns) contain numerics in the same
-range. Therefore, the data on many variables is visualised in a
-condensed manner. We can also make a selection of the columns that
-excludes the columns with relatively high values. To select multiple
-columns and for example exclude 5 and 10, you can use
-<code>mtcars[ ,c(1:4, 6:9, 11)]</code>. This selects of all rows (hence,
-no value befor the comma), the first to fourth, and sixth to ninth, and
-eleventh column (<code>c()</code> for combine).<br />
-<strong>20. To get a better view of the distribution of all of the
-variables: make a boxplot of the <code>mtcars</code> dataframe,
-excluding the columns with relatively high values. And make a boxplot of
-the columns you excluded.</strong></p>
-<p>When you want to visualize many boxplots, you can also display them
-horizontally with the <code>boxplot()</code> function, using the
-argument <code>horizontal = TRUE</code>.<br />
+<p>We can also make boxplots of our dataframe. We can either plot the whole dataframe, or select the columns we want to plot.<br />
+<strong>19. Make a boxplot of the <code>mtcars</code> dataframe.</strong><br />
+As you can see, not all variables (columns) contain numerics in the same range. Therefore, the data on many variables is visualised in a condensed manner. We can also make a selection of the columns that excludes the columns with relatively high values. To select multiple columns and for example exclude 5 and 10, you can use <code>mtcars[ ,c(1:4, 6:9, 11)]</code>. This selects of all rows (hence, no value befor the comma), the first to fourth, and sixth to ninth, and eleventh column (<code>c()</code> for combine).<br />
+<strong>20. To get a better view of the distribution of all of the variables: make a boxplot of the <code>mtcars</code> dataframe, excluding the columns with relatively high values. And make a boxplot of the columns you excluded.</strong></p>
+<p>When you want to visualize many boxplots, you can also display them horizontally with the <code>boxplot()</code> function, using the argument <code>horizontal = TRUE</code>.<br />
 <strong>21. Try this for the latest boxplots.</strong></p>
 </div>
 <div id="heatmap" class="section level4">
 <h4>3.5 Heatmap</h4>
-<p>Now, we have seen four different graphs: 1) A scatter plot, to
-visualize the relationship between two numeric variables (horsepower and
-weight). 2) A barplot, to show the relationship between a numeric and a
-categoric variable (the weight of each type of car). 3) A histogram, to
-study the distribution of a numeric variable (weight). 4) A boxplot, to
-summarize the distribution of numeric variables of several groups (all
-columns of a dataframe).<br />
-The fifth graph type we will explore, is the heatmap. This graphical
-representation is often used for gene expression data, because it
-provides a quick, visual overview of all data points. In the most basic
-version, each numeric data point (table cell) in a matrix is converted
-to a color, corresponding with the size of the value. So, on a scale of
-yellow to red (the default in base R), in a dataset with values from -10
-to 10, yellow would correspond with -10, and red with 10. Values in
-between are displayed in varying degrees of orange.<br />
-A heatmap requires a data structure containing only data of the type
-numeric. Therefore, the function <code>heatmap()</code> requires a
-numeric matrix for the argument <code>x</code>. If we want to visualize
-a dataframe, we first need to convert it to a matrix. For the
-<code>mtcars</code> dataframe, you can do this with the following
-command: <code>as.matrix(mtcars)</code>.<br />
-<strong>22. Create a new variable ‘matrix.mtcars’ with this
-command.</strong></p>
-<p>The default of the <code>heatmap()</code> function is already to
-normalize and reorder the data. Normalization is done to absorb the
-variation between rows or columns. Reordering is a computation that
-tries to order the observations in each row and column by
-similarity.<br />
-Let’s first take a look at the data in the same order as we can find it
-in the matrix (only, the top car in matrix is bottom car in heatmap),
-and without normalization.<br />
+<p>Now, we have seen four different graphs: 1) A scatter plot, to visualize the relationship between two numeric variables (horsepower and weight). 2) A barplot, to show the relationship between a numeric and a categoric variable (the weight of each type of car). 3) A histogram, to study the distribution of a numeric variable (weight). 4) A boxplot, to summarize the distribution of numeric variables of several groups (all columns of a dataframe).<br />
+The fifth graph type we will explore, is the heatmap. This graphical representation is often used for gene expression data, because it provides a quick, visual overview of all data points. In the most basic version, each numeric data point (table cell) in a matrix is converted to a color, corresponding with the size of the value. So, on a scale of yellow to red (the default in base R), in a dataset with values from -10 to 10, yellow would correspond with -10, and red with 10. Values in between are displayed in varying degrees of orange.<br />
+A heatmap requires a data structure containing only data of the type numeric. Therefore, the function <code>heatmap()</code> requires a numeric matrix for the argument <code>x</code>. If we want to visualize a dataframe, we first need to convert it to a matrix. For the <code>mtcars</code> dataframe, you can do this with the following command: <code>as.matrix(mtcars)</code>.<br />
+<strong>22. Create a new variable ‘matrix.mtcars’ with this command.</strong></p>
+<p>The default of the <code>heatmap()</code> function is already to normalize and reorder the data. Normalization is done to absorb the variation between rows or columns. Reordering is a computation that tries to order the observations in each row and column by similarity.<br />
+Let’s first take a look at the data in the same order as we can find it in the matrix (only, the top car in matrix is bottom car in heatmap), and without normalization.<br />
 <strong>23. Make a heatmap with the following command:</strong></p>
 <pre class="r"><code>heatmap(x = matrix.mtcars, scale = &quot;none&quot;, Colv = NA, Rowv = NA)</code></pre>
-<p>Just like in the boxplot, we can see that the columns ‘disp’ and ‘hp’
-contain relatively high values. This causes the other columns to display
-yellow values only. Therefore, it is useful to normalize the data, to
-absorb the variation between columns.<br />
-We can determine the normalization by using the argument
-<code>scale</code> in the function <code>heatmap()</code>. In the
-example above, we used <code>scale = "none"</code>, which means the
-values are not normalized. You can read in the <code>Help</code> section
-about <code>heatmap()</code> that the default of the argument
-<code>scale</code> is <code>row</code>, which means normalizing to
-absorb the variation between rows. We know that the variation between
-columns is bigger, and therefore we need to adapt our code, to scale by
-column.</p>
-<p><strong>24. Create the same heatmap as above, but change the argument
-scale to “column”. Don’t forget to use the quotation marks, to make it a
-character string.</strong><br />
+<p>Just like in the boxplot, we can see that the columns ‘disp’ and ‘hp’ contain relatively high values. This causes the other columns to display yellow values only. Therefore, it is useful to normalize the data, to absorb the variation between columns.<br />
+We can determine the normalization by using the argument <code>scale</code> in the function <code>heatmap()</code>. In the example above, we used <code>scale = "none"</code>, which means the values are not normalized. You can read in the <code>Help</code> section about <code>heatmap()</code> that the default of the argument <code>scale</code> is <code>row</code>, which means normalizing to absorb the variation between rows. We know that the variation between columns is bigger, and therefore we need to adapt our code, to scale by column.</p>
+<p><strong>24. Create the same heatmap as above, but change the argument scale to “column”. Don’t forget to use the quotation marks, to make it a character string.</strong><br />
 <em>You can also try what happens when you scale by row.</em></p>
-<p>As described above, the default of the <code>heatmap()</code>
-function is also to reorder the data. Reordering can be done for rows
-and columns seperately. In exercise 23 we set the reordering of both
-columns (<code>Colv</code>) and rows (<code>Rowv</code>) to NA (not
-available). If we do want the <code>heatmap()</code> to reorder, we can
-leave out these arguments, because the default of the function is to
-reorder by both column and row.</p>
-<p><strong>25. Create the same heatmap as above, but let the heatmap
-reorder by row and column.</strong></p>
-<p><strong>26. In how many groups would you devide the variables
-(horizontal axis)?</strong></p>
-<p><strong>27. In how many groups would you devide the
-cars?</strong></p>
-<p>The heatmap can give an indication of the correlation between
-different variables. For example, we can see that the variables ‘hp’ and
-‘disp’ are positively correlated. When the gross horsepower of a car is
-low (yellow), the displacement is most likely low as well. These
-variables, on the other hand, have a negative correlation with miles per
-gallon (mpg). We can check these correlations in more detail with
-another plot type.</p>
-<p><strong>28. Create a plot that displays the correlation between hp
-and disp.</strong></p>
-<p><strong>29. Create a plot that displays the correlation between hp
-and mpg.</strong></p>
-<p><strong>30. What correlation do you see between hp and cylinder in
-the heatmap? Create a plot that displays this correlation.</strong></p>
-<p><strong>31. What do you expect about the distribution of the variable
-cylinder based on this plot?</strong></p>
-<p><strong>32. Create a plot that displays the distribution of the
-variable cylinder.</strong></p>
-<p><strong>33. Take a look at your latest heatmap again. Are there other
-variables for which you expect a similar distribution?</strong></p>
-<p><strong>34. Create the plots that provide an overview of the
-distributions of all the variables of the mtcars dataset
-again.</strong></p>
-<p>You can see that some boxplots do not have whiskers, which could
-indicate that the variable does not contain many unique values. We can
-check this for each variable with the following function
-<code>unique(dataframe$columnname)</code>. This function returns a
-vector with the unique variables that can be found within a column.</p>
-<p><strong>35. Determine with the heatmap, distribution graphs and the
-<code>unique()</code> function which variables contain a low amount of
-unique variables.</strong></p>
+<p>As described above, the default of the <code>heatmap()</code> function is also to reorder the data. Reordering can be done for rows and columns seperately. In exercise 23 we set the reordering of both columns (<code>Colv</code>) and rows (<code>Rowv</code>) to NA (not available). If we do want the <code>heatmap()</code> to reorder, we can leave out these arguments, because the default of the function is to reorder by both column and row.</p>
+<p><strong>25. Create the same heatmap as above, but let the heatmap reorder by row and column.</strong></p>
+<p><strong>26. In how many groups would you devide the variables (horizontal axis)?</strong></p>
+<p><strong>27. In how many groups would you devide the cars?</strong></p>
+<p>The heatmap can give an indication of the correlation between different variables. For example, we can see that the variables ‘hp’ and ‘disp’ are positively correlated. When the gross horsepower of a car is low (yellow), the displacement is most likely low as well. These variables, on the other hand, have a negative correlation with miles per gallon (mpg). We can check these correlations in more detail with another plot type.</p>
+<p><strong>28. Create a plot that displays the correlation between hp and disp.</strong></p>
+<p><strong>29. Create a plot that displays the correlation between hp and mpg.</strong></p>
+<p><strong>30. What correlation do you see between hp and cylinder in the heatmap? Create a plot that displays this correlation.</strong></p>
+<p><strong>31. What do you expect about the distribution of the variable cylinder based on this plot?</strong></p>
+<p><strong>32. Create a plot that displays the distribution of the variable cylinder.</strong></p>
+<p><strong>33. Take a look at your latest heatmap again. Are there other variables for which you expect a similar distribution?</strong></p>
+<p><strong>34. Create the plots that provide an overview of the distributions of all the variables of the mtcars dataset again.</strong></p>
+<p>You can see that some boxplots do not have whiskers, which could indicate that the variable does not contain many unique values. We can check this for each variable with the following function <code>unique(dataframe$columnname)</code>. This function returns a vector with the unique variables that can be found within a column.</p>
+<p><strong>35. Determine with the heatmap, distribution graphs and the <code>unique()</code> function which variables contain a low amount of unique variables.</strong></p>
 </div>
 </div>
 <div id="saving-plots" class="section level3">
 <h3>4. Saving plots</h3>
-<p>Now that we’ve made some plots, we want to be able to save them as
-well. There are different ways to save plots in RStudio. An easy way is
-by clicking the ‘Export’ button above the plot in the ‘Plots’ panel of
-RStudio. You can then choose to save it as image or PDF, or copy it to
-your clipboard. When you choose to save it as an image, you are asked to
-choose an image format.<br />
-There are many formats you can use to save an image, which you can
-recognize by de file extension (for example ‘.jpeg’). To understand
-which image format is suited for which application, it is firstly good
-to realize that there is a difference between raster and vector images.
-<strong>Raster</strong> images save the information in the image as a
-series of pixels. When you stretch the image, and thereby the pixels,
-they can become distorted and the resulotion is compromised. Therefore,
-you best save pictures in the size you need. You can change the size of
-the image while saving in RStudio. <strong>Vector</strong> images, on
-the other hand, are far more flexible. They are saved as a formula that
-can recreate the image. You can use these image files to create images
-you would, for example, like to use both in a paper and on a A0 poster.
-When you enlarge the image, no information is lost.<br />
+<p>Now that we’ve made some plots, we want to be able to save them as well. There are different ways to save plots in RStudio. An easy way is by clicking the ‘Export’ button above the plot in the ‘Plots’ panel of RStudio. You can then choose to save it as image or PDF, or copy it to your clipboard. When you choose to save it as an image, you are asked to choose an image format.<br />
+There are many formats you can use to save an image, which you can recognize by de file extension (for example ‘.jpeg’). To understand which image format is suited for which application, it is firstly good to realize that there is a difference between raster and vector images. <strong>Raster</strong> images save the information in the image as a series of pixels. When you stretch the image, and thereby the pixels, they can become distorted and the resulotion is compromised. Therefore, you best save pictures in the size you need. You can change the size of the image while saving in RStudio. <strong>Vector</strong> images, on the other hand, are far more flexible. They are saved as a formula that can recreate the image. You can use these image files to create images you would, for example, like to use both in a paper and on a A0 poster. When you enlarge the image, no information is lost.<br />
 Some commonly used file extensions are:</p>
 <ul>
-<li>.jpeg (or .jpg): a raster format that compresses the file to create
-small-size files. During this compression image details are lost. Often
-used for images on the internet and photo cameras, because of the small
-file size.</li>
-<li>.png: a raster format that uses compression without losing detail.
-Not suitable for printing, because they still have low resolution, but
-does work for the internet, because they load quite quickly.</li>
-<li>.tiff: a raster format that uses compression without losing detail.
-A very rich format that contains a lot of detailed image data, can
-contain different types of color palets (grayscale, CMYK or RGB), and
-can save other info (like layers and image tags). TIFF images are
-usually very large and take longer to load.</li>
-<li>.svg: a vector format that does not compress images. It is XML-based
-(used to save and structure data) and often used for logos and
-graphs.</li>
-<li>.eps: a vector format that does not compress images. Very suited for
-high-resolution graphics for printing. You can open and save .eps files
-easily with many design software (for example Adobe Illustrator).</li>
+<li>.jpeg (or .jpg): a raster format that compresses the file to create small-size files. During this compression image details are lost. Often used for images on the internet and photo cameras, because of the small file size.</li>
+<li>.png: a raster format that uses compression without losing detail. Not suitable for printing, because they still have low resolution, but does work for the internet, because they load quite quickly.</li>
+<li>.tiff: a raster format that uses compression without losing detail. A very rich format that contains a lot of detailed image data, can contain different types of color palets (grayscale, CMYK or RGB), and can save other info (like layers and image tags). TIFF images are usually very large and take longer to load.</li>
+<li>.svg: a vector format that does not compress images. It is XML-based (used to save and structure data) and often used for logos and graphs.</li>
+<li>.eps: a vector format that does not compress images. Very suited for high-resolution graphics for printing. You can open and save .eps files easily with many design software (for example Adobe Illustrator).</li>
 </ul>
-<p><strong>36. Save one of your plots as JPEG, TIFF, EPS and PDF. What
-are the sizes of each of these files?</strong></p>
-<p>Another way to save your plots is by coding the command. Therefore,
-you must first indicate where you want to save your image. Remember that
-you can access a file by creating a character string that contains the
-whole file path including the name and the extension of the file. In the
-same manner, you can save a new file. If you copy the working directory
-path from your ‘Windows Verkenner’, don’t forget to convert the
-backslashes to normal slashes. In RStudio Cloud, begin with
-<code>tiff("/cloud)</code>.</p>
-<p><strong>37. Save a plot using the following commands (change the file
-path to a folder where you want to save your plot): </strong></p>
+<p><strong>36. Save one of your plots as JPEG, TIFF, EPS and PDF. What are the sizes of each of these files?</strong></p>
+<p>Another way to save your plots is by coding the command. Therefore, you must first indicate where you want to save your image. Remember that you can access a file by creating a character string that contains the whole file path including the name and the extension of the file. In the same manner, you can save a new file. If you copy the working directory path from your ‘Windows Verkenner’, don’t forget to convert the backslashes to normal slashes. In RStudio Cloud, begin with <code>tiff("/cloud)</code>.</p>
+<p><strong>37. Save a plot using the following commands (change the file path to a folder where you want to save your plot): </strong></p>
 <pre class="r"><code>tiff(&quot;C:/folder1/folder2/myfilename.tiff&quot;)
 heatmap(matrix.mtcars, scale = &quot;column&quot;)
 dev.off()</code></pre>
-<p>As you can see, you first determine the file format and file name.
-<strong>Look up which file formats you can save in the same manner, with
-<code>help(tiff)</code>.</strong> Then, you plot the plot you want to
-save. And you always end with the command <code>dev.off()</code>, which
-closes the file. If you forget this command, the file remains open and
-the next plot will be saved to the same file. Only when you close the
-file with <code>dev.off()</code>, the new file will appear in your
-folder.</p>
-<p><strong>38. Save a plot in the JPEG format using the commands
-above.</strong></p>
+<p>As you can see, you first determine the file format and file name. <strong>Look up which file formats you can save in the same manner, with <code>help(tiff)</code>.</strong> Then, you plot the plot you want to save. And you always end with the command <code>dev.off()</code>, which closes the file. If you forget this command, the file remains open and the next plot will be saved to the same file. Only when you close the file with <code>dev.off()</code>, the new file will appear in your folder.</p>
+<p><strong>38. Save a plot in the JPEG format using the commands above.</strong></p>
 </div>
 <div id="plotting-customization" class="section level3">
 <h3>5. Plotting customization</h3>
 <iframe width="560" height="315" src="https://www.youtube.com/embed/dPSpXOa3OJM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1">
 </iframe>
-<p>The plots we’ve made so far are not really visually attractive.
-Luckily, we can change many visual characteristics of the plots with
-extra arguments in the functions we use to plot. We will now try out
-some of these customization options. In all of the following exercises,
-we encourage you to try out some different values and play around with
-it a bit, to get an idea of all the possibilities.<br />
-You can find more info about customization on <a
-href="https://www.r-graph-gallery.com/">The R Graph Gallery</a> again,
-under ‘QUICK’ in the menu bar. The last three tabs are useful for base
-R. We will start with the scatterplot (plot()) again. You can also find
-info on customizations at the page for the basic scatterplot.</p>
-<p>We will use the scatterplot of mtcars displaying the relation between
-Displacement and Gross horsepower as an example.<br />
-<strong>39. Change the x- and y-limits of the axis with the following
-commands:</strong></p>
+<p>The plots we’ve made so far are not really visually attractive. Luckily, we can change many visual characteristics of the plots with extra arguments in the functions we use to plot. We will now try out some of these customization options. In all of the following exercises, we encourage you to try out some different values and play around with it a bit, to get an idea of all the possibilities.<br />
+You can find more info about customization on <a href="https://www.r-graph-gallery.com/">The R Graph Gallery</a> again, under ‘QUICK’ in the menu bar. The last three tabs are useful for base R. We will start with the scatterplot (plot()) again. You can also find info on customizations at the page for the basic scatterplot.</p>
+<p>We will use the scatterplot of mtcars displaying the relation between Displacement and Gross horsepower as an example.<br />
+<strong>39. Change the x- and y-limits of the axis with the following commands:</strong></p>
 <pre class="r"><code>plot(x = mtcars$disp, y = mtcars$hp,
      xlim = c(0, 500),
      ylim = c(0, 400)
      )</code></pre>
-<p>To keep all of the arguments in the function readable, we can put
-each argument on a new row. RStudio will automatically allign the next
-argument directly below the first argument.</p>
-<p>We can also create a title for the graph and change the axis
-titles.<br />
-<strong>40. Create meaningful titles by adapting the following
-commands:</strong></p>
+<p>To keep all of the arguments in the function readable, we can put each argument on a new row. RStudio will automatically allign the next argument directly below the first argument.</p>
+<p>We can also create a title for the graph and change the axis titles.<br />
+<strong>40. Create meaningful titles by adapting the following commands:</strong></p>
 <pre class="r"><code>plot(x = mtcars$disp, y = mtcars$hp,
      xlim = c(0, 500),
      ylim = c(0, 400),
@@ -877,8 +576,7 @@ commands:</strong></p>
      xlab = &quot;My x-axis title&quot;,
      ylab = &quot;My y-axis title&quot;
      )</code></pre>
-<p><strong>41. Now, change the shape, size and color of the markers
-respectively, with the following commands:</strong></p>
+<p><strong>41. Now, change the shape, size and color of the markers respectively, with the following commands:</strong></p>
 <pre class="r"><code>plot(x = mtcars$disp, y = mtcars$hp,
      xlim = c(0, 500),
      ylim = c(0, 400),
@@ -908,34 +606,22 @@ plot(x = mtcars$disp, y = mtcars$hp,
      cex = 2,
      col = &quot;red&quot;
      )</code></pre>
-<p>You can find the different shapes with <code>Help(pch)</code> and a
-list of the names of possible colors with <code>colors()</code>. Try out
-some different shapes, sizes and colors if you like. You can select a
-color in multiple ways:</p>
+<p>You can find the different shapes with <code>Help(pch)</code> and a list of the names of possible colors with <code>colors()</code>. Try out some different shapes, sizes and colors if you like. You can select a color in multiple ways:</p>
 <ul>
-<li>by using its name as a character string:
-<code>col = "red"</code><br />
+<li>by using its name as a character string: <code>col = "red"</code><br />
 </li>
-<li>by selecting a color from the list:
-<code>col = colors()[625]</code><br />
+<li>by selecting a color from the list: <code>col = colors()[625]</code><br />
 </li>
-<li>by using a number directly: <code>col = 5</code> (very
-limited)<br />
+<li>by using a number directly: <code>col = 5</code> (very limited)<br />
 </li>
-<li>by defining the rgb numbers:
-<code>col = rgb(0.7, 0.4, 0.8)</code><br />
+<li>by defining the rgb numbers: <code>col = rgb(0.7, 0.4, 0.8)</code><br />
 </li>
 <li>by defining the Hex code: <code>col = "#00A514"</code><br />
 </li>
-<li>by using a function, for example 10 colors of the function rainbow:
-<code>col = rainbow(10)</code></li>
+<li>by using a function, for example 10 colors of the function rainbow: <code>col = rainbow(10)</code></li>
 </ul>
-<p>The use of colors is particularly useful when you plot two or more
-variables in one plot. We will try this out with the histogram. To add a
-plot to the existing plot, you can use the argument
-<code>add = TRUE</code>.</p>
-<p><strong>42. Plot two normal distributions with the following
-commands:</strong></p>
+<p>The use of colors is particularly useful when you plot two or more variables in one plot. We will try this out with the histogram. To add a plot to the existing plot, you can use the argument <code>add = TRUE</code>.</p>
+<p><strong>42. Plot two normal distributions with the following commands:</strong></p>
 <pre class="r"><code>normal1 = rnorm(1000, mean = 1, sd = 2) #creates new vector with normally distributed numerics
 normal2 = rnorm(1000, mean = 3, sd = 2)
 
@@ -949,40 +635,11 @@ hist(x = normal2, breaks = 50,
      col = rgb(red = 0, green = 0, blue = 1), 
      add = TRUE
      )</code></pre>
-<p>Now, the blue histogram is overlapping the red one, therefore we can
-make the colors transparent with the argument <code>alpha</code> in the
-function <code>rgb</code>. The first three arguments in
-<code>rgb()</code> are red, green and blue, respectively. The fourth
-value is the alpha (transparency). Above, we use the full argument
-names, but you can also use the values only:
-<code>rgb(1, 0, 0, 0.5)</code>.</p>
-<p><strong>43. Plot the two normal distributions again with transparent
-colors, by adding ‘0.5’ as the alpha.</strong></p>
-<p>To make the plot interprable for others, let’s add a legend. You can
-add a legend by using the function <code>legend()</code> after you have
-made a plot. The arguments of this function you need to use are
-<code>x</code> for the location of the legend and <code>legend</code> to
-define the items of the legend. For <code>x</code> you can use a
-character string (with quotation marks) from the list: bottomright,
-bottom, bottomleft, left, topleft, top, topright, right and center. For
-<code>legend</code> you can use a vector like
-<code>c("first", "second")</code> to define the different variables in
-the plot, and <code>fill = c()</code> to define the colors of the
-legend.<br />
-For clarity: To make a plot with a legend, you use two functions, each
-with a set of arguments. So, first you use the <code>hist()</code>
-function with different customization arguments, and then on a new line,
-the <code>legend()</code> argument, with three arguments. Within the
-function <code>legend()</code> there’s an argument
-<code>legend =</code>. In this argument, you use the function
-<code>c("first", "second")</code> to provide the text for the legend.
-So, the complete argument is:
-<code>legend = c("first", "second")</code>. You can find an example of a
-legend on the <a
-href="https://www.r-graph-gallery.com/2-two-histograms-with-melt-colors.html">histogram
-page of The R Graph Gallery</a>.</p>
-<p><strong>44. Add a legend to the plot with these
-instructions.</strong></p>
+<p>Now, the blue histogram is overlapping the red one, therefore we can make the colors transparent with the argument <code>alpha</code> in the function <code>rgb</code>. The first three arguments in <code>rgb()</code> are red, green and blue, respectively. The fourth value is the alpha (transparency). Above, we use the full argument names, but you can also use the values only: <code>rgb(1, 0, 0, 0.5)</code>.</p>
+<p><strong>43. Plot the two normal distributions again with transparent colors, by adding ‘0.5’ as the alpha.</strong></p>
+<p>To make the plot interprable for others, let’s add a legend. You can add a legend by using the function <code>legend()</code> after you have made a plot. The arguments of this function you need to use are <code>x</code> for the location of the legend and <code>legend</code> to define the items of the legend. For <code>x</code> you can use a character string (with quotation marks) from the list: bottomright, bottom, bottomleft, left, topleft, top, topright, right and center. For <code>legend</code> you can use a vector like <code>c("first", "second")</code> to define the different variables in the plot, and <code>fill = c()</code> to define the colors of the legend.<br />
+For clarity: To make a plot with a legend, you use two functions, each with a set of arguments. So, first you use the <code>hist()</code> function with different customization arguments, and then on a new line, the <code>legend()</code> argument, with three arguments. Within the function <code>legend()</code> there’s an argument <code>legend =</code>. In this argument, you use the function <code>c("first", "second")</code> to provide the text for the legend. So, the complete argument is: <code>legend = c("first", "second")</code>. You can find an example of a legend on the <a href="https://www.r-graph-gallery.com/2-two-histograms-with-melt-colors.html">histogram page of The R Graph Gallery</a>.</p>
+<p><strong>44. Add a legend to the plot with these instructions.</strong></p>
 <hr />
 </div>
 <div id="visualization-pitfallslies" class="section level3">
@@ -993,83 +650,34 @@ instructions.</strong></p>
 </div>
 <div id="optional" class="section level3">
 <h3>7. Optional</h3>
-<p>If you have time to spare, try out this optional last part of the
-COO.</p>
-<p>Now, let’s optimize our heatmap. The color scheme used by base R is
-from red to yellow. However, this is not very pretty. While deciding
-which colors to use in a graph, you should try to find a combination
-that is color blind-friendly as well. Color blind people tend to have
-difficulty with the folowing combinations: red-green, green-brown,
-green-blue, blue-gray, blue-purple, green-gray, green-black and light
-green-yellow. Therefore, the often-used gene expression scheme with
-green for downregulation, black for no change and red for upregulation
-is not particularly color blind-friendly. A scheme that is also used for
-differential gene expression and far better, is the blue-white-red
-scheme.<br />
-In addition, it is customary to use a use a sequential scale (different
-shades of a single color) for values that vary between 0 and higher, and
-a diverging scale (different shades of two colors, in two directions)
-for values that vary around a midpoint (for example zero). So, if you
-want to display raw transcripts per million (TPM) data, use a sequential
-scale (white to dark blue). If you want to display differential gene
-expression, use a diverging scale (blue to white to red).</p>
+<p>If you have time to spare, try out this optional last part of the COO.</p>
+<p>Now, let’s optimize our heatmap. The color scheme used by base R is from red to yellow. However, this is not very pretty. While deciding which colors to use in a graph, you should try to find a combination that is color blind-friendly as well. Color blind people tend to have difficulty with the folowing combinations: red-green, green-brown, green-blue, blue-gray, blue-purple, green-gray, green-black and light green-yellow. Therefore, the often-used gene expression scheme with green for downregulation, black for no change and red for upregulation is not particularly color blind-friendly. A scheme that is also used for differential gene expression and far better, is the blue-white-red scheme.<br />
+In addition, it is customary to use a use a sequential scale (different shades of a single color) for values that vary between 0 and higher, and a diverging scale (different shades of two colors, in two directions) for values that vary around a midpoint (for example zero). So, if you want to display raw transcripts per million (TPM) data, use a sequential scale (white to dark blue). If you want to display differential gene expression, use a diverging scale (blue to white to red).</p>
 <p>There are useful color palets in the RColorBrewer package:</p>
 <p><img src="COO3/Colorbrewer.png" /></p>
-<p><strong>If the RColorBrewer package is not installed or loaded into
-your environment, use the <code>install.packages()</code> and
-<code>library()</code> functions to install and load it.</strong><br />
+<p><strong>If the RColorBrewer package is not installed or loaded into your environment, use the <code>install.packages()</code> and <code>library()</code> functions to install and load it.</strong><br />
 You can use this package in the following way:</p>
 <pre class="r"><code>heatmap(matrix.mtcars, scale = &quot;column&quot;,
         col = brewer.pal(n = 9, name = &quot;Blues&quot;))</code></pre>
-<p>In the function <code>brewer.pal</code> you select the number of
-different colors in the palette with the <code>n</code> argument, and
-the palette with <code>name</code>. You can choose from the palette
-names displayed above.</p>
-<p>To add a legend, you need to define the elements in the legend like
-we did above, with the argument <code>legend</code> of the function
-<code>legend()</code>. In addition, we need to define the colors we want
-to display in the legend. Therefore, we will use the argument
-<code>fill</code>. We will obtain these colors from the palette as well.
-We will use the same function
-<code>brewer.pal(n = 9, name = "Blues")</code>, but now we need to
-select three colors to display. We can do this with:
-<code>colorRampPalette()(3)</code> and then, between the empty brackets
-we fill in the brewer.pal function.<br />
-<strong>45. Create the heatmap as shown above and add a legend with the
-following commands:</strong></p>
+<p>In the function <code>brewer.pal</code> you select the number of different colors in the palette with the <code>n</code> argument, and the palette with <code>name</code>. You can choose from the palette names displayed above.</p>
+<p>To add a legend, you need to define the elements in the legend like we did above, with the argument <code>legend</code> of the function <code>legend()</code>. In addition, we need to define the colors we want to display in the legend. Therefore, we will use the argument <code>fill</code>. We will obtain these colors from the palette as well. We will use the same function <code>brewer.pal(n = 9, name = "Blues")</code>, but now we need to select three colors to display. We can do this with: <code>colorRampPalette()(3)</code> and then, between the empty brackets we fill in the brewer.pal function.<br />
+<strong>45. Create the heatmap as shown above and add a legend with the following commands:</strong></p>
 <pre class="r"><code>legend(x = &quot;topleft&quot;, legend = c(&quot;low&quot;, &quot;average&quot;, &quot;high&quot;),
        fill = colorRampPalette(brewer.pal(9,&quot;Blues&quot;))(3)
        )</code></pre>
-<p>We can also create our own color palette (blue-white-red) with the
-RColorBrewer package:</p>
+<p>We can also create our own color palette (blue-white-red) with the RColorBrewer package:</p>
 <pre class="r"><code>mycolors &lt;- colorRampPalette(colors = c(&quot;blue&quot;, &quot;white&quot;, &quot;red&quot;))</code></pre>
-<p>We can use this new variable as a function to create a list of colors
-varying from blue, via white, to red. The function will contain Hex
-codes to define colors. And, since the function contains a list with
-indices, we can select particular colors with the command
-<code>mycolors()[1]</code>. This is very useful for selecting colors for
-the legend.</p>
-<p><strong>46. Create the <code>mycolors</code> function and make a list
-with 256 colors using:</strong></p>
+<p>We can use this new variable as a function to create a list of colors varying from blue, via white, to red. The function will contain Hex codes to define colors. And, since the function contains a list with indices, we can select particular colors with the command <code>mycolors()[1]</code>. This is very useful for selecting colors for the legend.</p>
+<p><strong>46. Create the <code>mycolors</code> function and make a list with 256 colors using:</strong></p>
 <pre class="r"><code>mycolors(256)</code></pre>
-<p><strong>47. Create a heatmap with our new color palette, using
-<code>col = mycolors(256)</code>.</strong></p>
+<p><strong>47. Create a heatmap with our new color palette, using <code>col = mycolors(256)</code>.</strong></p>
 <p><strong>48. Add a legend with the following commands:</strong><br />
-<em>We select the first, middle, and last color of our mycolors function
-for the legend, by selecting these from the function with the index
-operator.</em></p>
+<em>We select the first, middle, and last color of our mycolors function for the legend, by selecting these from the function with the index operator.</em></p>
 <pre class="r"><code>legend(x = &quot;topleft&quot;, legend = c(&quot;low&quot;, &quot;mid&quot;, &quot;high&quot;),
        fill = c(mycolors(256)[1], mycolors(256)[128], mycolors(256)[256]))</code></pre>
-<p><strong>49. Now, create a similar heatmap with a color palette from
-“dodgerblue3”, via “lemonchiffon2” to “red4”, using 128 colors. In the
-legend, select the low, mid, and high value again. Save the plot, using
-commands, as a tiff image.</strong></p>
-<p><strong>Try out some different graphs and graph customizations. Use
-the ‘Help’ panel and The R Graph Gallery for inspiration.</strong></p>
-<p>If you have finished this COO early, you can take the time to explore
-the plotting functions in the ggplot2 package as well. These are very
-useful for presentations, posters and research reports in the
-future.</p>
+<p><strong>49. Now, create a similar heatmap with a color palette from “dodgerblue3”, via “lemonchiffon2” to “red4”, using 128 colors. In the legend, select the low, mid, and high value again. Save the plot, using commands, as a tiff image.</strong></p>
+<p><strong>Try out some different graphs and graph customizations. Use the ‘Help’ panel and The R Graph Gallery for inspiration.</strong></p>
+<p>If you have finished this COO early, you can take the time to explore the plotting functions in the ggplot2 package as well. These are very useful for presentations, posters and research reports in the future.</p>
 </div>
 
 

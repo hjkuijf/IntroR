@@ -114,7 +114,7 @@ It can take some time to install packages. In the console, you can see a STOP-si
 
 Wait until the STOP sign dissapears, and the > sign appears again in the Console, before running the next line of code.
 Before a new package can be used in the current script, you need to load it into the R environment. You need to do this every time you open a new environment. You install your package once, but you load the package every time you use it in a new environment. To see which packages are loaded in your environment, you can click on 'Global Environment':  
-![](Global-environment.PNG)
+![](COO3/Global-environment.png)
 
 To load a package, use the following function:  
 ```{r eval=FALSE}

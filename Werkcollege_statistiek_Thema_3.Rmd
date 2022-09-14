@@ -19,11 +19,17 @@ Zorg er voor dat je de benodigde databestanden hebt gedownload en lokaal hebt op
 
 Je gaat de stappen behandeld in het zelfstudie document nu zelf uitvoeren in R.
 
-We beginnen met het inlezen van het bestand en dat bekijken. (_NB: niet vergeten om de naam van de map, hier `mypath` genoemd, te veranderen in de map waar jij het bestand heb opgeslagen!_) De data staat in een .csv bestand `spirometrie.csv`. We lezen de data in en noemen de data frame d (NB: niet vergeten om de naam van de map, hier `mypath` genoemd, te veranderen in de map waar jij het bestand heb opgeslagen).
+We beginnen met het inlezen van het bestand en dat bekijken. De data staat in een .csv bestand `spirometrie.csv`. We lezen de data in en noemen de data frame `d`.
+
+```{r, eval = FALSE}
+d <-read.csv2("spirometrie.csv")
+```
+
+```{r, echo = FALSE}
+d <-read.csv2("Werkcollege_statistiek_Thema_3/spirometrie.csv")
+```
 
 ```{r}
-mypath <- "Werkcollege_statistiek_Thema_3"
-d <- data.frame(read.csv2(file.path(mypath, "spirometrie.csv")))
 head(d)
 ```
 
@@ -46,7 +52,7 @@ Let op: de lengte in het databestand is in centimeters, de formule van Quanjer g
 **Aan de hand van de gevonden verschillen, toets je of de FEV1 van studenten overeenkomt met de algemene populatie in Nederland.**
 In eerste instantie mag je veronderstellen dat de standaard deviatie van de populatie bekend is, en wel  gelijk aan `0.5`. Verder ga je er vanuit dat de data normaal verdeeld zijn. Je wil $H_0:\mu = 0$ en $H_1:\mu \neq 0$ toetsen.
 
-In R is er in de package `BSDA` een z-toets beschikbaar. Wil je de z-waarde uitrekenen in R, dan gaat dit als volgt. Voor de mannen:
+In R is er in de package `BSDA` een z-toets beschikbaar. Als je die nog niet hebt geïnstalleerd, doe dat nu met de functie `install.packages("BSDA")`. Wil je de z-waarde uitrekenen in R, dan gaat dit als volgt. Voor de mannen:
 
 ```{r z-test, eval=FALSE}
 library(BSDA)
@@ -95,7 +101,7 @@ dtab <- as.table(d)
 dtab
 ```
 
-Voor de interpretatie van de studie is het inzichtelijker om de frequenties niet als absolute, maar als relatieve (of procentuele) frequenties weer te geven. **Maak een tabel met relatieve frequenties.** Hiervoor gebruik je de functie `prop.table()`: `prop.table(dtab)`. Je kunt nog een `1` of `2` toevoegen aan de functie: `prop.table(dtab,1)` of `prop.table(dtab,2)`. **Welke informatie je krijgt met de verschillende relatieve frequenties die je kunt berekenen? Welke relatieve frequenties hebben jouw voorkeur bij de interpretatie?**
+Voor de interpretatie van de studie is het inzichtelijker om de frequenties niet als absolute, maar als relatieve (of procentuele) frequenties weer te geven. **Maak een tabel met relatieve frequenties.** Hiervoor gebruik je de functie `prop.table()`: `prop.table(dtab)`. Je kunt nog een `1` of `2` toevoegen aan de functie: `prop.table(dtab, 1)` of `prop.table(dtab, 2)`. **Welke informatie je krijgt met de verschillende relatieve frequenties die je kunt berekenen? Welke relatieve frequenties hebben jouw voorkeur bij de interpretatie?**
 
 **Voer een chi-kwadraat toets uit op de data:**
 
