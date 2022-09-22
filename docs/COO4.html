@@ -13,6 +13,7 @@
 
 <title>COO4: Descriptive Statistics in R</title>
 
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -289,8 +290,13 @@ $(document).ready(function () {
 </div>
 
 
-<p>In this computer lab, you will learn how to describe a sample using simple plots and descriptive statistics. We concentrate here on continuous (or “numeric”) outcome variables, looking at one group, two or more groups, and the relationship between a continuous outcome variable and a continuous explanatory variable (determinant).<br />
-In a later COO you will learn how to describe a categorical variable, and associations between two categorical variables.</p>
+<p>In this computer lab, you will learn how to describe a sample using
+simple plots and descriptive statistics. We concentrate here on
+continuous (or “numeric”) outcome variables, looking at one group, two
+or more groups, and the relationship between a continuous outcome
+variable and a continuous explanatory variable (determinant).<br />
+In a later COO you will learn how to describe a categorical variable,
+and associations between two categorical variables.</p>
 <ol start="0" style="list-style-type: decimal">
 <li>Preparation</li>
 <li>Descriptive statistics, continuous outcome (step-by-step)</li>
@@ -304,154 +310,152 @@ In a later COO you will learn how to describe a categorical variable, and associ
 <ol start="2" style="list-style-type: decimal">
 <li>Practice what you’ve learned</li>
 </ol>
-<p><strong>You are asked to answer a number of questions (in bold and numbered throughout).</strong></p>
+<p><strong>You are asked to answer a number of questions (in bold and
+numbered throughout).</strong></p>
 <div id="preparation" class="section level2">
 <h2>0. Preparation</h2>
-<p>Before starting, please <strong>download the file <a href="COO4/BMISBP.csv">BMISBP.csv</a> from Blackboard and save it locally</strong>.</p>
-<p>We will start the R session by installing (if necessary) and loading the packages we need for the exercises below. We will be using datasets and/or functions from the <code>NHANES</code> package and the <code>psych</code> package. <strong>If you are using these packages for the first time, you will first need to install them.</strong> Do this either via the RStudio menu (<code>Tools-Install Packages</code>), or with these commands:</p>
+<p>Before starting, please <strong>download the file <a
+href="COO4/BMISBP.csv">BMISBP.csv</a> from Blackboard and save it
+locally</strong>.</p>
+<p>We will start the R session by installing (if necessary) and loading
+the packages we need for the exercises below. We will be using datasets
+and/or functions from the <code>NHANES</code> package and the
+<code>psych</code> package. <strong>If you are using these packages for
+the first time, you will first need to install them.</strong> Do this
+either via the RStudio menu (<code>Tools-Install Packages</code>), or
+with these commands:</p>
 <pre class="r"><code>install.packages(&quot;NHANES&quot;) # put the package name between quotation marks
 install.packages(&quot;psych&quot;)
 install.packages(&quot;car&quot;)</code></pre>
-<p>You only need to <em>install</em> a package <em>once</em>. At the beginning of every R/Rstudio session, you need to <em>load the packages you will be using</em>:</p>
+<p>You only need to <em>install</em> a package <em>once</em>. At the
+beginning of every R/Rstudio session, you need to <em>load the packages
+you will be using</em>:</p>
 <pre class="r"><code>library(NHANES)
 library(psych)
 library(car)</code></pre>
 <p>For the following exercises, we will use two datasets:</p>
 <ul>
-<li><a href="COO4/BMISBP.csv">BMISBP.csv</a>, a comma-separated dataset (which you have already downloaded from Blackboard), and</li>
+<li><a href="COO4/BMISBP.csv">BMISBP.csv</a>, a comma-separated dataset
+(which you have already downloaded from Blackboard), and</li>
 <li>NHANES, a dataset built into the <code>NHANES</code> package</li>
 </ul>
 </div>
-<div id="descriptive-statistics-for-a-continuous-outcome-step-by-step" class="section level2">
-<h2>1. Descriptive statistics for a continuous outcome, step by step</h2>
-<p>We will start by looking at systolic blood pressure of adults in the NHANES sample. This dataset is a subset of the National Health and Nutrition Examination Survey (NHANES). First we load the data frame and get some information about it:</p>
+<div id="descriptive-statistics-for-a-continuous-outcome-step-by-step"
+class="section level2">
+<h2>1. Descriptive statistics for a continuous outcome, step by
+step</h2>
+<p>We will start by looking at systolic blood pressure of adults in the
+NHANES sample. This dataset is a subset of the National Health and
+Nutrition Examination Survey (NHANES). First we load the data frame and
+get some information about it:</p>
 <pre class="r"><code>data(NHANES)
 ?NHANES</code></pre>
 <p><strong>Question 1. What type of study design is this?</strong></p>
-<p>We’ll use the function <code>dim()</code> (dimensions) to see how many people are in the dataset provided (number of rows), and how many variables (number of columns).</p>
+<p>We’ll use the function <code>dim()</code> (dimensions) to see how
+many people are in the dataset provided (number of rows), and how many
+variables (number of columns).</p>
 <pre class="r"><code>dim(NHANES)</code></pre>
 <pre><code>## [1] 10000    76</code></pre>
-<p>The dataset contains 76 columns, or variables, from 10000 participants, in the rows.</p>
-<p>It can also be useful to look at the names of the variables (columns) in your data frame:</p>
+<p>The dataset contains 76 columns, or variables, from 10000
+participants, in the rows.</p>
+<p>It can also be useful to look at the names of the variables (columns)
+in your data frame:</p>
 <pre class="r"><code>colnames(NHANES)</code></pre>
-<pre><code>##  [1] &quot;ID&quot;               &quot;SurveyYr&quot;         &quot;Gender&quot;           &quot;Age&quot;             
-##  [5] &quot;AgeDecade&quot;        &quot;AgeMonths&quot;        &quot;Race1&quot;            &quot;Race3&quot;           
-##  [9] &quot;Education&quot;        &quot;MaritalStatus&quot;    &quot;HHIncome&quot;         &quot;HHIncomeMid&quot;     
-## [13] &quot;Poverty&quot;          &quot;HomeRooms&quot;        &quot;HomeOwn&quot;          &quot;Work&quot;            
-## [17] &quot;Weight&quot;           &quot;Length&quot;           &quot;HeadCirc&quot;         &quot;Height&quot;          
-## [21] &quot;BMI&quot;              &quot;BMICatUnder20yrs&quot; &quot;BMI_WHO&quot;          &quot;Pulse&quot;           
-## [25] &quot;BPSysAve&quot;         &quot;BPDiaAve&quot;         &quot;BPSys1&quot;           &quot;BPDia1&quot;          
-## [29] &quot;BPSys2&quot;           &quot;BPDia2&quot;           &quot;BPSys3&quot;           &quot;BPDia3&quot;          
-## [33] &quot;Testosterone&quot;     &quot;DirectChol&quot;       &quot;TotChol&quot;          &quot;UrineVol1&quot;       
-## [37] &quot;UrineFlow1&quot;       &quot;UrineVol2&quot;        &quot;UrineFlow2&quot;       &quot;Diabetes&quot;        
-## [41] &quot;DiabetesAge&quot;      &quot;HealthGen&quot;        &quot;DaysPhysHlthBad&quot;  &quot;DaysMentHlthBad&quot; 
-## [45] &quot;LittleInterest&quot;   &quot;Depressed&quot;        &quot;nPregnancies&quot;     &quot;nBabies&quot;         
-## [49] &quot;Age1stBaby&quot;       &quot;SleepHrsNight&quot;    &quot;SleepTrouble&quot;     &quot;PhysActive&quot;      
-## [53] &quot;PhysActiveDays&quot;   &quot;TVHrsDay&quot;         &quot;CompHrsDay&quot;       &quot;TVHrsDayChild&quot;   
-## [57] &quot;CompHrsDayChild&quot;  &quot;Alcohol12PlusYr&quot;  &quot;AlcoholDay&quot;       &quot;AlcoholYear&quot;     
-## [61] &quot;SmokeNow&quot;         &quot;Smoke100&quot;         &quot;Smoke100n&quot;        &quot;SmokeAge&quot;        
-## [65] &quot;Marijuana&quot;        &quot;AgeFirstMarij&quot;    &quot;RegularMarij&quot;     &quot;AgeRegMarij&quot;     
-## [69] &quot;HardDrugs&quot;        &quot;SexEver&quot;          &quot;SexAge&quot;           &quot;SexNumPartnLife&quot; 
-## [73] &quot;SexNumPartYear&quot;   &quot;SameSex&quot;          &quot;SexOrientation&quot;   &quot;PregnantNow&quot;</code></pre>
-<p>To keep things simple for the following exercises, we will concentrate on only the second survey (2011-2012), and use only the adults in the sample. <strong>Make a new dataframe <code>d</code>, containing this selection, and check how many participants are left:</strong></p>
+<pre><code>##  [1] &quot;ID&quot;               &quot;SurveyYr&quot;         &quot;Gender&quot;           &quot;Age&quot;              &quot;AgeDecade&quot;        &quot;AgeMonths&quot;        &quot;Race1&quot;           
+##  [8] &quot;Race3&quot;            &quot;Education&quot;        &quot;MaritalStatus&quot;    &quot;HHIncome&quot;         &quot;HHIncomeMid&quot;      &quot;Poverty&quot;          &quot;HomeRooms&quot;       
+## [15] &quot;HomeOwn&quot;          &quot;Work&quot;             &quot;Weight&quot;           &quot;Length&quot;           &quot;HeadCirc&quot;         &quot;Height&quot;           &quot;BMI&quot;             
+## [22] &quot;BMICatUnder20yrs&quot; &quot;BMI_WHO&quot;          &quot;Pulse&quot;            &quot;BPSysAve&quot;         &quot;BPDiaAve&quot;         &quot;BPSys1&quot;           &quot;BPDia1&quot;          
+## [29] &quot;BPSys2&quot;           &quot;BPDia2&quot;           &quot;BPSys3&quot;           &quot;BPDia3&quot;           &quot;Testosterone&quot;     &quot;DirectChol&quot;       &quot;TotChol&quot;         
+## [36] &quot;UrineVol1&quot;        &quot;UrineFlow1&quot;       &quot;UrineVol2&quot;        &quot;UrineFlow2&quot;       &quot;Diabetes&quot;         &quot;DiabetesAge&quot;      &quot;HealthGen&quot;       
+## [43] &quot;DaysPhysHlthBad&quot;  &quot;DaysMentHlthBad&quot;  &quot;LittleInterest&quot;   &quot;Depressed&quot;        &quot;nPregnancies&quot;     &quot;nBabies&quot;          &quot;Age1stBaby&quot;      
+## [50] &quot;SleepHrsNight&quot;    &quot;SleepTrouble&quot;     &quot;PhysActive&quot;       &quot;PhysActiveDays&quot;   &quot;TVHrsDay&quot;         &quot;CompHrsDay&quot;       &quot;TVHrsDayChild&quot;   
+## [57] &quot;CompHrsDayChild&quot;  &quot;Alcohol12PlusYr&quot;  &quot;AlcoholDay&quot;       &quot;AlcoholYear&quot;      &quot;SmokeNow&quot;         &quot;Smoke100&quot;         &quot;Smoke100n&quot;       
+## [64] &quot;SmokeAge&quot;         &quot;Marijuana&quot;        &quot;AgeFirstMarij&quot;    &quot;RegularMarij&quot;     &quot;AgeRegMarij&quot;      &quot;HardDrugs&quot;        &quot;SexEver&quot;         
+## [71] &quot;SexAge&quot;           &quot;SexNumPartnLife&quot;  &quot;SexNumPartYear&quot;   &quot;SameSex&quot;          &quot;SexOrientation&quot;   &quot;PregnantNow&quot;</code></pre>
+<p>To keep things simple for the following exercises, we will
+concentrate on only the second survey (2011-2012), and use only the
+adults in the sample. <strong>Make a new dataframe <code>d</code>,
+containing this selection, and check how many participants are
+left:</strong></p>
 <pre class="r"><code>d &lt;- data.frame(NHANES[NHANES$SurveyYr == &quot;2011_12&quot; &amp; NHANES$Age &gt;= 18,])
 dim(d)</code></pre>
 <pre><code>## [1] 3707   76</code></pre>
-<p>So we continue with the 3707 adult participants. Note that we still have 76 variables.</p>
-<p>In COO2 you learned the function <code>View()</code> to examine an entire data frame. With such a large data frame, it can be useful to just look at the first few lines of data frame with which you are working, to get a sense of the structure. You can do this with the <code>head()</code> function. <strong>Use:</strong></p>
+<p>So we continue with the 3707 adult participants. Note that we still
+have 76 variables.</p>
+<p>In COO2 you learned the function <code>View()</code> to examine an
+entire data frame. With such a large data frame, it can be useful to
+just look at the first few lines of data frame with which you are
+working, to get a sense of the structure. You can do this with the
+<code>head()</code> function. <strong>Use:</strong></p>
 <pre class="r"><code>head(d)</code></pre>
-<pre><code>##      ID SurveyYr Gender Age AgeDecade AgeMonths Race1 Race3    Education
-## 1 62172  2011_12 female  43     40-49        NA Black Black  High School
-## 2 62174  2011_12   male  80      &lt;NA&gt;        NA White White College Grad
-## 3 62174  2011_12   male  80      &lt;NA&gt;        NA White White College Grad
-## 4 62176  2011_12 female  34     30-39        NA White White College Grad
-## 5 62178  2011_12   male  80      &lt;NA&gt;        NA White White  High School
-## 6 62180  2011_12   male  35     30-39        NA White White College Grad
-##   MaritalStatus    HHIncome HHIncomeMid Poverty HomeRooms HomeOwn       Work
-## 1  NeverMarried 20000-24999       22500    2.02         4    Rent NotWorking
-## 2       Married 65000-74999       70000    4.30         7     Own NotWorking
-## 3       Married 65000-74999       70000    4.30         7     Own NotWorking
-## 4       Married  more 99999      100000    5.00         8     Own NotWorking
-## 5       Widowed      0-4999        2500    0.05         6     Own NotWorking
-## 6       Married 20000-24999       22500    0.87         6     Own    Working
-##   Weight Length HeadCirc Height  BMI BMICatUnder20yrs      BMI_WHO Pulse
-## 1   98.6     NA       NA  172.0 33.3             &lt;NA&gt;    30.0_plus    80
-## 2   95.8     NA       NA  168.1 33.9             &lt;NA&gt;    30.0_plus    56
-## 3   95.8     NA       NA  168.1 33.9             &lt;NA&gt;    30.0_plus    56
-## 4   68.7     NA       NA  171.6 23.3             &lt;NA&gt; 18.5_to_24.9    92
-## 5   85.9     NA       NA  173.5 28.5             &lt;NA&gt; 25.0_to_29.9    68
-## 6   89.0     NA       NA  178.7 27.9             &lt;NA&gt; 25.0_to_29.9    66
-##   BPSysAve BPDiaAve BPSys1 BPDia1 BPSys2 BPDia2 BPSys3 BPDia3 Testosterone
-## 1      103       72    100     70    102     68    104     76        47.53
-## 2       97       39     NA     NA     96     38     98     40       642.82
-## 3       97       39     NA     NA     96     38     98     40       642.82
-## 4      107       69     NA     NA    114     70    100     68        21.11
-## 5      121       72    124     72    124     76    118     68       562.78
-## 6      107       66    108     62    108     66    106     66       401.78
-##   DirectChol TotChol UrineVol1 UrineFlow1 UrineVol2 UrineFlow2 Diabetes
-## 1       1.89    4.37       107      0.645        NA         NA       No
-## 2       1.40    5.25        94      1.160        NA         NA       No
-## 3       1.40    5.25        94      1.160        NA         NA       No
-## 4       1.42    4.42       341      1.258        NA         NA       No
-## 5       1.22    5.20        16      0.113        29      0.259       No
-## 6       0.85    3.70       350      2.593        NA         NA       No
-##   DiabetesAge HealthGen DaysPhysHlthBad DaysMentHlthBad LittleInterest
-## 1          NA      Good               2              10        Several
-## 2          NA      Fair              30               2           None
-## 3          NA      Fair              30               2           None
-## 4          NA     Vgood               2               0           None
-## 5          NA      Fair               2              10           None
-## 6          NA      Good               0               8        Several
-##   Depressed nPregnancies nBabies Age1stBaby SleepHrsNight SleepTrouble
-## 1      Most            3       2         20             8           No
-## 2      None           NA      NA         NA             9           No
-## 3      None           NA      NA         NA             9           No
-## 4      None            5       2         29             7           No
-## 5   Several           NA      NA         NA             6          Yes
-## 6   Several           NA      NA         NA             7          Yes
-##   PhysActive PhysActiveDays  TVHrsDay CompHrsDay TVHrsDayChild CompHrsDayChild
-## 1         No              2 More_4_hr  More_4_hr            NA              NA
-## 2         No              7      4_hr      0_hrs            NA              NA
-## 3         No              5      4_hr      0_hrs            NA              NA
-## 4        Yes              5      2_hr  0_to_1_hr            NA              NA
-## 5         No             NA More_4_hr      0_hrs            NA              NA
-## 6         No             NA      2_hr       1_hr            NA              NA
-##   Alcohol12PlusYr AlcoholDay AlcoholYear SmokeNow Smoke100  Smoke100n SmokeAge
-## 1             Yes          3         104      Yes      Yes     Smoker       28
-## 2             Yes         NA           0     &lt;NA&gt;       No Non-Smoker       NA
-## 3             Yes         NA           0     &lt;NA&gt;       No Non-Smoker       NA
-## 4             Yes          2         104     &lt;NA&gt;       No Non-Smoker       NA
-## 5              No         NA          NA     &lt;NA&gt;       No Non-Smoker       NA
-## 6             Yes          1           2     &lt;NA&gt;       No Non-Smoker       NA
-##   Marijuana AgeFirstMarij RegularMarij AgeRegMarij HardDrugs SexEver SexAge
-## 1       Yes            21           No          NA        No     Yes     17
-## 2      &lt;NA&gt;            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA
-## 3      &lt;NA&gt;            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA
-## 4       Yes            18           No          NA        No     Yes     16
-## 5      &lt;NA&gt;            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA
-## 6        No            NA           No          NA        No     Yes     17
-##   SexNumPartnLife SexNumPartYear SameSex SexOrientation PregnantNow
-## 1               4              2      No   Heterosexual          No
-## 2              NA             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
-## 3              NA             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
-## 4              15              1      No   Heterosexual          No
-## 5              NA             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
-## 6               4              1      No   Heterosexual        &lt;NA&gt;</code></pre>
-<p>By default, <code>head()</code> displays the first 6 rows of data; you can change the number of rows displayed using the option <code>n=</code>. Try:</p>
+<pre><code>##      ID SurveyYr Gender Age AgeDecade AgeMonths Race1 Race3    Education MaritalStatus    HHIncome HHIncomeMid Poverty HomeRooms HomeOwn       Work
+## 1 62172  2011_12 female  43     40-49        NA Black Black  High School  NeverMarried 20000-24999       22500    2.02         4    Rent NotWorking
+## 2 62174  2011_12   male  80      &lt;NA&gt;        NA White White College Grad       Married 65000-74999       70000    4.30         7     Own NotWorking
+## 3 62174  2011_12   male  80      &lt;NA&gt;        NA White White College Grad       Married 65000-74999       70000    4.30         7     Own NotWorking
+## 4 62176  2011_12 female  34     30-39        NA White White College Grad       Married  more 99999      100000    5.00         8     Own NotWorking
+## 5 62178  2011_12   male  80      &lt;NA&gt;        NA White White  High School       Widowed      0-4999        2500    0.05         6     Own NotWorking
+## 6 62180  2011_12   male  35     30-39        NA White White College Grad       Married 20000-24999       22500    0.87         6     Own    Working
+##   Weight Length HeadCirc Height  BMI BMICatUnder20yrs      BMI_WHO Pulse BPSysAve BPDiaAve BPSys1 BPDia1 BPSys2 BPDia2 BPSys3 BPDia3 Testosterone
+## 1   98.6     NA       NA  172.0 33.3             &lt;NA&gt;    30.0_plus    80      103       72    100     70    102     68    104     76        47.53
+## 2   95.8     NA       NA  168.1 33.9             &lt;NA&gt;    30.0_plus    56       97       39     NA     NA     96     38     98     40       642.82
+## 3   95.8     NA       NA  168.1 33.9             &lt;NA&gt;    30.0_plus    56       97       39     NA     NA     96     38     98     40       642.82
+## 4   68.7     NA       NA  171.6 23.3             &lt;NA&gt; 18.5_to_24.9    92      107       69     NA     NA    114     70    100     68        21.11
+## 5   85.9     NA       NA  173.5 28.5             &lt;NA&gt; 25.0_to_29.9    68      121       72    124     72    124     76    118     68       562.78
+## 6   89.0     NA       NA  178.7 27.9             &lt;NA&gt; 25.0_to_29.9    66      107       66    108     62    108     66    106     66       401.78
+##   DirectChol TotChol UrineVol1 UrineFlow1 UrineVol2 UrineFlow2 Diabetes DiabetesAge HealthGen DaysPhysHlthBad DaysMentHlthBad LittleInterest Depressed
+## 1       1.89    4.37       107      0.645        NA         NA       No          NA      Good               2              10        Several      Most
+## 2       1.40    5.25        94      1.160        NA         NA       No          NA      Fair              30               2           None      None
+## 3       1.40    5.25        94      1.160        NA         NA       No          NA      Fair              30               2           None      None
+## 4       1.42    4.42       341      1.258        NA         NA       No          NA     Vgood               2               0           None      None
+## 5       1.22    5.20        16      0.113        29      0.259       No          NA      Fair               2              10           None   Several
+## 6       0.85    3.70       350      2.593        NA         NA       No          NA      Good               0               8        Several   Several
+##   nPregnancies nBabies Age1stBaby SleepHrsNight SleepTrouble PhysActive PhysActiveDays  TVHrsDay CompHrsDay TVHrsDayChild CompHrsDayChild Alcohol12PlusYr
+## 1            3       2         20             8           No         No              2 More_4_hr  More_4_hr            NA              NA             Yes
+## 2           NA      NA         NA             9           No         No              7      4_hr      0_hrs            NA              NA             Yes
+## 3           NA      NA         NA             9           No         No              5      4_hr      0_hrs            NA              NA             Yes
+## 4            5       2         29             7           No        Yes              5      2_hr  0_to_1_hr            NA              NA             Yes
+## 5           NA      NA         NA             6          Yes         No             NA More_4_hr      0_hrs            NA              NA              No
+## 6           NA      NA         NA             7          Yes         No             NA      2_hr       1_hr            NA              NA             Yes
+##   AlcoholDay AlcoholYear SmokeNow Smoke100  Smoke100n SmokeAge Marijuana AgeFirstMarij RegularMarij AgeRegMarij HardDrugs SexEver SexAge SexNumPartnLife
+## 1          3         104      Yes      Yes     Smoker       28       Yes            21           No          NA        No     Yes     17               4
+## 2         NA           0     &lt;NA&gt;       No Non-Smoker       NA      &lt;NA&gt;            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA              NA
+## 3         NA           0     &lt;NA&gt;       No Non-Smoker       NA      &lt;NA&gt;            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA              NA
+## 4          2         104     &lt;NA&gt;       No Non-Smoker       NA       Yes            18           No          NA        No     Yes     16              15
+## 5         NA          NA     &lt;NA&gt;       No Non-Smoker       NA      &lt;NA&gt;            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA              NA
+## 6          1           2     &lt;NA&gt;       No Non-Smoker       NA        No            NA           No          NA        No     Yes     17               4
+##   SexNumPartYear SameSex SexOrientation PregnantNow
+## 1              2      No   Heterosexual          No
+## 2             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
+## 3             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
+## 4              1      No   Heterosexual          No
+## 5             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
+## 6              1      No   Heterosexual        &lt;NA&gt;</code></pre>
+<p>By default, <code>head()</code> displays the first 6 rows of data;
+you can change the number of rows displayed using the option
+<code>n=</code>. Try:</p>
 <pre class="r"><code>head(d, n = 10)</code></pre>
 <div id="describing-1-group" class="section level3">
 <h3>1.1 Describing 1 group</h3>
-<p><strong>Make a histogram and boxplot of systolic blood pressure (SBP):</strong></p>
+<p><strong>Make a histogram and boxplot of systolic blood pressure
+(SBP):</strong></p>
 <pre class="r"><code>hist(d$BPSysAve, main = &quot;Systolic Blood Pressure US Adults&quot;,
         xlab = &quot;Systolic Blood Pressure (mmHg)&quot;)</code></pre>
 <p><img src="COO4_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <pre class="r"><code>boxplot(d$BPSysAve, main = &quot;Systolic Blood Pressure US Adults&quot;,
         ylab = &quot;Systolic Blood Pressure (mmHg)&quot;)</code></pre>
 <p><img src="COO4_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
-<p><strong>Question 2. Describe the shape of the distribution of SBP. Which descriptive statistics would you prefer for the location and variation (spread)?</strong></p>
-<p>Before continuing, see if you can read off the median SBP in the sample. What are the first and third quartiles, and what is the interquartile range? Can you guess (approximately) what the mean will be? And the standard deviation?</p>
-<p><strong>Question 2a. Write down your estimates for the sample quartiles, IQR, mean and SD.</strong></p>
-<p>Now we’ll check these estimates. You’ve seen several of the functions (mean, median, sd) earlier. <code>IQR()</code> is the interquartile range.</p>
+<p><strong>Question 2. Describe the shape of the distribution of SBP.
+Which descriptive statistics would you prefer for the location and
+variation (spread)?</strong></p>
+<p>Before continuing, see if you can read off the median SBP in the
+sample. What are the first and third quartiles, and what is the
+interquartile range? Can you guess (approximately) what the mean will
+be? And the standard deviation?</p>
+<p><strong>Question 2a. Write down your estimates for the sample
+quartiles, IQR, mean and SD.</strong></p>
+<p>Now we’ll check these estimates. You’ve seen several of the functions
+(mean, median, sd) earlier. <code>IQR()</code> is the interquartile
+range.</p>
 <pre class="r"><code>median(d$BPSysAve, na.rm = TRUE)</code></pre>
 <pre><code>## [1] 119</code></pre>
 <pre class="r"><code>mean(d$BPSysAve, na.rm = TRUE)</code></pre>
@@ -463,46 +467,80 @@ dim(d)</code></pre>
 <pre><code>## [1] 20</code></pre>
 <pre class="r"><code>sd(d$BPSysAve, na.rm = TRUE)</code></pre>
 <pre><code>## [1] 17.1919</code></pre>
-<p>Do you understand the <code>quantile</code> function? <strong>If not, try <code>?quantile</code>.</strong></p>
-<p><strong>Question 2b. How do your guesses compare to the estimates given by R? If your guess was far off (say, more than 5 mmHg), why was that?</strong></p>
-<p>Getting all those statistics took a lot of lines of code. Fortunately, someone wrote a nice function to get all the important descriptive statistics for a variable, either for everyone in the dataset, or stratified (split up) by a factor (grouping) variable. The function we want is <code>describe</code>, from the <code>psych</code> package. Note that we use the <code>skew=FALSE</code> option to repress some of the default output, and the <code>quant</code> and <code>IQR</code> options to get some output we do want.</p>
+<p>Do you understand the <code>quantile</code> function? <strong>If not,
+try <code>?quantile</code>.</strong></p>
+<p><strong>Question 2b. How do your guesses compare to the estimates
+given by R? If your guess was far off (say, more than 5 mmHg), why was
+that?</strong></p>
+<p>Getting all those statistics took a lot of lines of code.
+Fortunately, someone wrote a nice function to get all the important
+descriptive statistics for a variable, either for everyone in the
+dataset, or stratified (split up) by a factor (grouping) variable. The
+function we want is <code>describe</code>, from the <code>psych</code>
+package. Note that we use the <code>skew=FALSE</code> option to repress
+some of the default output, and the <code>quant</code> and
+<code>IQR</code> options to get some output we do want.</p>
 <pre class="r"><code>describe(d$BPSysAve, na.rm = TRUE, skew = FALSE, quant = c(0.25, 0.5, 0.75), IQR = TRUE)</code></pre>
 <pre><code>##   vars    n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
 ## 1    1 3583 121.46 17.19  81 221   140 0.29  20   110  119   130</code></pre>
-<p><strong>Let’s now take a look at the distribution of testosterone in the sample.</strong></p>
+<p><strong>Let’s now take a look at the distribution of testosterone in
+the sample.</strong></p>
 <pre class="r"><code>hist(d$Testosterone, main = &quot;Testosterone Level US Adults&quot;,
         xlab = &quot;Testosterone (ng/dL)&quot;)
 boxplot(d$Testosterone, main = &quot;Testosterone Level US Adults&quot;,
         ylab = &quot;Testosterone (ng/dL)&quot;)</code></pre>
 <p><img src="COO4_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p><strong>Question 3. Describe what you see here. Can you explain the strange distribution? What have we done wrong? How could we fix the problem?</strong></p>
+<p><strong>Question 3. Describe what you see here. Can you explain the
+strange distribution? What have we done wrong? How could we fix the
+problem?</strong></p>
 </div>
 <div id="describing-1-group-1" class="section level3">
 <h3>1.2 Describing &gt; 1 group</h3>
-<p>Does smoking increase your systolic blood pressure (SBP)? Do former smokers have higher SBP than non-smokers? Let’s compare smokers, non-smokers and former smokers on a few variables. Since the variable SmokeNow was only asked of people who had ever smoked more than 100 cigarettes (Smoke100), <strong>we will first need to create a new variable:</strong></p>
+<p>Does smoking increase your systolic blood pressure (SBP)? Do former
+smokers have higher SBP than non-smokers? Let’s compare smokers,
+non-smokers and former smokers on a few variables. Since the variable
+SmokeNow was only asked of people who had ever smoked more than 100
+cigarettes (Smoke100), <strong>we will first need to create a new
+variable:</strong></p>
 <pre class="r"><code>d$SmokStat[d$Smoke100 == &quot;No&quot;] &lt;- &quot;Never&quot;
 d$SmokStat[d$Smoke100 == &quot;Yes&quot; &amp; d$SmokeNow == &quot;No&quot;] &lt;- &quot;Former&quot;
 d$SmokStat[d$Smoke100 == &quot;Yes&quot; &amp; d$SmokeNow == &quot;Yes&quot;] &lt;- &quot;Current&quot;</code></pre>
-<p>(Note: there are many ways to create new variables in R, this is one way.)</p>
-<p>When you’ve created a new variable from existing variables, <em>always</em> take a moment to <strong>check that the coding worked</strong>! We use the <code>table()</code> function with the option <code>useNA = "always"</code> to see what happens with the data that is missing (“NA” in R):</p>
+<p>(Note: there are many ways to create new variables in R, this is one
+way.)</p>
+<p>When you’ve created a new variable from existing variables,
+<em>always</em> take a moment to <strong>check that the coding
+worked</strong>! We use the <code>table()</code> function with the
+option <code>useNA = "always"</code> to see what happens with the data
+that is missing (“NA” in R):</p>
 <pre class="r"><code>table(d$Smoke100, useNA = &quot;always&quot;)
 table(d$SmokStat, useNA = &quot;always&quot;)
 table(d$Smoke100,d$SmokeNow,d$SmokStat, useNA = &quot;always&quot;)</code></pre>
-<p>There were 2027 people who never smoked more than 100 cigarettes, and 1560 who did. Of those, 698 answer yes to SmokeNow, and 862 say no. 120 people did not respond to the question about ever smoking, and those are missing all 3 smoking variables. <strong>Can you identify all those numbers from the above tables?</strong></p>
-<p>Now let’s compare these three groups on a blood pressure. <strong>Examine the relationship between smoking status and the average of several systolic blood pressure readings</strong> (<code>BPSysAve</code>), first with side-by-side boxplots.</p>
+<p>There were 2027 people who never smoked more than 100 cigarettes, and
+1560 who did. Of those, 698 answer yes to SmokeNow, and 862 say no. 120
+people did not respond to the question about ever smoking, and those are
+missing all 3 smoking variables. <strong>Can you identify all those
+numbers from the above tables?</strong></p>
+<p>Now let’s compare these three groups on a blood pressure.
+<strong>Examine the relationship between smoking status and the average
+of several systolic blood pressure readings</strong>
+(<code>BPSysAve</code>), first with side-by-side boxplots.</p>
 <pre class="r"><code>boxplot(d$BPSysAve ~ d$SmokStat, 
         main = &quot;Systolic Blood Pressure US Adults by Smoking Status&quot;,
         ylab = &quot;Systolic Blood Pressure (mmHg)&quot;)</code></pre>
 <p><img src="COO4_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p><strong>Question 4. What is the shape of the distribution for each of the groups?</strong><br />
-Let’s get the descriptive statistics for the three groups. We’ll start by using base R functions. <strong>First we’ll get means for each group using selections:</strong></p>
+<p><strong>Question 4. What is the shape of the distribution for each of
+the groups?</strong><br />
+Let’s get the descriptive statistics for the three groups. We’ll start
+by using base R functions. <strong>First we’ll get means for each group
+using selections:</strong></p>
 <pre class="r"><code>mean(d[d$SmokStat == &quot;Never&quot;, c(&quot;BPSysAve&quot;)], na.rm = TRUE)</code></pre>
 <pre><code>## [1] 120.1813</code></pre>
 <pre class="r"><code>mean(d[d$SmokStat == &quot;Former&quot;, c(&quot;BPSysAve&quot;)], na.rm = TRUE)</code></pre>
 <pre><code>## [1] 125.2447</code></pre>
 <pre class="r"><code>mean(d[d$SmokStat == &quot;Current&quot;, c(&quot;BPSysAve&quot;)], na.rm = TRUE)</code></pre>
 <pre><code>## [1] 121.7299</code></pre>
-<p>Okay, that’s going to take too long! We could use the tapply function for the median, SD and IQR for the 3 smoking groups:</p>
+<p>Okay, that’s going to take too long! We could use the tapply function
+for the median, SD and IQR for the 3 smoking groups:</p>
 <pre class="r"><code>tapply(d$BPSysAve, d$SmokStat, median, na.rm = TRUE)</code></pre>
 <pre><code>## Current  Former   Never 
 ##   119.0   122.5   119.0</code></pre>
@@ -512,46 +550,95 @@ Let’s get the descriptive statistics for the three groups. We’ll start by us
 <pre class="r"><code>tapply(d$BPSysAve, d$SmokStat, IQR, na.rm = TRUE)</code></pre>
 <pre><code>## Current  Former   Never 
 ##      18      22      20</code></pre>
-<p>This goes a bit quicker, but we still need to ask for each descriptive statistic separately. We can get descriptive statistics for separate groups even faster by using the <code>describeBy()</code> function from the <code>psych</code> package. We use the same options here as we did above with the <code>describe()</code> function, and add the grouping variable in the <code>group</code> option.</p>
+<p>This goes a bit quicker, but we still need to ask for each
+descriptive statistic separately. We can get descriptive statistics for
+separate groups even faster by using the <code>describeBy()</code>
+function from the <code>psych</code> package. We use the same options
+here as we did above with the <code>describe()</code> function, and add
+the grouping variable in the <code>group</code> option.</p>
 <pre class="r"><code>describeBy(d$BPSysAve, group = d$SmokStat, na.rm = TRUE, skew = FALSE, quant = c(0.25, 0.5, 0.75), IQR = TRUE)</code></pre>
 <pre><code>## 
 ##  Descriptive statistics by group 
 ## group: Current
 ##   vars   n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
 ## 1    1 670 121.73 17.94  81 221   140 0.69  18   111  119   129
-## ------------------------------------------------------------ 
+## ------------------------------------------------------------------------------------------------------------------- 
 ## group: Former
 ##   vars   n   mean    sd min max range   se IQR Q0.25  Q0.5 Q0.75
 ## 1    1 846 125.24 17.96  85 217   132 0.62  22   113 122.5   135
-## ------------------------------------------------------------ 
+## ------------------------------------------------------------------------------------------------------------------- 
 ## group: Never
 ##   vars    n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
 ## 1    1 1953 120.18 16.51  82 209   127 0.37  20   109  119   129</code></pre>
-<p>In this way, we get all the usual descriptive statistics for SBP for each of the groups separately.</p>
+<p>In this way, we get all the usual descriptive statistics for SBP for
+each of the groups separately.</p>
 </div>
 <div id="aside-transformations" class="section level3">
 <h3>1.3 Aside: transformations</h3>
-<p>Earlier in the course you read about transformations of variables. In the NHANES dataset, HDL cholesterol was reported in mmol/L. This is the SI unit, and also the unit used to report HDL cholesterol in many countries, including the Netherlands. In the US, however, the standard units are mg/dL. The conversion factor from mmol/L to mg/dL is 38.61004. Given the following descriptive statistics for HDL cholesterol in mmol/L, <strong>can you translate the mean, median, standard deviation and IQR to mg/dL for an American physician?</strong></p>
+<p>Earlier in the course you read about transformations of variables. In
+the NHANES dataset, HDL cholesterol was reported in mmol/L. This is the
+SI unit, and also the unit used to report HDL cholesterol in many
+countries, including the Netherlands. In the US, however, the standard
+units are mg/dL. The conversion factor from mmol/L to mg/dL is 38.61004.
+Given the following descriptive statistics for HDL cholesterol in
+mmol/L, <strong>can you translate the mean, median, standard deviation
+and IQR to mg/dL for an American physician?</strong></p>
 <pre><code>##   vars    n mean   sd  min   max range   se IQR Q0.25 Q0.5 Q0.75
 ## 1    1 3500    5 1.06 1.53 12.28 10.75 0.02 1.4  4.24 4.91  5.64</code></pre>
-<p><strong>Now let’s check our answers by making a new variable, and getting the descriptive statistics for this new variable:</strong></p>
+<p><strong>Now let’s check our answers by making a new variable, and
+getting the descriptive statistics for this new variable:</strong></p>
 <pre class="r"><code>d$TotCholmgdl &lt;- d$TotChol * 38.61004
 describe(d$TotCholmgdl, na.rm = TRUE, skew = FALSE, quant = c(0.25, 0.5, 0.75), IQR = TRUE)</code></pre>
 <pre><code>##   vars    n   mean    sd   min    max  range   se   IQR  Q0.25   Q0.5  Q0.75
 ## 1    1 3500 193.01 40.79 59.07 474.13 415.06 0.69 54.05 163.71 189.58 217.76</code></pre>
-<p>Since all of the statistics we’re examining (mean, median, sd, IQR) are in the same units as the variable itself, we can multiply the descriptive statistics of <code>TotChol</code> to get the descriptive statistics of <code>TotCholmgdl</code>. Though of course making the new variable and asking for its descriptive statistics is easier (and less prone to error).</p>
-<p>We also learned that certain transformations can help us with skewed variables. Consider, again, HDL cholesterol. Now we’ll look at <strong>direct</strong> HDL cholesterol, stored in the variable <code>DirectChol</code>. <strong>Get a histogram of direct HDL cholesterol:</strong></p>
+<p>Since all of the statistics we’re examining (mean, median, sd, IQR)
+are in the same units as the variable itself, we can multiply the
+descriptive statistics of <code>TotChol</code> to get the descriptive
+statistics of <code>TotCholmgdl</code>. Though of course making the new
+variable and asking for its descriptive statistics is easier (and less
+prone to error).</p>
+<p>We also learned that certain transformations can help us with skewed
+variables. Consider, again, HDL cholesterol. Now we’ll look at
+<strong>direct</strong> HDL cholesterol, stored in the variable
+<code>DirectChol</code>. <strong>Get a histogram of direct HDL
+cholesterol:</strong></p>
 <pre class="r"><code>hist(d$DirectChol)</code></pre>
 <p><img src="COO4_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
-<p>As with many other lab/physical measures variables we’ve looked at, this variable is also right-skewed. Later in the course we’ll hear more about why, but often it is useful in statistics to have (more or less) normally distributed outcome variables. A common transformation in biomedical statistics is the log transformation. Note: when statisticians say “log transformation”, we nearly always mean the “natural log transformation” (ln, or log<sub>e</sub>), though log<sub>10</sub>, log<sub>2</sub> or any other base will work as well. Which base you use will sometimes depend on the context of the study. However, if there is no obvious reason to choose a different base, you’ll generally see ln used (i.e. log with base e=2.718). That is the transformation we’ll use here. <strong>Make a new variable in the data frame <code>d</code> called <code>lnDirChol</code>, using log<sub>e</sub> of <code>DirectChol</code>:</strong></p>
+<p>As with many other lab/physical measures variables we’ve looked at,
+this variable is also right-skewed. Later in the course we’ll hear more
+about why, but often it is useful in statistics to have (more or less)
+normally distributed outcome variables. A common transformation in
+biomedical statistics is the log transformation. Note: when
+statisticians say “log transformation”, we nearly always mean the
+“natural log transformation” (ln, or log<sub>e</sub>), though
+log<sub>10</sub>, log<sub>2</sub> or any other base will work as well.
+Which base you use will sometimes depend on the context of the study.
+However, if there is no obvious reason to choose a different base,
+you’ll generally see ln used (i.e. log with base e=2.718). That is the
+transformation we’ll use here. <strong>Make a new variable in the data
+frame <code>d</code> called <code>lnDirChol</code>, using
+log<sub>e</sub> of <code>DirectChol</code>:</strong></p>
 <pre class="r"><code>d$lnDirChol &lt;- log(d$DirectChol)
 hist(d$lnDirChol)</code></pre>
-<p>Note that in R the function <code>log()</code> refers to ln (if you want to use a log<sub>10</sub> transformation, use the function <code>log10()</code>).</p>
-<p><strong>Question 5. Describe the distribution of lnDirChol. What has changed after log transformation?</strong></p>
+<p>Note that in R the function <code>log()</code> refers to ln (if you
+want to use a log<sub>10</sub> transformation, use the function
+<code>log10()</code>).</p>
+<p><strong>Question 5. Describe the distribution of lnDirChol. What has
+changed after log transformation?</strong></p>
 </div>
-<div id="relationship-to-1-continuous-explanatory-variable" class="section level3">
+<div id="relationship-to-1-continuous-explanatory-variable"
+class="section level3">
 <h3>1.4 relationship to 1 continuous explanatory variable</h3>
-<p>Do heavier people tend to have higher blood pressure? We will examine the relationship between BMI (a continuous, numeric variable) and SBP (also a continuous, numeric variable). Though these particular variables are also available in the NHANES dataset, it might be instructive to consider a smaller sample. Often in biomedical research we do not have data from thousands of individuals at once. The file BMISBP.sav contains a sample of 40 elderly Dutch adults. <strong>Read in the data and examine the first few lines of the data frame.</strong> (<em>Make sure you change your path name to the directory in which you have saved the file!</em>)</p>
+<p>Do heavier people tend to have higher blood pressure? We will examine
+the relationship between BMI (a continuous, numeric variable) and SBP
+(also a continuous, numeric variable). Though these particular variables
+are also available in the NHANES dataset, it might be instructive to
+consider a smaller sample. Often in biomedical research we do not have
+data from thousands of individuals at once. The file BMISBP.sav contains
+a sample of 40 elderly Dutch adults. <strong>Read in the data and
+examine the first few lines of the data frame.</strong> (<em>Make sure
+you change your path name to the directory in which you have saved the
+file!</em>)</p>
 <pre class="r"><code>d2 &lt;- read.csv(&quot;BMISBP.csv&quot;)</code></pre>
 <pre class="r"><code>dim(d2)</code></pre>
 <pre><code>## [1] 40  2</code></pre>
@@ -563,33 +650,75 @@ hist(d$lnDirChol)</code></pre>
 ## 4 19.890 114
 ## 5 20.430 145
 ## 6 20.640 160</code></pre>
-<p>You have already seen how to generate scatterplots. For a quick-and-dirty examination of 2 variables at a time, the <code>plot</code> function in base R is generally sufficient (though much prettier plots can be made using the <code>ggplot2</code> package).</p>
+<p>You have already seen how to generate scatterplots. For a
+quick-and-dirty examination of 2 variables at a time, the
+<code>plot</code> function in base R is generally sufficient (though
+much prettier plots can be made using the <code>ggplot2</code>
+package).</p>
 <pre class="r"><code>plot(d2$BMI, d2$SBP)</code></pre>
 <p><img src="COO4_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
-<p><strong>Question 6. How would you characterize the relationship between BMI and SPB? How strong do you think the correlation is?</strong></p>
-<p>For examining more than 2 variables, the <code>scatterplotMatrix</code> function in the <code>car</code> package can be helpful. If necessary, first install the <code>car</code> package. When you want to add more variables, use more + signs and add the variables you want in your scatterplot matrix.</p>
+<p><strong>Question 6. How would you characterize the relationship
+between BMI and SPB? How strong do you think the correlation
+is?</strong></p>
+<p>For examining more than 2 variables, the
+<code>scatterplotMatrix</code> function in the <code>car</code> package
+can be helpful. If necessary, first install the <code>car</code>
+package. When you want to add more variables, use more + signs and add
+the variables you want in your scatterplot matrix.</p>
 <pre class="r"><code>library(car)
 scatterplotMatrix(~ BMI + SBP, data = d2,  diagonal = list(method = &quot;histogram&quot;))</code></pre>
 <p><img src="COO4_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
-<p>Now let’s check our guess for the correlation. Note that we need to use an option that tells R what to do with missing values in the variables examined. Since we want to look at correlations among several variables at once, we prefer to only delete the observations that are missing for the two variables being examined and therefore choose <code>use="pairwise.complete.obs"</code>:</p>
+<p>Now let’s check our guess for the correlation. Note that we need to
+use an option that tells R what to do with missing values in the
+variables examined. Since we want to look at correlations among several
+variables at once, we prefer to only delete the observations that are
+missing for the two variables being examined and therefore choose
+<code>use="pairwise.complete.obs"</code>:</p>
 <pre class="r"><code>cor(d2$BMI, d2$SBP, use = &quot;pairwise.complete.obs&quot;)</code></pre>
 <pre><code>## [1] 0.4519469</code></pre>
-<p><strong>Question 7. How does this compare to your guess? Would you call this no, weak, moderate, strong or perfect correlation?</strong></p>
+<p><strong>Question 7. How does this compare to your guess? Would you
+call this no, weak, moderate, strong or perfect
+correlation?</strong></p>
 </div>
 </div>
 <div id="practice-what-youve-learned" class="section level2">
 <h2>2. Practice what you’ve learned</h2>
-<p>Now you will apply the skills you’ve learned to a new set of variables. We’ll return to the NHANES data, which should still be in the memory of R/Rstudio (if you’ve since closed RStudio and started a new session, you will need to re-run the code that read in NHANES and reduced it to the data frame <code>d</code>).</p>
-<p><strong>Using the appropriate descriptive statistics and plots, examine the distributions of, and the associations among, the following variables: age in years, the 60-second pulse rate, the combined systolic blood pressure reading, and total HDL cholesterol.</strong> Note: look again at the help function for the NHANES package to find the names of these variables.</p>
-<p><strong>Question 8. Describe the distributions of age, 60-second pulse rate, and total HDL cholesterol.</strong> (Since we’ve already examined SBP in detail, you may skip that)</p>
-<p><strong>Question 9. For which variable(s) do you expect the mean and median to be the same, and why? For which do they actually differ appreciably?</strong></p>
-<p><strong>Question 10a. Examine visually and numerically the relationships among age in years, pulse rate, SBP, and HDL cholesterol.</strong> (Hint: remember the <code>scatterplotMatrix()</code> function.)</p>
-<p><strong>Question 10b. Is it reasonable to calculate correlation coefficients for these six associations?</strong></p>
-<p><strong>Question 10c. Which of the six associations has the strongest correlation, and what is the correlation coefficient for that association?</strong></p>
-<p><strong>Question 10d. Which of the six associations has the weakest correlation, and what is that correlation coefficient?</strong></p>
-<p><strong>Question 11a. Get side-by-side boxplots and the descriptive statistics for total HDL cholesterol, separately for the body mass index categories</strong> (categorized according to WHO guidelines; this is a variable in the dataset).</p>
-<p><strong>Question 11b. Describe the patterns you see in HDL-c for the BMI categories.</strong></p>
-<p><strong>Question 11c. Based on what you see, do you think total HDL cholesterol increases with increasing categories of BMI?</strong></p>
+<p>Now you will apply the skills you’ve learned to a new set of
+variables. We’ll return to the NHANES data, which should still be in the
+memory of R/Rstudio (if you’ve since closed RStudio and started a new
+session, you will need to re-run the code that read in NHANES and
+reduced it to the data frame <code>d</code>).</p>
+<p><strong>Using the appropriate descriptive statistics and plots,
+examine the distributions of, and the associations among, the following
+variables: age in years, the 60-second pulse rate, the combined systolic
+blood pressure reading, and total HDL cholesterol.</strong> Note: look
+again at the help function for the NHANES package to find the names of
+these variables.</p>
+<p><strong>Question 8. Describe the distributions of age, 60-second
+pulse rate, and total HDL cholesterol.</strong> (Since we’ve already
+examined SBP in detail, you may skip that)</p>
+<p><strong>Question 9. For which variable(s) do you expect the mean and
+median to be the same, and why? For which do they actually differ
+appreciably?</strong></p>
+<p><strong>Question 10a. Examine visually and numerically the
+relationships among age in years, pulse rate, SBP, and HDL
+cholesterol.</strong> (Hint: remember the
+<code>scatterplotMatrix()</code> function.)</p>
+<p><strong>Question 10b. Is it reasonable to calculate correlation
+coefficients for these six associations?</strong></p>
+<p><strong>Question 10c. Which of the six associations has the strongest
+correlation, and what is the correlation coefficient for that
+association?</strong></p>
+<p><strong>Question 10d. Which of the six associations has the weakest
+correlation, and what is that correlation coefficient?</strong></p>
+<p><strong>Question 11a. Get side-by-side boxplots and the descriptive
+statistics for total HDL cholesterol, separately for the body mass index
+categories</strong> (categorized according to WHO guidelines; this is a
+variable in the dataset).</p>
+<p><strong>Question 11b. Describe the patterns you see in HDL-c for the
+BMI categories.</strong></p>
+<p><strong>Question 11c. Based on what you see, do you think total HDL
+cholesterol increases with increasing categories of BMI?</strong></p>
 </div>
 
 
