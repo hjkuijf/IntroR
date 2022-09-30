@@ -361,17 +361,32 @@ participants, in the rows.</p>
 <p>It can also be useful to look at the names of the variables (columns)
 in your data frame:</p>
 <pre class="r"><code>colnames(NHANES)</code></pre>
-<pre><code>##  [1] &quot;ID&quot;               &quot;SurveyYr&quot;         &quot;Gender&quot;           &quot;Age&quot;              &quot;AgeDecade&quot;        &quot;AgeMonths&quot;        &quot;Race1&quot;           
-##  [8] &quot;Race3&quot;            &quot;Education&quot;        &quot;MaritalStatus&quot;    &quot;HHIncome&quot;         &quot;HHIncomeMid&quot;      &quot;Poverty&quot;          &quot;HomeRooms&quot;       
-## [15] &quot;HomeOwn&quot;          &quot;Work&quot;             &quot;Weight&quot;           &quot;Length&quot;           &quot;HeadCirc&quot;         &quot;Height&quot;           &quot;BMI&quot;             
-## [22] &quot;BMICatUnder20yrs&quot; &quot;BMI_WHO&quot;          &quot;Pulse&quot;            &quot;BPSysAve&quot;         &quot;BPDiaAve&quot;         &quot;BPSys1&quot;           &quot;BPDia1&quot;          
-## [29] &quot;BPSys2&quot;           &quot;BPDia2&quot;           &quot;BPSys3&quot;           &quot;BPDia3&quot;           &quot;Testosterone&quot;     &quot;DirectChol&quot;       &quot;TotChol&quot;         
-## [36] &quot;UrineVol1&quot;        &quot;UrineFlow1&quot;       &quot;UrineVol2&quot;        &quot;UrineFlow2&quot;       &quot;Diabetes&quot;         &quot;DiabetesAge&quot;      &quot;HealthGen&quot;       
-## [43] &quot;DaysPhysHlthBad&quot;  &quot;DaysMentHlthBad&quot;  &quot;LittleInterest&quot;   &quot;Depressed&quot;        &quot;nPregnancies&quot;     &quot;nBabies&quot;          &quot;Age1stBaby&quot;      
-## [50] &quot;SleepHrsNight&quot;    &quot;SleepTrouble&quot;     &quot;PhysActive&quot;       &quot;PhysActiveDays&quot;   &quot;TVHrsDay&quot;         &quot;CompHrsDay&quot;       &quot;TVHrsDayChild&quot;   
-## [57] &quot;CompHrsDayChild&quot;  &quot;Alcohol12PlusYr&quot;  &quot;AlcoholDay&quot;       &quot;AlcoholYear&quot;      &quot;SmokeNow&quot;         &quot;Smoke100&quot;         &quot;Smoke100n&quot;       
-## [64] &quot;SmokeAge&quot;         &quot;Marijuana&quot;        &quot;AgeFirstMarij&quot;    &quot;RegularMarij&quot;     &quot;AgeRegMarij&quot;      &quot;HardDrugs&quot;        &quot;SexEver&quot;         
-## [71] &quot;SexAge&quot;           &quot;SexNumPartnLife&quot;  &quot;SexNumPartYear&quot;   &quot;SameSex&quot;          &quot;SexOrientation&quot;   &quot;PregnantNow&quot;</code></pre>
+<pre><code>##  [1] &quot;ID&quot;               &quot;SurveyYr&quot;         &quot;Gender&quot;          
+##  [4] &quot;Age&quot;              &quot;AgeDecade&quot;        &quot;AgeMonths&quot;       
+##  [7] &quot;Race1&quot;            &quot;Race3&quot;            &quot;Education&quot;       
+## [10] &quot;MaritalStatus&quot;    &quot;HHIncome&quot;         &quot;HHIncomeMid&quot;     
+## [13] &quot;Poverty&quot;          &quot;HomeRooms&quot;        &quot;HomeOwn&quot;         
+## [16] &quot;Work&quot;             &quot;Weight&quot;           &quot;Length&quot;          
+## [19] &quot;HeadCirc&quot;         &quot;Height&quot;           &quot;BMI&quot;             
+## [22] &quot;BMICatUnder20yrs&quot; &quot;BMI_WHO&quot;          &quot;Pulse&quot;           
+## [25] &quot;BPSysAve&quot;         &quot;BPDiaAve&quot;         &quot;BPSys1&quot;          
+## [28] &quot;BPDia1&quot;           &quot;BPSys2&quot;           &quot;BPDia2&quot;          
+## [31] &quot;BPSys3&quot;           &quot;BPDia3&quot;           &quot;Testosterone&quot;    
+## [34] &quot;DirectChol&quot;       &quot;TotChol&quot;          &quot;UrineVol1&quot;       
+## [37] &quot;UrineFlow1&quot;       &quot;UrineVol2&quot;        &quot;UrineFlow2&quot;      
+## [40] &quot;Diabetes&quot;         &quot;DiabetesAge&quot;      &quot;HealthGen&quot;       
+## [43] &quot;DaysPhysHlthBad&quot;  &quot;DaysMentHlthBad&quot;  &quot;LittleInterest&quot;  
+## [46] &quot;Depressed&quot;        &quot;nPregnancies&quot;     &quot;nBabies&quot;         
+## [49] &quot;Age1stBaby&quot;       &quot;SleepHrsNight&quot;    &quot;SleepTrouble&quot;    
+## [52] &quot;PhysActive&quot;       &quot;PhysActiveDays&quot;   &quot;TVHrsDay&quot;        
+## [55] &quot;CompHrsDay&quot;       &quot;TVHrsDayChild&quot;    &quot;CompHrsDayChild&quot; 
+## [58] &quot;Alcohol12PlusYr&quot;  &quot;AlcoholDay&quot;       &quot;AlcoholYear&quot;     
+## [61] &quot;SmokeNow&quot;         &quot;Smoke100&quot;         &quot;Smoke100n&quot;       
+## [64] &quot;SmokeAge&quot;         &quot;Marijuana&quot;        &quot;AgeFirstMarij&quot;   
+## [67] &quot;RegularMarij&quot;     &quot;AgeRegMarij&quot;      &quot;HardDrugs&quot;       
+## [70] &quot;SexEver&quot;          &quot;SexAge&quot;           &quot;SexNumPartnLife&quot; 
+## [73] &quot;SexNumPartYear&quot;   &quot;SameSex&quot;          &quot;SexOrientation&quot;  
+## [76] &quot;PregnantNow&quot;</code></pre>
 <p>To keep things simple for the following exercises, we will
 concentrate on only the second survey (2011-2012), and use only the
 adults in the sample. <strong>Make a new dataframe <code>d</code>,
@@ -388,48 +403,90 @@ just look at the first few lines of data frame with which you are
 working, to get a sense of the structure. You can do this with the
 <code>head()</code> function. <strong>Use:</strong></p>
 <pre class="r"><code>head(d)</code></pre>
-<pre><code>##      ID SurveyYr Gender Age AgeDecade AgeMonths Race1 Race3    Education MaritalStatus    HHIncome HHIncomeMid Poverty HomeRooms HomeOwn       Work
-## 1 62172  2011_12 female  43     40-49        NA Black Black  High School  NeverMarried 20000-24999       22500    2.02         4    Rent NotWorking
-## 2 62174  2011_12   male  80      &lt;NA&gt;        NA White White College Grad       Married 65000-74999       70000    4.30         7     Own NotWorking
-## 3 62174  2011_12   male  80      &lt;NA&gt;        NA White White College Grad       Married 65000-74999       70000    4.30         7     Own NotWorking
-## 4 62176  2011_12 female  34     30-39        NA White White College Grad       Married  more 99999      100000    5.00         8     Own NotWorking
-## 5 62178  2011_12   male  80      &lt;NA&gt;        NA White White  High School       Widowed      0-4999        2500    0.05         6     Own NotWorking
-## 6 62180  2011_12   male  35     30-39        NA White White College Grad       Married 20000-24999       22500    0.87         6     Own    Working
-##   Weight Length HeadCirc Height  BMI BMICatUnder20yrs      BMI_WHO Pulse BPSysAve BPDiaAve BPSys1 BPDia1 BPSys2 BPDia2 BPSys3 BPDia3 Testosterone
-## 1   98.6     NA       NA  172.0 33.3             &lt;NA&gt;    30.0_plus    80      103       72    100     70    102     68    104     76        47.53
-## 2   95.8     NA       NA  168.1 33.9             &lt;NA&gt;    30.0_plus    56       97       39     NA     NA     96     38     98     40       642.82
-## 3   95.8     NA       NA  168.1 33.9             &lt;NA&gt;    30.0_plus    56       97       39     NA     NA     96     38     98     40       642.82
-## 4   68.7     NA       NA  171.6 23.3             &lt;NA&gt; 18.5_to_24.9    92      107       69     NA     NA    114     70    100     68        21.11
-## 5   85.9     NA       NA  173.5 28.5             &lt;NA&gt; 25.0_to_29.9    68      121       72    124     72    124     76    118     68       562.78
-## 6   89.0     NA       NA  178.7 27.9             &lt;NA&gt; 25.0_to_29.9    66      107       66    108     62    108     66    106     66       401.78
-##   DirectChol TotChol UrineVol1 UrineFlow1 UrineVol2 UrineFlow2 Diabetes DiabetesAge HealthGen DaysPhysHlthBad DaysMentHlthBad LittleInterest Depressed
-## 1       1.89    4.37       107      0.645        NA         NA       No          NA      Good               2              10        Several      Most
-## 2       1.40    5.25        94      1.160        NA         NA       No          NA      Fair              30               2           None      None
-## 3       1.40    5.25        94      1.160        NA         NA       No          NA      Fair              30               2           None      None
-## 4       1.42    4.42       341      1.258        NA         NA       No          NA     Vgood               2               0           None      None
-## 5       1.22    5.20        16      0.113        29      0.259       No          NA      Fair               2              10           None   Several
-## 6       0.85    3.70       350      2.593        NA         NA       No          NA      Good               0               8        Several   Several
-##   nPregnancies nBabies Age1stBaby SleepHrsNight SleepTrouble PhysActive PhysActiveDays  TVHrsDay CompHrsDay TVHrsDayChild CompHrsDayChild Alcohol12PlusYr
-## 1            3       2         20             8           No         No              2 More_4_hr  More_4_hr            NA              NA             Yes
-## 2           NA      NA         NA             9           No         No              7      4_hr      0_hrs            NA              NA             Yes
-## 3           NA      NA         NA             9           No         No              5      4_hr      0_hrs            NA              NA             Yes
-## 4            5       2         29             7           No        Yes              5      2_hr  0_to_1_hr            NA              NA             Yes
-## 5           NA      NA         NA             6          Yes         No             NA More_4_hr      0_hrs            NA              NA              No
-## 6           NA      NA         NA             7          Yes         No             NA      2_hr       1_hr            NA              NA             Yes
-##   AlcoholDay AlcoholYear SmokeNow Smoke100  Smoke100n SmokeAge Marijuana AgeFirstMarij RegularMarij AgeRegMarij HardDrugs SexEver SexAge SexNumPartnLife
-## 1          3         104      Yes      Yes     Smoker       28       Yes            21           No          NA        No     Yes     17               4
-## 2         NA           0     &lt;NA&gt;       No Non-Smoker       NA      &lt;NA&gt;            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA              NA
-## 3         NA           0     &lt;NA&gt;       No Non-Smoker       NA      &lt;NA&gt;            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA              NA
-## 4          2         104     &lt;NA&gt;       No Non-Smoker       NA       Yes            18           No          NA        No     Yes     16              15
-## 5         NA          NA     &lt;NA&gt;       No Non-Smoker       NA      &lt;NA&gt;            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA              NA
-## 6          1           2     &lt;NA&gt;       No Non-Smoker       NA        No            NA           No          NA        No     Yes     17               4
-##   SexNumPartYear SameSex SexOrientation PregnantNow
-## 1              2      No   Heterosexual          No
-## 2             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
-## 3             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
-## 4              1      No   Heterosexual          No
-## 5             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
-## 6              1      No   Heterosexual        &lt;NA&gt;</code></pre>
+<pre><code>##      ID SurveyYr Gender Age AgeDecade AgeMonths Race1 Race3    Education
+## 1 62172  2011_12 female  43     40-49        NA Black Black  High School
+## 2 62174  2011_12   male  80      &lt;NA&gt;        NA White White College Grad
+## 3 62174  2011_12   male  80      &lt;NA&gt;        NA White White College Grad
+## 4 62176  2011_12 female  34     30-39        NA White White College Grad
+## 5 62178  2011_12   male  80      &lt;NA&gt;        NA White White  High School
+## 6 62180  2011_12   male  35     30-39        NA White White College Grad
+##   MaritalStatus    HHIncome HHIncomeMid Poverty HomeRooms HomeOwn
+## 1  NeverMarried 20000-24999       22500    2.02         4    Rent
+## 2       Married 65000-74999       70000    4.30         7     Own
+## 3       Married 65000-74999       70000    4.30         7     Own
+## 4       Married  more 99999      100000    5.00         8     Own
+## 5       Widowed      0-4999        2500    0.05         6     Own
+## 6       Married 20000-24999       22500    0.87         6     Own
+##         Work Weight Length HeadCirc Height  BMI BMICatUnder20yrs
+## 1 NotWorking   98.6     NA       NA  172.0 33.3             &lt;NA&gt;
+## 2 NotWorking   95.8     NA       NA  168.1 33.9             &lt;NA&gt;
+## 3 NotWorking   95.8     NA       NA  168.1 33.9             &lt;NA&gt;
+## 4 NotWorking   68.7     NA       NA  171.6 23.3             &lt;NA&gt;
+## 5 NotWorking   85.9     NA       NA  173.5 28.5             &lt;NA&gt;
+## 6    Working   89.0     NA       NA  178.7 27.9             &lt;NA&gt;
+##        BMI_WHO Pulse BPSysAve BPDiaAve BPSys1 BPDia1 BPSys2 BPDia2
+## 1    30.0_plus    80      103       72    100     70    102     68
+## 2    30.0_plus    56       97       39     NA     NA     96     38
+## 3    30.0_plus    56       97       39     NA     NA     96     38
+## 4 18.5_to_24.9    92      107       69     NA     NA    114     70
+## 5 25.0_to_29.9    68      121       72    124     72    124     76
+## 6 25.0_to_29.9    66      107       66    108     62    108     66
+##   BPSys3 BPDia3 Testosterone DirectChol TotChol UrineVol1 UrineFlow1
+## 1    104     76        47.53       1.89    4.37       107      0.645
+## 2     98     40       642.82       1.40    5.25        94      1.160
+## 3     98     40       642.82       1.40    5.25        94      1.160
+## 4    100     68        21.11       1.42    4.42       341      1.258
+## 5    118     68       562.78       1.22    5.20        16      0.113
+## 6    106     66       401.78       0.85    3.70       350      2.593
+##   UrineVol2 UrineFlow2 Diabetes DiabetesAge HealthGen DaysPhysHlthBad
+## 1        NA         NA       No          NA      Good               2
+## 2        NA         NA       No          NA      Fair              30
+## 3        NA         NA       No          NA      Fair              30
+## 4        NA         NA       No          NA     Vgood               2
+## 5        29      0.259       No          NA      Fair               2
+## 6        NA         NA       No          NA      Good               0
+##   DaysMentHlthBad LittleInterest Depressed nPregnancies nBabies
+## 1              10        Several      Most            3       2
+## 2               2           None      None           NA      NA
+## 3               2           None      None           NA      NA
+## 4               0           None      None            5       2
+## 5              10           None   Several           NA      NA
+## 6               8        Several   Several           NA      NA
+##   Age1stBaby SleepHrsNight SleepTrouble PhysActive PhysActiveDays
+## 1         20             8           No         No              2
+## 2         NA             9           No         No              7
+## 3         NA             9           No         No              5
+## 4         29             7           No        Yes              5
+## 5         NA             6          Yes         No             NA
+## 6         NA             7          Yes         No             NA
+##    TVHrsDay CompHrsDay TVHrsDayChild CompHrsDayChild Alcohol12PlusYr
+## 1 More_4_hr  More_4_hr            NA              NA             Yes
+## 2      4_hr      0_hrs            NA              NA             Yes
+## 3      4_hr      0_hrs            NA              NA             Yes
+## 4      2_hr  0_to_1_hr            NA              NA             Yes
+## 5 More_4_hr      0_hrs            NA              NA              No
+## 6      2_hr       1_hr            NA              NA             Yes
+##   AlcoholDay AlcoholYear SmokeNow Smoke100  Smoke100n SmokeAge Marijuana
+## 1          3         104      Yes      Yes     Smoker       28       Yes
+## 2         NA           0     &lt;NA&gt;       No Non-Smoker       NA      &lt;NA&gt;
+## 3         NA           0     &lt;NA&gt;       No Non-Smoker       NA      &lt;NA&gt;
+## 4          2         104     &lt;NA&gt;       No Non-Smoker       NA       Yes
+## 5         NA          NA     &lt;NA&gt;       No Non-Smoker       NA      &lt;NA&gt;
+## 6          1           2     &lt;NA&gt;       No Non-Smoker       NA        No
+##   AgeFirstMarij RegularMarij AgeRegMarij HardDrugs SexEver SexAge
+## 1            21           No          NA        No     Yes     17
+## 2            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA
+## 3            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA
+## 4            18           No          NA        No     Yes     16
+## 5            NA         &lt;NA&gt;          NA      &lt;NA&gt;    &lt;NA&gt;     NA
+## 6            NA           No          NA        No     Yes     17
+##   SexNumPartnLife SexNumPartYear SameSex SexOrientation PregnantNow
+## 1               4              2      No   Heterosexual          No
+## 2              NA             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
+## 3              NA             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
+## 4              15              1      No   Heterosexual          No
+## 5              NA             NA    &lt;NA&gt;           &lt;NA&gt;        &lt;NA&gt;
+## 6               4              1      No   Heterosexual        &lt;NA&gt;</code></pre>
 <p>By default, <code>head()</code> displays the first 6 rows of data;
 you can change the number of rows displayed using the option
 <code>n=</code>. Try:</p>
@@ -562,11 +619,11 @@ the grouping variable in the <code>group</code> option.</p>
 ## group: Current
 ##   vars   n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
 ## 1    1 670 121.73 17.94  81 221   140 0.69  18   111  119   129
-## ------------------------------------------------------------------------------------------------------------------- 
+## ------------------------------------------------------ 
 ## group: Former
 ##   vars   n   mean    sd min max range   se IQR Q0.25  Q0.5 Q0.75
 ## 1    1 846 125.24 17.96  85 217   132 0.62  22   113 122.5   135
-## ------------------------------------------------------------------------------------------------------------------- 
+## ------------------------------------------------------ 
 ## group: Never
 ##   vars    n   mean    sd min max range   se IQR Q0.25 Q0.5 Q0.75
 ## 1    1 1953 120.18 16.51  82 209   127 0.37  20   109  119   129</code></pre>
@@ -589,8 +646,10 @@ and IQR to mg/dL for an American physician?</strong></p>
 getting the descriptive statistics for this new variable:</strong></p>
 <pre class="r"><code>d$TotCholmgdl &lt;- d$TotChol * 38.61004
 describe(d$TotCholmgdl, na.rm = TRUE, skew = FALSE, quant = c(0.25, 0.5, 0.75), IQR = TRUE)</code></pre>
-<pre><code>##   vars    n   mean    sd   min    max  range   se   IQR  Q0.25   Q0.5  Q0.75
-## 1    1 3500 193.01 40.79 59.07 474.13 415.06 0.69 54.05 163.71 189.58 217.76</code></pre>
+<pre><code>##   vars    n   mean    sd   min    max  range   se   IQR  Q0.25   Q0.5
+## 1    1 3500 193.01 40.79 59.07 474.13 415.06 0.69 54.05 163.71 189.58
+##    Q0.75
+## 1 217.76</code></pre>
 <p>Since all of the statistics we’re examining (mean, median, sd, IQR)
 are in the same units as the variable itself, we can multiply the
 descriptive statistics of <code>TotChol</code> to get the descriptive

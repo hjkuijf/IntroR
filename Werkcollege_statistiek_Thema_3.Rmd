@@ -36,7 +36,7 @@ Het is ook handig om je 'working directory' te veranderen in deze map met databe
 
 Verder maken we gebruik van functies uit de `BSDA` en de `psych` packages. Als je die nog niet hebt geïnstalleerd, doe dat nu (`install.packages("BSDA")` en `install.packages("psych")`). Daarna kunnen we ze laden:
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, message = FALSE}
 library(BSDA)
 library(psych)
 ```
@@ -91,13 +91,6 @@ Omdat de FEV1 waarden afhankelijk zijn van lengte en leeftijd, zijn de gegevens 
   Mannen: 	verwachte FEV1 = 4.30H – 0.029A – 2.49
 
   H = lengte in meters, A = leeftijd in jaren
-```
-
-```{r}
-d$verwachtFEV1 <- ifelse(d$Geslacht == "V",
-                         3.95 * d$Lengte - 0.025 * d$Leeftijd - 2.60,
-                         4.30 * d$Lengte - 0.029 * d$Leeftijd - 2.49)
-
 ```
 
 **Maak ook van `verwachtFEV1` een boxplot en beschrijvende statistieken voor mannen en vrouwen**
@@ -198,12 +191,8 @@ Voor de interpretatie van de studie is het inzichtelijker om de frequenties niet
 
 ```{r}
 dtab / sum(dtab)
-
 sweep(dtab, 1, margin.table(dtab, 1), "/")
-# sweep(dtab, 1, rowSums(dtab), "/")
-
 sweep(dtab, 2, margin.table(dtab, 2), "/")
-# sweep(dtab, 2, colSums(dtab), "/")
 ```
 
 **Vraag 9. Welke informatie krijg je met de verschillende relatieve frequenties die je kunt berekenen? Welke relatieve frequenties hebben jouw voorkeur bij de interpretatie?**
