@@ -14,7 +14,7 @@
 
 <title>Werkcollege statistiek Thema 3</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.15/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -363,20 +363,13 @@ in en noemen de data frame <code>d</code> en bekijken de eerste rows met
 <code>head</code>.</p>
 <pre class="r"><code>d &lt;-read.csv2(&quot;spirometrie.csv&quot;)</code></pre>
 <pre class="r"><code>head(d)</code></pre>
-<pre><code>##   Student Geslacht Leeftijd Lengte Gewicht Teugvolume  ERV  IRV  FVC
-## 1       1        V       19    174      63       1.14 0.70 1.41 3.03
-## 2       2        V       19    175      67       1.10 1.22 1.92 4.22
-## 3       3        M       21    176      60       1.31 2.09 2.10 5.02
-## 4       4        V       21    178      63       1.23 2.17 1.51 4.81
-## 5       5        M       20    196      93       0.65 2.21 3.22 6.20
-## 6       6        V       21    172      78         NA 1.65 1.51 4.36
-##   FEV1 verwachtFEV1
-## 1 3.04       3.7980
-## 2 2.49       3.8375
-## 3 4.58       4.4690
-## 4 3.95       3.9060
-## 5 5.79       5.3580
-## 6 3.91       3.6690</code></pre>
+<pre><code>##   Student Geslacht Leeftijd Lengte Gewicht Teugvolume  ERV  IRV  FVC FEV1 verwachtFEV1
+## 1       1        V       19    174      63       1.14 0.70 1.41 3.03 3.04       3.7980
+## 2       2        V       19    175      67       1.10 1.22 1.92 4.22 2.49       3.8375
+## 3       3        M       21    176      60       1.31 2.09 2.10 5.02 4.58       4.4690
+## 4       4        V       21    178      63       1.23 2.17 1.51 4.81 3.95       3.9060
+## 5       5        M       20    196      93       0.65 2.21 3.22 6.20 5.79       5.3580
+## 6       6        V       21    172      78         NA 1.65 1.51 4.36 3.91       3.6690</code></pre>
 </div>
 <div id="beschrijvende-statistiek" class="section level3">
 <h3>1.2 Beschrijvende statistiek</h3>
@@ -401,7 +394,7 @@ de describeBy() functie gebruiken (we krijgen dan veel meer dan mean
 ## group: M
 ##    vars  n mean   sd  min max range  se  IQR
 ## X1    1 36 4.77 0.58 3.79 6.1  2.31 0.1 0.73
-## ------------------------------------------------------ 
+## ------------------------------------------------------------------- 
 ## group: V
 ##    vars  n mean   sd  min  max range   se  IQR
 ## X1    1 58 3.55 0.38 2.49 4.26  1.77 0.05 0.42</code></pre>
