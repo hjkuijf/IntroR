@@ -166,7 +166,7 @@ Let's try to make a scatterplot of a whole dataframe.
    
 **7. In which row and column of this new plot can you find the plot we made before (with horsepower on the x-axis and weight on the y-axis)?**  
   
-We can also use the `plot()` function to create line graphs. Then, we use the `x = ` and `type = "l"` arguments. Remember that all arguments of a function are used between the () and separated with a comma.    
+We can also use the `plot()` function to create line graphs. Then, we use the `x = ` and `type = "l"` arguments. **Note**, use the 'l' from 'line', not '1 (one)'. Remember that all arguments of a function are used between the () and separated with a comma.    
   
 **8. Plot the horsepower of the mtcars data in a line graph.**
   
@@ -434,8 +434,8 @@ The use of colors is particularly useful when you plot two or more variables in 
   
 **42. Plot two normal distributions with the following commands:**  
 ```{r eval=FALSE}
-normal1 = rnorm(1000, mean = 1, sd = 2) #creates new vector with normally distributed numerics
-normal2 = rnorm(1000, mean = 3, sd = 2)
+normal1 <- rnorm(1000, mean = 1, sd = 2) #creates new vector with normally distributed numerics
+normal2 <- rnorm(1000, mean = 3, sd = 2)
 
 hist(x = normal1, breaks = 50, 
      col = rgb(red = 1, green = 0, blue = 0),
