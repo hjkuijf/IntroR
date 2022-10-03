@@ -44,7 +44,7 @@ library(car)
 
 For the following exercises, we will use two datasets:  
 
-  * [BMISBP.csv](COO4/BMISBP.csv), a comma-separated dataset (which you have already downloaded from Blackboard), and
+  * [BMISBP.csv](COO4/BMISBP.csv), a comma-separated dataset (which you have already downloaded), and
   * NHANES, a dataset built into the `NHANES` package
 
 
