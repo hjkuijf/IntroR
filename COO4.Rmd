@@ -23,7 +23,7 @@ In a later COO you will learn how to describe a categorical variable, and associ
 
 ## 0. Preparation
 
-Before starting, please **download the file [BMISBP.csv](COO4/BMISBP.csv) from Blackboard and save it locally**.
+Before starting, please **download the file [BMISBP.csv](COO4/BMISBP.csv) and save it locally**.
 
 We will start the R session by installing (if necessary) and loading the packages we need for the exercises below. We will be using datasets and/or functions from the `NHANES` package and the `psych` package. **If you are using these packages for the first time, you will first need to install them.** Do this either via the RStudio menu (`Tools-Install Packages`), or with these commands:
 
@@ -80,7 +80,7 @@ So we continue with the `r dim(d)[1]` adult participants. Note that we still hav
 
 In COO2 you learned the function `View()` to examine an entire data frame. With such a large data frame, it can be useful to just look at the first few lines of data frame with which you are working, to get a sense of the structure. You can do this with the `head()` function. **Use:**
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, results='hide'}
 head(d)
 ```
 
