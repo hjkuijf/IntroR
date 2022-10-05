@@ -56,7 +56,7 @@ d1 <-read.csv("huisstof.csv")
 ```
 
 ```{r, echo = FALSE}
-d1 <-read.csv("Werkcollege_statistiek_Thema_2/huisstof.csv")
+d1 <- read.csv("Werkcollege_statistiek_Thema_2/huisstof.csv")
 ```
 
 ```{r}
