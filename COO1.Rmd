@@ -551,5 +551,5 @@ final <- data.frame(species, numbers, kingdom)
 
 ```{r, echo=FALSE}
 colnames(final) <- c("type", "count", "category")
-final
+final 
 ```
