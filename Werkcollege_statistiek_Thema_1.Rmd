@@ -38,11 +38,11 @@ In de zelfstudie is gekeken naar de optische densiteit (OD) bij een concentratie
 De data zijn opgeslagen in een het bestand `OD250.csv`. We lezen de data in en noemen de data frame `d1`. We bekijken de eerste regels met `head`:
 
 ```{r, eval = FALSE}
-d1 <-read.csv("OD250.csv")
+d1 <- read.csv("OD250.csv")
 ```
 
 ```{r, echo = FALSE}
-d1 <-read.csv("Werkcollege_statistiek_Thema_1/OD250.csv")
+d1 <- read.csv("Werkcollege_statistiek_Thema_1/OD250.csv")
 ```
 
 ```{r}
